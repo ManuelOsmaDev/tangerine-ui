@@ -1,6 +1,6 @@
 // Tangerine UI: componentes listos para usar en Tangerine.
 //
-//   import { Button, Input, Card, Modal, toast, Toaster } from "tangerine-ui"
+//   import { Button, Input, Card, Modal, toast, Toaster } from "tangerine-lang-ui"
 //
 // Todos usan las clases de css/tangerine-ui.css. Los que reciben un bloque { }
 // (Card, Alert, Modal, Stack, Row, Grid) lo muestran como contenido.

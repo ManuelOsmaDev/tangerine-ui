@@ -115,7 +115,7 @@
       output: () => {},
       onError: (m) => errores.push(m),
       modules: { "tangerine-ui.tng": ui() },
-      imports: { "tangerine-ui": "tangerine-ui.tng" },
+      imports: { "tangerine-lang-ui": "tangerine-ui.tng" },
     });
   }
   function mostrarError(el, msg) {

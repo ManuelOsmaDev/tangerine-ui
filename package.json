@@ -1,5 +1,5 @@
 {
-  "name": "tangerine-ui",
+  "name": "tangerine-lang-ui",
   "version": "0.1.0",
   "description": "Componentes para Tangerine: botones, formularios, modales, tablas y avisos. Accesibles, con modo oscuro y un CSS que funciona en cualquier HTML.",
   "license": "MIT",

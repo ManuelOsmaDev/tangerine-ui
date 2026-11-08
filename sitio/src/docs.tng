@@ -12,7 +12,7 @@ export let docs = [
     ejemplos: [
       {
         titulo: "Variantes",
-        codigo: 'import { Button, Row } from "tangerine-ui"
+        codigo: 'import { Button, Row } from "tangerine-lang-ui"
 
 struct Demo {
   view {
@@ -29,7 +29,7 @@ struct Demo {
       },
       {
         titulo: "Carga, tamaños e íconos",
-        codigo: 'import { Button, Row, toast, Toaster } from "tangerine-ui"
+        codigo: 'import { Button, Row, toast, Toaster } from "tangerine-lang-ui"
 
 struct Demo {
   @State var guardando = false
@@ -71,7 +71,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Con validación en vivo",
-        codigo: 'import { Input, Stack } from "tangerine-ui"
+        codigo: 'import { Input, Stack } from "tangerine-lang-ui"
 
 struct Demo {
   @State var correo = ""
@@ -110,7 +110,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Con contador",
-        codigo: 'import { Textarea } from "tangerine-ui"
+        codigo: 'import { Textarea } from "tangerine-lang-ui"
 
 struct Demo {
   @State var bio = ""
@@ -140,7 +140,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Básico",
-        codigo: 'import { Select, Stack } from "tangerine-ui"
+        codigo: 'import { Select, Stack } from "tangerine-lang-ui"
 
 struct Demo {
   @State var pais = "co"
@@ -167,7 +167,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Básico",
-        codigo: 'import { Checkbox, Stack } from "tangerine-ui"
+        codigo: 'import { Checkbox, Stack } from "tangerine-lang-ui"
 
 struct Demo {
   @State var terminos = false
@@ -197,7 +197,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Ajustes",
-        codigo: 'import { Switch, Stack, Badge } from "tangerine-ui"
+        codigo: 'import { Switch, Stack, Badge } from "tangerine-lang-ui"
 
 struct Demo {
   @State var avisos = true
@@ -226,7 +226,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Planes",
-        codigo: 'import { RadioGroup, Stack } from "tangerine-ui"
+        codigo: 'import { RadioGroup, Stack } from "tangerine-lang-ui"
 
 struct Demo {
   @State var plan = "pro"
@@ -252,7 +252,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Variantes",
-        codigo: 'import { Card, Grid, Button, Badge } from "tangerine-ui"
+        codigo: 'import { Card, Grid, Button, Badge } from "tangerine-lang-ui"
 
 struct Demo {
   view {
@@ -285,7 +285,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Confirmar una acción",
-        codigo: 'import { Modal, Button, Row, toast, Toaster } from "tangerine-ui"
+        codigo: 'import { Modal, Button, Row, toast, Toaster } from "tangerine-lang-ui"
 
 struct Demo {
   @State var abierto = false
@@ -322,7 +322,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Dos estilos",
-        codigo: 'import { Tabs, Stack, Card } from "tangerine-ui"
+        codigo: 'import { Tabs, Stack, Card } from "tangerine-lang-ui"
 
 struct Demo {
   @State var tab = 0
@@ -353,7 +353,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Tipos",
-        codigo: 'import { Alert, Stack } from "tangerine-ui"
+        codigo: 'import { Alert, Stack } from "tangerine-lang-ui"
 
 struct Demo {
   view {
@@ -380,7 +380,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Avisos",
-        codigo: 'import { Button, Row, toast, Toaster } from "tangerine-ui"
+        codigo: 'import { Button, Row, toast, Toaster } from "tangerine-lang-ui"
 
 struct Demo {
   view {
@@ -408,7 +408,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Subiendo archivos",
-        codigo: 'import { Progress, Button, Stack } from "tangerine-ui"
+        codigo: 'import { Progress, Button, Stack } from "tangerine-lang-ui"
 
 struct Demo {
   @State var hecho = 3
@@ -435,7 +435,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Cargando un perfil",
-        codigo: 'import { Spinner, Skeleton, Row, Stack } from "tangerine-ui"
+        codigo: 'import { Spinner, Skeleton, Row, Stack } from "tangerine-lang-ui"
 
 struct Demo {
   view {
@@ -471,7 +471,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Equipo con buscador",
-        codigo: 'import { Table, Input, Stack } from "tangerine-ui"
+        codigo: 'import { Table, Input, Stack } from "tangerine-lang-ui"
 
 let equipo = [
   { nombre: "Ana Pérez", rol: "Diseño", ciudad: "Bogotá" },
@@ -506,7 +506,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Estados y personas",
-        codigo: 'import { Badge, Avatar, Row, Stack, Kbd } from "tangerine-ui"
+        codigo: 'import { Badge, Avatar, Row, Stack, Kbd } from "tangerine-lang-ui"
 
 struct Demo {
   view {
@@ -549,7 +549,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Un tablero",
-        codigo: 'import { Grid, Card, Stack, Row, Divider, Badge } from "tangerine-ui"
+        codigo: 'import { Grid, Card, Stack, Row, Divider, Badge } from "tangerine-lang-ui"
 
 struct Demo {
   view {

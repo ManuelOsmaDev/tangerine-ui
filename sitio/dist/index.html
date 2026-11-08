@@ -1211,7 +1211,7 @@ a:hover > .flecha, .t-btn:hover .flecha { transform: translateX(3px); }
       output: () => {},
       onError: (m) => errores.push(m),
       modules: { "tangerine-ui.tng": ui() },
-      imports: { "tangerine-ui": "tangerine-ui.tng" },
+      imports: { "tangerine-lang-ui": "tangerine-ui.tng" },
     });
   }
   function mostrarError(el, msg) {
@@ -1310,7 +1310,7 @@ export let docs = [
     ejemplos: [
       {
         titulo: "Variantes",
-        codigo: 'import { Button, Row } from "tangerine-ui"
+        codigo: 'import { Button, Row } from "tangerine-lang-ui"
 
 struct Demo {
   view {
@@ -1327,7 +1327,7 @@ struct Demo {
       },
       {
         titulo: "Carga, tamaños e íconos",
-        codigo: 'import { Button, Row, toast, Toaster } from "tangerine-ui"
+        codigo: 'import { Button, Row, toast, Toaster } from "tangerine-lang-ui"
 
 struct Demo {
   @State var guardando = false
@@ -1369,7 +1369,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Con validación en vivo",
-        codigo: 'import { Input, Stack } from "tangerine-ui"
+        codigo: 'import { Input, Stack } from "tangerine-lang-ui"
 
 struct Demo {
   @State var correo = ""
@@ -1408,7 +1408,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Con contador",
-        codigo: 'import { Textarea } from "tangerine-ui"
+        codigo: 'import { Textarea } from "tangerine-lang-ui"
 
 struct Demo {
   @State var bio = ""
@@ -1438,7 +1438,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Básico",
-        codigo: 'import { Select, Stack } from "tangerine-ui"
+        codigo: 'import { Select, Stack } from "tangerine-lang-ui"
 
 struct Demo {
   @State var pais = "co"
@@ -1465,7 +1465,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Básico",
-        codigo: 'import { Checkbox, Stack } from "tangerine-ui"
+        codigo: 'import { Checkbox, Stack } from "tangerine-lang-ui"
 
 struct Demo {
   @State var terminos = false
@@ -1495,7 +1495,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Ajustes",
-        codigo: 'import { Switch, Stack, Badge } from "tangerine-ui"
+        codigo: 'import { Switch, Stack, Badge } from "tangerine-lang-ui"
 
 struct Demo {
   @State var avisos = true
@@ -1524,7 +1524,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Planes",
-        codigo: 'import { RadioGroup, Stack } from "tangerine-ui"
+        codigo: 'import { RadioGroup, Stack } from "tangerine-lang-ui"
 
 struct Demo {
   @State var plan = "pro"
@@ -1550,7 +1550,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Variantes",
-        codigo: 'import { Card, Grid, Button, Badge } from "tangerine-ui"
+        codigo: 'import { Card, Grid, Button, Badge } from "tangerine-lang-ui"
 
 struct Demo {
   view {
@@ -1583,7 +1583,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Confirmar una acción",
-        codigo: 'import { Modal, Button, Row, toast, Toaster } from "tangerine-ui"
+        codigo: 'import { Modal, Button, Row, toast, Toaster } from "tangerine-lang-ui"
 
 struct Demo {
   @State var abierto = false
@@ -1620,7 +1620,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Dos estilos",
-        codigo: 'import { Tabs, Stack, Card } from "tangerine-ui"
+        codigo: 'import { Tabs, Stack, Card } from "tangerine-lang-ui"
 
 struct Demo {
   @State var tab = 0
@@ -1651,7 +1651,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Tipos",
-        codigo: 'import { Alert, Stack } from "tangerine-ui"
+        codigo: 'import { Alert, Stack } from "tangerine-lang-ui"
 
 struct Demo {
   view {
@@ -1678,7 +1678,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Avisos",
-        codigo: 'import { Button, Row, toast, Toaster } from "tangerine-ui"
+        codigo: 'import { Button, Row, toast, Toaster } from "tangerine-lang-ui"
 
 struct Demo {
   view {
@@ -1706,7 +1706,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Subiendo archivos",
-        codigo: 'import { Progress, Button, Stack } from "tangerine-ui"
+        codigo: 'import { Progress, Button, Stack } from "tangerine-lang-ui"
 
 struct Demo {
   @State var hecho = 3
@@ -1733,7 +1733,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Cargando un perfil",
-        codigo: 'import { Spinner, Skeleton, Row, Stack } from "tangerine-ui"
+        codigo: 'import { Spinner, Skeleton, Row, Stack } from "tangerine-lang-ui"
 
 struct Demo {
   view {
@@ -1769,7 +1769,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Equipo con buscador",
-        codigo: 'import { Table, Input, Stack } from "tangerine-ui"
+        codigo: 'import { Table, Input, Stack } from "tangerine-lang-ui"
 
 let equipo = [
   { nombre: "Ana Pérez", rol: "Diseño", ciudad: "Bogotá" },
@@ -1804,7 +1804,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Estados y personas",
-        codigo: 'import { Badge, Avatar, Row, Stack, Kbd } from "tangerine-ui"
+        codigo: 'import { Badge, Avatar, Row, Stack, Kbd } from "tangerine-lang-ui"
 
 struct Demo {
   view {
@@ -1847,7 +1847,7 @@ struct Demo {
     ejemplos: [
       {
         titulo: "Un tablero",
-        codigo: 'import { Grid, Card, Stack, Row, Divider, Badge } from "tangerine-ui"
+        codigo: 'import { Grid, Card, Stack, Row, Divider, Badge } from "tangerine-lang-ui"
 
 struct Demo {
   view {
@@ -1880,7 +1880,7 @@ struct Demo {
 <script type="text/tangerine" data-module="src/ui.tng">
 // Tangerine UI: componentes listos para usar en Tangerine.
 //
-//   import { Button, Input, Card, Modal, toast, Toaster } from "tangerine-ui"
+//   import { Button, Input, Card, Modal, toast, Toaster } from "tangerine-lang-ui"
 //
 // Todos usan las clases de css/tangerine-ui.css. Los que reciben un bloque { }
 // (Card, Alert, Modal, Stack, Row, Grid) lo muestran como contenido.
@@ -2629,7 +2629,7 @@ struct Vitrina {
 
 // ---------- Portada ----------
 
-let EJEMPLO_PORTADA = 'import { Card, Input, Switch, Button, toast, Toaster } from "tangerine-ui"
+let EJEMPLO_PORTADA = 'import { Card, Input, Switch, Button, toast, Toaster } from "tangerine-lang-ui"
 
 struct Demo {
   @State var nombre = ""
@@ -2672,8 +2672,8 @@ struct Inicio {
           }
           div(.comando) {
             span(.comando-prompt) { "$" }
-            code { "tangerine add tangerine-ui" }
-            element("button", { class: "ej-btn", on_click: |e| copy("tangerine add tangerine-ui", e.target) }) { "Copiar" }
+            code { "tangerine add tangerine-lang-ui" }
+            element("button", { class: "ej-btn", on_click: |e| copy("tangerine add tangerine-lang-ui", e.target) }) { "Copiar" }
           }
         }
         div(.vitrina) { element("ui-vitrina") }
@@ -2751,14 +2751,14 @@ struct Instalar {
     }
     h2(.pag-h2) { "1. En un proyecto de Tangerine" }
     p(.pag-p) { "Agrega el paquete:" }
-    Codigo("tangerine add tangerine-ui", "bash")
+    Codigo("tangerine add tangerine-lang-ui", "bash")
     p(.pag-p) { "Agrega el CSS a styles en tangerine.json:" }
     Codigo('{
   "entry": "src/main.tng",
-  "styles": ["node_modules/tangerine-ui/css/tangerine-ui.css", "src/estilos.css"]
+  "styles": ["node_modules/tangerine-lang-ui/css/tangerine-ui.css", "src/estilos.css"]
 }', "css", "tangerine.json")
     p(.pag-p) { "E impórtalos donde los uses:" }
-    Codigo('import { Button, Card, Input, Toaster, toast } from "tangerine-ui"
+    Codigo('import { Button, Card, Input, Toaster, toast } from "tangerine-lang-ui"
 
 struct App {
   @State var correo = ""
@@ -2777,14 +2777,14 @@ mount("#app", App)')
 
     h2(.pag-h2) { "2. En cualquier HTML, Angular o React" }
     p(.pag-p) { "Si no usas Tangerine, enlaza solo el CSS y usa las clases. La pestaña HTML de cada ejemplo te da el código listo." }
-    Codigo('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tangerine-ui/css/tangerine-ui.css">
+    Codigo('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tangerine-lang-ui/css/tangerine-ui.css">
 
 <button class="t-btn t-btn-primary">Guardar</button>
 <div class="t-field">
   <label class="t-label" for="correo">Correo</label>
   <input class="t-input" id="correo" type="email">
 </div>', "html")
-    p(.pag-p) { 'En Angular agrégalo a "styles" en angular.json. En React o Vue, impórtalo en main.js: import "tangerine-ui/css/tangerine-ui.css".' }
+    p(.pag-p) { 'En Angular agrégalo a "styles" en angular.json. En React o Vue, impórtalo en main.js: import "tangerine-lang-ui/css/tangerine-ui.css".' }
 
     h2(.pag-h2) { "3. Modo oscuro" }
     p(.pag-p) { "Sigue al sistema solo. Para forzarlo, pon data-theme en la etiqueta html:" }

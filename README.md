@@ -6,8 +6,10 @@ Componentes para [Tangerine](https://github.com/ManuelOsmaDev/tangerine-lang): b
 
 **Documentación con ejemplos editables en vivo:** https://manuelosmadev.github.io/tangerine-ui/
 
+En npm se llama **`tangerine-lang-ui`**.
+
 ```swift
-import { Card, Input, Switch, Button, toast, Toaster } from "tangerine-ui"
+import { Card, Input, Switch, Button, toast, Toaster } from "tangerine-lang-ui"
 
 struct Perfil {
   @State var nombre = ""
@@ -31,19 +33,19 @@ mount("#app", Perfil)
 En un proyecto de Tangerine (5.2 o más reciente):
 
 ```bash
-tangerine add tangerine-ui
+tangerine add tangerine-lang-ui
 ```
 
 Agrega el CSS a `styles` en `tangerine.json`:
 
 ```json
-{ "styles": ["node_modules/tangerine-ui/css/tangerine-ui.css", "src/estilos.css"] }
+{ "styles": ["node_modules/tangerine-lang-ui/css/tangerine-ui.css", "src/estilos.css"] }
 ```
 
 **Sin Tangerine**, en cualquier HTML, enlaza solo el CSS y usa las clases:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tangerine-ui/css/tangerine-ui.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tangerine-lang-ui/css/tangerine-ui.css">
 <button class="t-btn t-btn-primary">Guardar</button>
 ```
 

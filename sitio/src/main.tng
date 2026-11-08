@@ -167,7 +167,7 @@ struct Vitrina {
 
 // ---------- Portada ----------
 
-let EJEMPLO_PORTADA = 'import { Card, Input, Switch, Button, toast, Toaster } from "tangerine-ui"
+let EJEMPLO_PORTADA = 'import { Card, Input, Switch, Button, toast, Toaster } from "tangerine-lang-ui"
 
 struct Demo {
   @State var nombre = ""
@@ -210,8 +210,8 @@ struct Inicio {
           }
           div(.comando) {
             span(.comando-prompt) { "$" }
-            code { "tangerine add tangerine-ui" }
-            element("button", { class: "ej-btn", on_click: |e| copy("tangerine add tangerine-ui", e.target) }) { "Copiar" }
+            code { "tangerine add tangerine-lang-ui" }
+            element("button", { class: "ej-btn", on_click: |e| copy("tangerine add tangerine-lang-ui", e.target) }) { "Copiar" }
           }
         }
         div(.vitrina) { element("ui-vitrina") }
@@ -289,14 +289,14 @@ struct Instalar {
     }
     h2(.pag-h2) { "1. En un proyecto de Tangerine" }
     p(.pag-p) { "Agrega el paquete:" }
-    Codigo("tangerine add tangerine-ui", "bash")
+    Codigo("tangerine add tangerine-lang-ui", "bash")
     p(.pag-p) { "Agrega el CSS a styles en tangerine.json:" }
     Codigo('{
   "entry": "src/main.tng",
-  "styles": ["node_modules/tangerine-ui/css/tangerine-ui.css", "src/estilos.css"]
+  "styles": ["node_modules/tangerine-lang-ui/css/tangerine-ui.css", "src/estilos.css"]
 }', "css", "tangerine.json")
     p(.pag-p) { "E impórtalos donde los uses:" }
-    Codigo('import { Button, Card, Input, Toaster, toast } from "tangerine-ui"
+    Codigo('import { Button, Card, Input, Toaster, toast } from "tangerine-lang-ui"
 
 struct App {
   @State var correo = ""
@@ -315,14 +315,14 @@ mount("#app", App)')
 
     h2(.pag-h2) { "2. En cualquier HTML, Angular o React" }
     p(.pag-p) { "Si no usas Tangerine, enlaza solo el CSS y usa las clases. La pestaña HTML de cada ejemplo te da el código listo." }
-    Codigo('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tangerine-ui/css/tangerine-ui.css">
+    Codigo('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tangerine-lang-ui/css/tangerine-ui.css">
 
 <button class="t-btn t-btn-primary">Guardar</button>
 <div class="t-field">
   <label class="t-label" for="correo">Correo</label>
   <input class="t-input" id="correo" type="email">
 </div>', "html")
-    p(.pag-p) { 'En Angular agrégalo a "styles" en angular.json. En React o Vue, impórtalo en main.js: import "tangerine-ui/css/tangerine-ui.css".' }
+    p(.pag-p) { 'En Angular agrégalo a "styles" en angular.json. En React o Vue, impórtalo en main.js: import "tangerine-lang-ui/css/tangerine-ui.css".' }
 
     h2(.pag-h2) { "3. Modo oscuro" }
     p(.pag-p) { "Sigue al sistema solo. Para forzarlo, pon data-theme en la etiqueta html:" }
