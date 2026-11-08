@@ -1,13 +1,13 @@
 // Documentación de cada componente. El código de cada ejemplo es real:
 // la web lo ejecuta para dibujar la vista previa y lo convierte en HTML.
 
-export let grupos = ["Formularios", "Contenedores", "Feedback", "Datos", "Layout"]
+export let grupos = ["Botones", "Formularios", "Contenedores", "Navegación", "Feedback", "Datos", "Layout"]
 
 export let docs = [
   {
     id: "button",
     nombre: "Button",
-    grupo: "Formularios",
+    grupo: "Botones",
     desc: "Un botón con variantes, tamaños, ícono y estado de carga. La acción va como segundo argumento.",
     ejemplos: [
       {
@@ -23,6 +23,29 @@ struct Demo {
       Button("Fantasma", || nil, .ghost)
       Button("Peligro", || nil, .danger)
       Button("Enlace", || nil, .link)
+    }
+  }
+}',
+      },
+      {
+        titulo: "Más colores y tamaños",
+        codigo: 'import { Button, Row, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  view {
+    Stack(12) {
+      Row(8) {
+        Button("Suave", || nil, .soft)
+        Button("Éxito", || nil, .success)
+        Button("Aviso", || nil, .warning)
+      }
+      Row(8) {
+        Button("Mini", || nil).size("xs")
+        Button("Pequeño", || nil).size("sm")
+        Button("Normal", || nil)
+        Button("Grande", || nil).size("lg")
+        Button("Enorme", || nil).size("xl")
+      }
     }
   }
 }',
@@ -54,8 +77,8 @@ struct Demo {
       },
     ],
     api: [
-      ['Button(texto, accion?, variante?)', 'variante: .primary (por defecto), .secondary, .outline, .ghost, .danger, .link'],
-      ['.size("sm" | "lg")', 'Más pequeño o más grande.'],
+      ['Button(texto, accion?, variante?)', 'variante: .primary (por defecto), .secondary, .outline, .ghost, .soft, .success, .warning, .danger, .link'],
+      ['.size("xs" | "sm" | "lg" | "xl")', 'Del más pequeño al más grande.'],
       ['.loading(bool)', 'Muestra un spinner y evita doble clic.'],
       ['.icon(texto)', 'Un ícono o emoji antes del texto.'],
       ['.disabled(bool)', 'Lo desactiva.'],
@@ -93,6 +116,22 @@ struct Demo {
   }
 }',
       },
+      {
+        titulo: "Con prefijo y sufijo",
+        codigo: 'import { Input, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var precio = "120"
+  @State var sitio = "mi-tienda"
+
+  view {
+    Stack(14) {
+      Input("Precio", $precio, "number").prefix("$").suffix("USD")
+      Input("Tu web", $sitio).prefix("https://").suffix(".com")
+    }
+  }
+}',
+      },
     ],
     api: [
       ['Input(etiqueta, $campo, tipo?)', 'tipo: "text" (por defecto), "email", "password", "number", "search", "tel", "url", "date"...'],
@@ -100,6 +139,7 @@ struct Demo {
       ['.hint(texto)', 'Ayuda debajo del campo.'],
       ['.error(texto)', 'Lo marca en rojo con el mensaje. Con nil se quita.'],
       ['.disabled(bool)', 'Lo desactiva.'],
+      ['.prefix(texto)  .suffix(texto)', 'Texto pegado al campo, por ejemplo "$" o ".com".'],
     ],
   },
   {
@@ -575,6 +615,606 @@ struct Demo {
       ['Row(espacio?, alinear?) { ... }', 'Fila que salta de línea. alinear: "center", "start", "end".'],
       ['Grid(columnas?, espacio?) { ... }', 'Rejilla (3 columnas, 16px).'],
       ['Divider(texto?)', 'Línea separadora, con texto en medio si quieres.'],
+    ],
+  },
+  {
+    id: "icon-button",
+    nombre: "IconButton y ButtonGroup",
+    grupo: "Botones",
+    desc: "Botones solo con ícono, y grupos de botones unidos en una sola pieza.",
+    ejemplos: [
+      {
+        titulo: "Íconos y grupos",
+        codigo: 'import { IconButton, ButtonGroup, Button, Row, Stack, toast, Toaster } from "tangerine-lang-ui"
+
+struct Demo {
+  view {
+    Stack(16) {
+      Row(8) {
+        IconButton("✎", || toast("Editar"), "Editar")
+        IconButton("♥", || toast("Me gusta", "accent"), "Me gusta", .soft)
+        IconButton("⧉", || toast("Copiado"), "Copiar", .outline)
+        IconButton("+", || toast("Nuevo", "success"), "Nuevo", .primary).round()
+        IconButton("✕", || toast("Borrado", "danger"), "Borrar", .danger).size("sm")
+      }
+      ButtonGroup {
+        Button("Izquierda", || nil, .outline)
+        Button("Centro", || nil, .outline)
+        Button("Derecha", || nil, .outline)
+      }
+    }
+    Toaster()
+  }
+}',
+      },
+    ],
+    api: [
+      ['IconButton(icono, accion, etiqueta, variante?)', 'etiqueta la leen los lectores de pantalla y aparece al pasar el mouse. variante: .ghost (por defecto), .soft, .outline, .primary, .danger'],
+      ['.size("sm" | "lg")  .round()', 'Tamaño y forma redonda.'],
+      ['ButtonGroup { ... }', 'Une los botones de adentro.'],
+    ],
+  },
+  {
+    id: "segmented",
+    nombre: "SegmentedControl",
+    grupo: "Botones",
+    desc: "Elegir una opción entre pocas, como en iOS. El @State guarda la opción elegida.",
+    ejemplos: [
+      {
+        titulo: "Vista del calendario",
+        codigo: 'import { SegmentedControl, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var vista = "semana"
+
+  view {
+    Stack(14) {
+      SegmentedControl($vista, [["dia", "Día"], ["semana", "Semana"], ["mes", "Mes"], ["ano", "Año"]])
+      p { "Mostrando: {vista}" }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['SegmentedControl($valor, opciones)', 'opciones: ["A", "B"] o [["a", "A"], ["b", "B"]]. El campo guarda el valor.'],
+      ['.full()', 'Ocupa todo el ancho.'],
+    ],
+  },
+  {
+    id: "form",
+    nombre: "Form",
+    grupo: "Formularios",
+    desc: "Un formulario completo: Enter o el botón .submit() lo envían. Así se ven todos los campos juntos.",
+    ejemplos: [
+      {
+        titulo: "Crear cuenta",
+        codigo: 'import { Form, Input, PasswordInput, Select, Checkbox, Button, Card, toast, Toaster } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var nombre = ""
+  @State var correo = ""
+  @State var clave = ""
+  @State var pais = "co"
+  @State var acepto = false
+  @State var enviado = false
+
+  fn error_correo() { if enviado && !correo.contains("@") { "Escribe un correo válido" } else { nil } }
+  fn error_clave() { if enviado && clave.len() < 8 { "Mínimo 8 caracteres" } else { nil } }
+
+  fn enviar() {
+    enviado = true
+    if error_correo() == nil && error_clave() == nil && acepto {
+      toast("Cuenta creada para {nombre}", "success")
+    }
+  }
+
+  view {
+    Card("Crear cuenta", "Tarda un minuto").variant("elevated") {
+      Form(|| enviar()) {
+        Input("Nombre", $nombre).placeholder("Ana Pérez")
+        Input("Correo", $correo, "email").placeholder("ana@correo.com").error(error_correo())
+        PasswordInput("Contraseña", $clave).error(error_clave())
+        Select("País", $pais, [["co", "Colombia"], ["mx", "México"], ["es", "España"]])
+        Checkbox("Acepto los términos", $acepto)
+        Button("Crear cuenta").submit().full()
+      }
+    }
+    Toaster()
+  }
+}',
+      },
+    ],
+    api: [
+      ['Form(accion) { ... }', 'Llama a accion al enviar, con Enter o con un Button(...).submit().'],
+    ],
+  },
+  {
+    id: "password",
+    nombre: "PasswordInput",
+    grupo: "Formularios",
+    desc: "Contraseña con un botón para mostrarla u ocultarla.",
+    ejemplos: [
+      {
+        titulo: "Con fuerza de la contraseña",
+        codigo: 'import { PasswordInput, Progress, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var clave = ""
+
+  fn fuerza() {
+    var puntos = 0
+    if clave.len() >= 8 { puntos += 40 }
+    if clave.lower() != clave { puntos += 20 }
+    if clave.chars().any(|c| "0123456789".contains(c)) { puntos += 20 }
+    if clave.chars().any(|c| "!@#$%&*?".contains(c)) { puntos += 20 }
+    puntos
+  }
+
+  view {
+    Stack(12) {
+      PasswordInput("Contraseña", $clave).placeholder("Escribe una contraseña").hint("Usa 8 caracteres, mayúsculas, números y símbolos")
+      Progress(fuerza()).label("Seguridad")
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['PasswordInput(etiqueta, $campo)', 'El botón del ojo la muestra u oculta.'],
+      ['.placeholder(t)  .hint(t)  .error(t)', 'Como en Input.'],
+    ],
+  },
+  {
+    id: "search",
+    nombre: "SearchInput",
+    grupo: "Formularios",
+    desc: "Buscador con ícono y un botón para borrar lo escrito.",
+    ejemplos: [
+      {
+        titulo: "Filtrar una lista",
+        codigo: 'import { SearchInput, List, ListItem, Stack } from "tangerine-lang-ui"
+
+let frutas = ["Mandarina", "Limón", "Naranja", "Toronja", "Lima", "Pomelo"]
+
+struct Demo {
+  @State var buscar = ""
+
+  view {
+    Stack(12) {
+      SearchInput($buscar).placeholder("Buscar fruta...")
+      List {
+        for f in frutas.filter(|f| f.lower().contains(buscar.lower())) {
+          ListItem(f, "Cítrico")
+        }
+      }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['SearchInput($campo)', 'El botón × aparece cuando hay texto.'],
+      ['.placeholder(texto)', 'Texto de ejemplo.'],
+    ],
+  },
+  {
+    id: "number",
+    nombre: "NumberInput",
+    grupo: "Formularios",
+    desc: "Número con botones para restar y sumar, y límites.",
+    ejemplos: [
+      {
+        titulo: "Carrito",
+        codigo: 'import { NumberInput, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var cantidad = 1
+
+  view {
+    Stack(12) {
+      NumberInput("Cantidad", $cantidad).range(1, 10)
+      p { "Total: ${cantidad * 3200}" }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['NumberInput(etiqueta, $campo)', 'El campo guarda un número.'],
+      ['.range(min, max)  .step(paso)', 'Límites y cuánto suma cada clic.'],
+    ],
+  },
+  {
+    id: "slider",
+    nombre: "Slider",
+    grupo: "Formularios",
+    desc: "Elegir un valor arrastrando. La barra se llena con el color de tu tema.",
+    ejemplos: [
+      {
+        titulo: "Volumen y brillo",
+        codigo: 'import { Slider, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var volumen = 60
+  @State var brillo = 35
+
+  view {
+    Stack(18) {
+      Slider("Volumen", $volumen).unit("%")
+      Slider("Brillo", $brillo).range(0, 50).step(5)
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Slider(etiqueta, $campo)', 'El campo guarda un número.'],
+      ['.range(min, max)  .step(paso)  .unit(texto)', 'Límites, paso y unidad que se muestra junto al valor.'],
+    ],
+  },
+  {
+    id: "tags",
+    nombre: "TagInput",
+    grupo: "Formularios",
+    desc: "Agregar etiquetas: escribe y pulsa Enter. Borrar con el campo vacío quita la última.",
+    ejemplos: [
+      {
+        titulo: "Tecnologías",
+        codigo: 'import { TagInput, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var tags = ["Tangerine", "CSS"]
+
+  view {
+    Stack(10) {
+      TagInput("Tecnologías", $tags).placeholder("Agrega una y pulsa Enter")
+      p { "{tags.len()} etiquetas" }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['TagInput(etiqueta, $lista)', 'El campo guarda una lista de textos. No repite etiquetas.'],
+      ['.placeholder(texto)', 'Texto de ejemplo.'],
+    ],
+  },
+  {
+    id: "rating",
+    nombre: "Rating",
+    grupo: "Formularios",
+    desc: "Calificar con estrellas.",
+    ejemplos: [
+      {
+        titulo: "Reseña",
+        codigo: 'import { Rating, Stack, Row } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var estrellas = 4
+
+  view {
+    Stack(10) {
+      Rating($estrellas)
+      p { match estrellas { 1 => "Malo", 2 => "Regular", 3 => "Bien", 4 => "Muy bien", _ => "¡Excelente!" } }
+      Row(8) {
+        span { "Promedio:" }
+        Rating($estrellas).readonly()
+      }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Rating($campo, maximo?)', 'El campo guarda de 1 a maximo (5).'],
+      ['.readonly()', 'Solo para mostrar.'],
+    ],
+  },
+  {
+    id: "color",
+    nombre: "ColorPicker",
+    grupo: "Formularios",
+    desc: "Elegir un color de una paleta.",
+    ejemplos: [
+      {
+        titulo: "Color de etiqueta",
+        codigo: 'import { ColorPicker, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var color = "#3e63dd"
+
+  view {
+    Stack(14) {
+      ColorPicker("Color", $color)
+      div({ style: "height: 44px; border-radius: 12px; background: {color}; transition: background .3s" })
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['ColorPicker(etiqueta, $campo, colores?)', 'colores: lista de colores CSS. Si no la pones, usa ocho colores de la marca.'],
+    ],
+  },
+  {
+    id: "breadcrumb",
+    nombre: "Breadcrumb",
+    grupo: "Navegación",
+    desc: "Dónde estás dentro de la app. El último elemento es la página actual.",
+    ejemplos: [
+      {
+        titulo: "Ruta",
+        codigo: 'import { Breadcrumb } from "tangerine-lang-ui"
+
+struct Demo {
+  view {
+    Breadcrumb([["Inicio", "#"], ["Proyectos", "#"], ["Citrus", "#"], ["Ajustes"]])
+  }
+}',
+      },
+    ],
+    api: [
+      ['Breadcrumb(items)', 'items: [["Texto", "enlace"], ..., ["Página actual"]]'],
+    ],
+  },
+  {
+    id: "pagination",
+    nombre: "Pagination",
+    grupo: "Navegación",
+    desc: "Moverse entre páginas de resultados. Muestra la primera, la última y las vecinas.",
+    ejemplos: [
+      {
+        titulo: "Resultados",
+        codigo: 'import { Pagination, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var pagina = 5
+
+  view {
+    Stack(12) {
+      Pagination($pagina, 12)
+      p { "Página {pagina} de 12" }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Pagination($pagina, total)', 'El campo guarda la página, desde 1.'],
+    ],
+  },
+  {
+    id: "steps",
+    nombre: "Steps",
+    grupo: "Navegación",
+    desc: "Los pasos de un proceso y en cuál vas.",
+    ejemplos: [
+      {
+        titulo: "Registro en pasos",
+        codigo: 'import { Steps, Button, Row, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var paso = 1
+
+  view {
+    Stack(20) {
+      Steps(paso, ["Cuenta", "Perfil", "Pago", "Listo"])
+      Row(8) {
+        Button("Atrás", || { paso = (paso - 1).clamp(0, 3) }, .outline).disabled(paso == 0)
+        Button("Siguiente", || { paso = (paso + 1).clamp(0, 3) }).disabled(paso == 3)
+      }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Steps(actual, pasos)', 'actual empieza en 0. Los pasos anteriores salen con ✓.'],
+    ],
+  },
+  {
+    id: "accordion",
+    nombre: "Accordion",
+    grupo: "Navegación",
+    desc: "Secciones que se abren y cierran, ideales para preguntas frecuentes. Funcionan con teclado.",
+    ejemplos: [
+      {
+        titulo: "Preguntas frecuentes",
+        codigo: 'import { Accordion, AccordionItem } from "tangerine-lang-ui"
+
+struct Demo {
+  view {
+    Accordion {
+      AccordionItem("¿Qué es Tangerine UI?").open() {
+        p { "Una librería de componentes para Tangerine." }
+      }
+      AccordionItem("¿Funciona sin Tangerine?") {
+        p { "Sí: su CSS funciona en cualquier HTML." }
+      }
+      AccordionItem("¿Tiene modo oscuro?") {
+        p { "Sí, y sigue al sistema solo." }
+      }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Accordion { AccordionItem(titulo) { ... } }', 'Cada item tiene su contenido en el bloque.'],
+      ['AccordionItem(...).open()', 'Empieza abierto.'],
+    ],
+  },
+  {
+    id: "dropdown",
+    nombre: "Dropdown",
+    grupo: "Navegación",
+    desc: "Un menú que se abre al hacer clic. Se cierra al elegir, al hacer clic afuera o con Escape.",
+    ejemplos: [
+      {
+        titulo: "Acciones",
+        codigo: 'import { Dropdown, MenuItem, toast, Toaster } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var abierto = false
+
+  view {
+    Dropdown($abierto, "Acciones") {
+      MenuItem("Editar", || toast("Editar"), "✎")
+      MenuItem("Duplicar", || toast("Duplicado"), "⧉")
+      MenuItem("Compartir", || toast("Enlace copiado", "accent"), "↗")
+      MenuItem("Borrar", || toast("Borrado", "danger"), "✕").danger()
+    }
+    Toaster()
+  }
+}',
+      },
+    ],
+    api: [
+      ['Dropdown($abierto, texto) { ... }', 'El campo guarda si está abierto.'],
+      ['.align_end()', 'Alinea el menú a la derecha del botón.'],
+      ['MenuItem(texto, accion?, icono?)', 'Una opción del menú.'],
+      ['MenuItem(...).danger()', 'En rojo, para acciones peligrosas.'],
+    ],
+  },
+  {
+    id: "stat",
+    nombre: "Stat",
+    grupo: "Datos",
+    desc: "Un número importante con su cambio. Verde si sube, rojo si baja.",
+    ejemplos: [
+      {
+        titulo: "Tablero",
+        codigo: 'import { Stat, Grid } from "tangerine-lang-ui"
+
+struct Demo {
+  view {
+    Grid(3, 12) {
+      Stat("Ventas", "$12.480", "+12%").hint("vs. mes pasado")
+      Stat("Pedidos", "318", "+4%")
+      Stat("Devoluciones", "9", "-2%")
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Stat(titulo, valor, cambio?)', 'Si cambio empieza con + sale en verde; con -, en rojo.'],
+      ['.hint(texto)', 'Una nota pequeña debajo.'],
+    ],
+  },
+  {
+    id: "timeline",
+    nombre: "Timeline",
+    grupo: "Datos",
+    desc: "Eventos en orden, como el historial de un pedido.",
+    ejemplos: [
+      {
+        titulo: "Historial de un pedido",
+        codigo: 'import { Timeline } from "tangerine-lang-ui"
+
+struct Demo {
+  view {
+    Timeline([
+      ["En camino", "El repartidor salió con tu pedido", "11:40"],
+      ["Preparado", "Lo empacamos con cuidado", "10:05"],
+      ["Pagado", "Recibimos tu pago", "09:14"],
+      ["Pedido creado", "Ana hizo el pedido", "09:12"],
+    ])
+  }
+}',
+      },
+    ],
+    api: [
+      ['Timeline(items)', 'items: [["Título", "Texto", "Hora"], ...]. El primero se resalta.'],
+    ],
+  },
+  {
+    id: "empty",
+    nombre: "EmptyState",
+    grupo: "Datos",
+    desc: "Lo que se muestra cuando todavía no hay nada, con una acción para empezar.",
+    ejemplos: [
+      {
+        titulo: "Sin proyectos",
+        codigo: 'import { EmptyState, Button, toast, Toaster } from "tangerine-lang-ui"
+
+struct Demo {
+  view {
+    EmptyState("Aún no tienes proyectos", "Crea el primero y aparecerá aquí.", "🍊") {
+      Button("Crear proyecto", || toast("¡Proyecto creado!", "success"))
+      Button("Ver ejemplos", || nil, .ghost)
+    }
+    Toaster()
+  }
+}',
+      },
+    ],
+    api: [
+      ['EmptyState(titulo, texto?, icono?) { ... }', 'El bloque son las acciones.'],
+    ],
+  },
+  {
+    id: "list",
+    nombre: "List y Chip",
+    grupo: "Datos",
+    desc: "Listas de personas o cosas, y chips para filtros o etiquetas que se pueden quitar.",
+    ejemplos: [
+      {
+        titulo: "Equipo y filtros",
+        codigo: 'import { List, ListItem, Chip, Row, Stack, Badge, toast, Toaster } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var filtros = ["Diseño", "Remoto", "Senior"]
+
+  view {
+    Stack(14) {
+      Row(6) {
+        for f in filtros {
+          Chip(f, || { filtros = filtros.filter(|x| x != f) })
+        }
+      }
+      List {
+        ListItem("Ana Pérez", "Diseño · Bogotá").avatar("Ana Pérez").extra("Admin").action(|| toast("Ana"))
+        ListItem("Luis Gómez", "Backend · CDMX").avatar("Luis Gómez").extra("Editor").action(|| toast("Luis"))
+        ListItem("Sara Ruiz", "Frontend · Madrid").avatar("Sara Ruiz") { Badge("Nueva", .accent) }
+      }
+    }
+    Toaster()
+  }
+}',
+      },
+    ],
+    api: [
+      ['List { ListItem(titulo, subtitulo?) }', 'Cada fila; su bloque se agrega bajo el texto.'],
+      ['.avatar(nombre)  .extra(texto)  .action(f)', 'Foto con iniciales, texto a la derecha y acción al hacer clic.'],
+      ['Chip(texto, al_quitar?)', 'Con al_quitar sale el botón ×.'],
+      ['Chip(...).active()', 'Resaltado.'],
+    ],
+  },
+  {
+    id: "tooltip",
+    nombre: "Tooltip",
+    grupo: "Datos",
+    desc: "Un texto que aparece al pasar el mouse o al enfocar con el teclado.",
+    ejemplos: [
+      {
+        titulo: "Ayuda en íconos",
+        codigo: 'import { Tooltip, IconButton, Row } from "tangerine-lang-ui"
+
+struct Demo {
+  view {
+    Row(10) {
+      Tooltip("Editar") { IconButton("✎", || nil, "Editar", .outline) }
+      Tooltip("Copiar enlace") { IconButton("⧉", || nil, "Copiar", .outline) }
+      Tooltip("Borrar para siempre") { IconButton("✕", || nil, "Borrar", .danger) }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Tooltip(texto) { ... }', 'Envuelve lo que lleva la ayuda.'],
     ],
   },
 ]

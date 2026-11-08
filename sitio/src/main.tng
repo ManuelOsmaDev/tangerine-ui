@@ -195,7 +195,7 @@ struct Inicio {
         div(.hero-texto) {
           a(.hero-aviso, { href: "#c/modal" }) {
             span(.aviso-punto)
-            span { "Nuevo: 23 componentes para Tangerine 5.2" }
+            span { "Nuevo en 0.2: 48 componentes, con más formularios y navegación" }
             span(.flecha) { "→" }
           }
           h1(.hero-titulo) {

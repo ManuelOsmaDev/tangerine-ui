@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="generator" content="Tangerine 5.2.0">
+<meta name="generator" content="Tangerine 5.2.1">
 <title>Tangerine UI · Componentes para Tangerine</title>
 <meta name="description" content="Componentes accesibles y con modo oscuro para Tangerine: botones, formularios, modales, tablas y avisos. Su CSS funciona en cualquier HTML."><meta name="color-scheme" content="light dark"><meta property="og:title" content="Tangerine UI"><meta property="og:description" content="Componentes jugosos para Tangerine."><link rel="icon" href="logo.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&family=JetBrains+Mono:wght@400..600&display=swap">
 <style>
 /*!
- * Tangerine UI 0.1.0 · MIT
+ * Tangerine UI 0.2.0 · MIT
  * Componentes para Tangerine y para cualquier HTML.
  * Cambia el tema con variables: --t-accent, --t-radius, --t-font...
  */
@@ -585,6 +585,409 @@
 }
 [data-tooltip]:hover::after, [data-tooltip]:focus-visible::after { opacity: 1; transform: translate(-50%, 0); transition-delay: 150ms; }
 
+/* ==================== 0.2 ==================== */
+
+/* ---------- Más botones ---------- */
+.t-btn-soft { --_bg: var(--t-accent-soft); --_bg-hover: color-mix(in srgb, var(--t-accent) 20%, transparent); --_bg-press: color-mix(in srgb, var(--t-accent) 28%, transparent); --_fg: var(--t-accent-text); }
+.t-btn-success { --_bg: var(--t-success); --_bg-hover: color-mix(in srgb, var(--t-success) 88%, #000); --_bg-press: color-mix(in srgb, var(--t-success) 78%, #000); --_fg: #fff; }
+.t-btn-warning { --_bg: var(--t-warning); --_bg-hover: color-mix(in srgb, var(--t-warning) 88%, #000); --_bg-press: color-mix(in srgb, var(--t-warning) 78%, #000); --_fg: #fff; }
+.t-btn-xs { min-height: 26px; padding: 0 9px; font-size: 12px; border-radius: 6px; gap: 5px; }
+.t-btn-xl { min-height: 56px; padding: 0 28px; font-size: 17px; border-radius: calc(var(--t-radius) + 2px); }
+.t-icon-btn { width: 40px; padding: 0; font-size: 17px; }
+.t-icon-btn-sm { width: 32px; min-height: 32px; font-size: 15px; border-radius: var(--t-radius-sm); }
+.t-icon-btn-lg { width: 48px; min-height: 48px; font-size: 20px; }
+.t-icon-btn-round { border-radius: 999px; }
+.t-btn-group { display: inline-flex; isolation: isolate; }
+.t-btn-group > .t-btn { border-radius: 0; box-shadow: none; }
+.t-btn-group > .t-btn:not(:first-child) { margin-left: -1px; }
+.t-btn-group > .t-btn:first-child { border-radius: var(--t-radius) 0 0 var(--t-radius); }
+.t-btn-group > .t-btn:last-child { border-radius: 0 var(--t-radius) var(--t-radius) 0; }
+.t-btn-group > .t-btn:hover, .t-btn-group > .t-btn:focus-visible { z-index: 1; }
+.t-segmented {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--t-radius);
+  background: var(--t-surface-2);
+  border: 1px solid var(--t-border);
+}
+.t-segmented-full { display: flex; }
+.t-segmented-full .t-segment { flex: 1; }
+.t-segment {
+  min-height: 32px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: calc(var(--t-radius) - 3px);
+  background: transparent;
+  color: var(--t-text-2);
+  font: 560 13.5px/1 var(--t-font);
+  cursor: pointer;
+  transition: background var(--t-med) var(--t-ease), color var(--t-fast), box-shadow var(--t-med) var(--t-ease), transform var(--t-fast);
+}
+.t-segment:hover { color: var(--t-text); }
+.t-segment:active { transform: scale(.97); }
+.t-segment:focus-visible { outline: none; box-shadow: var(--t-ring); }
+.t-segment.is-active { background: var(--t-surface); color: var(--t-text); box-shadow: var(--t-shadow-sm), 0 0 0 1px var(--t-border); }
+
+/* ---------- Íconos de los campos ---------- */
+.t-ico { display: inline-block; flex: none; width: 16px; height: 16px; background: currentColor; -webkit-mask: var(--_m) center / contain no-repeat; mask: var(--_m) center / contain no-repeat; }
+.t-ico-search { --_m: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E"); }
+.t-ico-eye { --_m: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E"); }
+.t-ico-eye-off { --_m: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 3l18 18M10.6 10.6a2 2 0 002.8 2.8M9.9 5.1A10.4 10.4 0 0112 5c6.5 0 10 7 10 7a17.7 17.7 0 01-3.2 4.2M6.6 6.6C3.9 8.3 2 12 2 12s3.5 7 10 7a9.7 9.7 0 005.4-1.6'/%3E%3C/svg%3E"); }
+
+/* ---------- Grupos y acciones dentro del campo ---------- */
+.t-input-group { display: flex; align-items: stretch; }
+.t-input-group .t-input { flex: 1; min-width: 0; border-radius: 0; }
+.t-input-group .t-input:first-child { border-radius: var(--t-radius) 0 0 var(--t-radius); }
+.t-input-group .t-input:last-child { border-radius: 0 var(--t-radius) var(--t-radius) 0; }
+.t-input-group .t-input:only-child { border-radius: var(--t-radius); }
+.t-addon {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border: 1px solid var(--t-border-strong);
+  background: var(--t-surface-2);
+  color: var(--t-text-2);
+  font-size: 14px;
+  white-space: nowrap;
+}
+.t-addon:first-child { border-right: 0; border-radius: var(--t-radius) 0 0 var(--t-radius); }
+.t-addon:last-child { border-left: 0; border-radius: 0 var(--t-radius) var(--t-radius) 0; }
+.t-input-wrap, .t-search { position: relative; display: flex; align-items: center; }
+.t-input-wrap .t-input { padding-right: 44px; }
+.t-search .t-ico-search { position: absolute; left: 12px; color: var(--t-text-3); pointer-events: none; }
+.t-search .t-input { padding-left: 36px; padding-right: 38px; }
+.t-search .t-input::-webkit-search-cancel-button { display: none; }
+.t-input-action {
+  position: absolute;
+  right: 5px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 30px;
+  border: 0;
+  border-radius: calc(var(--t-radius) - 3px);
+  background: transparent;
+  color: var(--t-text-3);
+  font-size: 18px;
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
+  animation: t-fade var(--t-med) var(--t-ease);
+}
+.t-input-action:hover { background: var(--t-surface-2); color: var(--t-text); }
+.t-input-action:focus-visible { outline: none; box-shadow: var(--t-ring); }
+
+/* ---------- Número ---------- */
+.t-number { display: flex; align-items: stretch; }
+.t-number .t-input { flex: 1; min-width: 0; border-radius: 0; text-align: center; font-variant-numeric: tabular-nums; -moz-appearance: textfield; }
+.t-number .t-input::-webkit-outer-spin-button, .t-number .t-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.t-number-btn {
+  width: 40px;
+  border: 1px solid var(--t-border-strong);
+  background: var(--t-surface-2);
+  color: var(--t-text);
+  font-size: 18px;
+  cursor: pointer;
+  transition: background var(--t-fast), transform var(--t-fast);
+}
+.t-number-btn:first-child { border-right: 0; border-radius: var(--t-radius) 0 0 var(--t-radius); }
+.t-number-btn:last-child { border-left: 0; border-radius: 0 var(--t-radius) var(--t-radius) 0; }
+.t-number-btn:hover { background: var(--t-surface-3); }
+.t-number-btn:active { transform: scale(.94); }
+.t-number-btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+.t-number-btn:focus-visible { outline: none; box-shadow: var(--t-ring); position: relative; z-index: 1; }
+
+/* ---------- Slider ---------- */
+.t-slider-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.t-slider-value { font: 600 13px/1 var(--t-font); color: var(--t-accent-text); font-variant-numeric: tabular-nums; }
+.t-slider {
+  --pct: 50%;
+  width: 100%;
+  height: 22px;
+  margin: 2px 0;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.t-slider::-webkit-slider-runnable-track { height: 6px; border-radius: 999px; background: linear-gradient(90deg, var(--t-accent) var(--pct), var(--t-surface-3) var(--pct)); }
+.t-slider::-moz-range-track { height: 6px; border-radius: 999px; background: var(--t-surface-3); }
+.t-slider::-moz-range-progress { height: 6px; border-radius: 999px; background: var(--t-accent); }
+.t-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -7px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--t-accent);
+  box-shadow: 0 2px 6px rgb(0 0 0 / .2);
+  transition: transform var(--t-fast) var(--t-ease-spring), box-shadow var(--t-fast);
+}
+.t-slider::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 2px solid var(--t-accent); }
+.t-slider:active::-webkit-slider-thumb { transform: scale(1.15); }
+.t-slider:focus-visible { outline: none; }
+.t-slider:focus-visible::-webkit-slider-thumb { box-shadow: var(--t-ring); }
+
+/* ---------- Chips y etiquetas ---------- */
+.t-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  padding: 0 4px 0 11px;
+  border: 1px solid var(--t-border-strong);
+  border-radius: 999px;
+  background: var(--t-surface);
+  color: var(--t-text);
+  font: 520 13px/1 var(--t-font);
+  animation: t-pop var(--t-med) var(--t-ease-spring);
+}
+.t-chip:not(:has(.t-chip-x)) { padding-right: 11px; }
+.t-chip.is-active { border-color: var(--t-accent); background: var(--t-accent-soft); color: var(--t-accent-text); }
+.t-chip-x {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--t-text-3);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.t-chip-x:hover { background: var(--t-surface-3); color: var(--t-text); }
+.t-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 5px 6px;
+  border: 1px solid var(--t-border-strong);
+  border-radius: var(--t-radius);
+  background: var(--t-surface);
+  box-shadow: var(--t-shadow-sm);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.t-tags:focus-within { border-color: var(--t-accent); box-shadow: var(--t-ring); }
+.t-tags-input { flex: 1; min-width: 120px; height: 28px; padding: 0 6px; border: 0; outline: none; background: transparent; color: var(--t-text); font: 14px var(--t-font); }
+
+/* ---------- Estrellas y colores ---------- */
+.t-rating { display: inline-flex; gap: 2px; }
+.t-star {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--t-surface-3);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color var(--t-fast), transform var(--t-med) var(--t-ease-spring);
+}
+.t-star.is-on { color: #f5a524; }
+.t-rating:not(.is-readonly) .t-star:hover { transform: scale(1.2) rotate(-8deg); }
+.t-rating:not(.is-readonly):hover .t-star { color: #f5a524; }
+.t-rating:not(.is-readonly) .t-star:hover ~ .t-star { color: var(--t-surface-3); }
+.t-star:focus-visible { outline: none; box-shadow: var(--t-ring); }
+.t-rating.is-readonly .t-star { cursor: default; width: 22px; height: 22px; font-size: 18px; }
+.t-swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+.t-swatch {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / .12);
+  cursor: pointer;
+  transition: transform var(--t-med) var(--t-ease-spring), box-shadow var(--t-fast);
+}
+.t-swatch:hover { transform: scale(1.12); }
+.t-swatch.is-active { box-shadow: 0 0 0 2px var(--t-surface), 0 0 0 4px var(--c); transform: scale(1.05); }
+.t-swatch:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--t-surface), 0 0 0 4px var(--t-text); }
+
+/* ---------- Formulario ---------- */
+.t-form { display: flex; flex-direction: column; gap: 16px; }
+
+/* ---------- Navegación ---------- */
+.t-breadcrumb ol { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0; padding: 0; list-style: none; font-size: 14px; }
+.t-breadcrumb li { display: inline-flex; align-items: center; gap: 6px; }
+.t-breadcrumb a { color: var(--t-text-2); text-decoration: none; border-radius: 4px; transition: color var(--t-fast); }
+.t-breadcrumb a:hover { color: var(--t-accent-text); }
+.t-breadcrumb-sep { color: var(--t-text-3); }
+.t-breadcrumb [aria-current] { color: var(--t-text); font-weight: 600; }
+.t-pagination { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.t-page {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: var(--t-radius-sm);
+  background: transparent;
+  color: var(--t-text-2);
+  font: 560 14px/1 var(--t-font);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast), transform var(--t-fast);
+}
+.t-page:hover:not(:disabled) { background: var(--t-surface-2); color: var(--t-text); }
+.t-page:active:not(:disabled) { transform: scale(.95); }
+.t-page.is-active { background: var(--t-accent); color: var(--t-accent-contrast); }
+.t-page:disabled { opacity: .4; cursor: not-allowed; }
+.t-page:focus-visible { outline: none; box-shadow: var(--t-ring); }
+.t-page-gap { min-width: 28px; color: var(--t-text-3); text-align: center; }
+.t-steps { display: flex; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.t-step { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+.t-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: calc(50% + 22px);
+  right: calc(-50% + 22px);
+  height: 2px;
+  border-radius: 2px;
+  background: var(--t-border);
+  transition: background var(--t-slow);
+}
+.t-step.is-done::after { background: var(--t-accent); }
+.t-step-dot {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--t-border-strong);
+  border-radius: 50%;
+  background: var(--t-surface);
+  color: var(--t-text-3);
+  font: 650 13px/1 var(--t-font);
+  transition: background var(--t-med), border-color var(--t-med), color var(--t-med), transform var(--t-med) var(--t-ease-spring);
+}
+.t-step.is-done .t-step-dot { background: var(--t-accent); border-color: var(--t-accent); color: var(--t-accent-contrast); }
+.t-step.is-current .t-step-dot { border-color: var(--t-accent); color: var(--t-accent-text); box-shadow: 0 0 0 4px var(--t-accent-soft); transform: scale(1.08); }
+.t-step-label { font-size: 13px; color: var(--t-text-2); }
+.t-step.is-current .t-step-label { color: var(--t-text); font-weight: 600; }
+.t-accordion { border: 1px solid var(--t-border); border-radius: var(--t-radius-lg); background: var(--t-surface); overflow: hidden; }
+.t-acc-item + .t-acc-item { border-top: 1px solid var(--t-border); }
+.t-acc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  transition: background var(--t-fast);
+}
+.t-acc-head::-webkit-details-marker { display: none; }
+.t-acc-head:hover { background: var(--t-surface-2); }
+.t-acc-head:focus-visible { outline: none; box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--t-accent) 32%, transparent); }
+.t-acc-chev, .t-dd-chev { width: 10px; height: 10px; border-right: 2px solid var(--t-text-3); border-bottom: 2px solid var(--t-text-3); transform: rotate(45deg) translateY(-3px); transition: transform var(--t-med) var(--t-ease); }
+details[open] > .t-acc-head .t-acc-chev { transform: rotate(-135deg) translateY(-2px); }
+.t-acc-body { padding: 0 18px 16px; color: var(--t-text-2); animation: t-fade-down var(--t-med) var(--t-ease); }
+.t-acc-body > :first-child { margin-top: 0; }
+.t-acc-body > :last-child { margin-bottom: 0; }
+.t-dropdown { position: relative; display: inline-block; }
+.t-dd-chev { width: 8px; height: 8px; margin-left: 2px; }
+.t-btn[aria-expanded="true"] .t-dd-chev { transform: rotate(-135deg) translateY(-1px); }
+.t-dd-layer { position: fixed; inset: 0; z-index: 900; }
+.t-dd-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  z-index: 901;
+  min-width: 200px;
+  padding: 6px;
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius);
+  background: var(--t-surface);
+  box-shadow: var(--t-shadow-lg);
+  transform-origin: top;
+  animation: t-menu-in var(--t-med) var(--t-ease-spring);
+}
+.t-dd-start { left: 0; }
+.t-dd-end { right: 0; transform-origin: top right; }
+.t-dd-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: calc(var(--t-radius) - 4px);
+  background: transparent;
+  color: var(--t-text);
+  font: 14px var(--t-font);
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.t-dd-item:hover, .t-dd-item:focus-visible { background: var(--t-surface-2); outline: none; }
+.t-dd-item.is-danger { color: var(--t-danger); }
+.t-dd-item.is-danger:hover { background: color-mix(in srgb, var(--t-danger) 10%, transparent); }
+.t-dd-icon { width: 18px; color: var(--t-text-3); text-align: center; }
+
+/* ---------- Datos ---------- */
+.t-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 20px;
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-lg);
+  background: var(--t-surface);
+  box-shadow: var(--t-shadow-sm);
+}
+.t-stat-label { color: var(--t-text-2); font-size: 13px; font-weight: 520; }
+.t-stat-value { font: 720 28px/1.15 var(--t-font); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.t-stat-delta { align-self: flex-start; padding: 3px 8px; border-radius: 999px; background: var(--t-surface-2); color: var(--t-text-2); font: 600 12px/1 var(--t-font); }
+.t-stat-delta.is-up { background: color-mix(in srgb, var(--t-success) 13%, transparent); color: var(--t-success); }
+.t-stat-delta.is-up::before { content: "↑ "; }
+.t-stat-delta.is-down { background: color-mix(in srgb, var(--t-danger) 13%, transparent); color: var(--t-danger); }
+.t-stat-delta.is-down::before { content: "↓ "; }
+.t-stat-hint { color: var(--t-text-3); font-size: 12.5px; }
+.t-timeline { position: relative; margin: 0; padding: 0; list-style: none; }
+.t-tl-item { position: relative; display: flex; gap: 14px; padding-bottom: 20px; }
+.t-tl-item:not(:last-child)::before { content: ""; position: absolute; left: 6px; top: 18px; bottom: 0; width: 2px; background: var(--t-border); }
+.t-tl-dot { flex: none; width: 14px; height: 14px; margin-top: 4px; border-radius: 50%; background: var(--t-surface); border: 3px solid var(--t-accent); box-shadow: 0 0 0 4px var(--t-accent-soft); }
+.t-tl-item:not(:first-child) .t-tl-dot { border-color: var(--t-border-strong); box-shadow: none; }
+.t-tl-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.t-tl-time { color: var(--t-text-3); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.t-tl-body { flex: 1; min-width: 0; }
+.t-tl-body p { margin: 3px 0 0; color: var(--t-text-2); font-size: 14px; }
+.t-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 40px 24px;
+  border: 1.5px dashed var(--t-border-strong);
+  border-radius: var(--t-radius-lg);
+  text-align: center;
+}
+.t-empty-icon { display: grid; place-items: center; width: 52px; height: 52px; margin-bottom: 8px; border-radius: 16px; background: var(--t-accent-soft); color: var(--t-accent-text); font-size: 24px; animation: t-float 4s ease-in-out infinite; }
+.t-empty h3 { margin: 0; font: 650 17px/1.3 var(--t-font); }
+.t-empty p { margin: 0; max-width: 340px; color: var(--t-text-2); font-size: 14px; }
+.t-empty-actions:not(:empty) { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 12px; }
+.t-list { display: flex; flex-direction: column; border: 1px solid var(--t-border); border-radius: var(--t-radius-lg); background: var(--t-surface); overflow: hidden; }
+.t-list-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; transition: background var(--t-fast); }
+.t-list-item + .t-list-item { border-top: 1px solid var(--t-border); }
+.t-list-item.is-clickable { cursor: pointer; }
+.t-list-item.is-clickable:hover { background: var(--t-surface-2); }
+.t-list-item:focus-visible { outline: none; box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--t-accent) 32%, transparent); }
+.t-list-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.t-list-text strong { font-weight: 600; font-size: 14.5px; }
+.t-list-text span { color: var(--t-text-2); font-size: 13px; }
+.t-list-extra { color: var(--t-text-3); font-size: 13px; }
+.t-tooltip { display: inline-flex; }
+
+@keyframes t-menu-in { from { opacity: 0; transform: translateY(-4px) scale(.97); } }
+@keyframes t-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
 /* ---------- Animaciones ---------- */
 @keyframes t-spin { to { transform: rotate(360deg); } }
 @keyframes t-fade { from { opacity: 0; } }
@@ -1082,15 +1485,15 @@ a:hover > .flecha, .t-btn:hover .flecha { transform: translateX(3px); }
 <body>
 <div id="app"></div>
 <script id="tangerine-runtime">
-/*! Tangerine 5.2.0 | MIT */
+/*! Tangerine 5.2.1 | MIT */
 (()=>{var M=class extends Error{constructor(i,a,l,c){super(i),this.name="TngError",this.line=a||null,this.col=l||null,this.file=c||null,this.incomplete=!1}},ne=class{constructor(i,a,l){this.value=i,this.line=a||null,this.file=l||null}},he=class{constructor(i){this.value=i}},ve=class{constructor(i){this.message=i}},Me={control:"break"},Te={control:"continue"};function Xe(n,i,a){if(!n)return a?`${a}: `:"";let l=`l\xEDnea ${n}${i?`, columna ${i}`:""}`;return a?`${a}, ${l}: `:l[0].toUpperCase()+l.slice(1)+": "}var De=new Set(["let","var","fn","return","if","else","while","loop","for","in","break","continue","match","class","struct","self","super","do","catch","throw","true","false","nil","import","export","async","await"]),mt=new Set(["..="]),yt=new Set(["==","!=","<=",">=","&&","||","=>","->","**","??","?.","..","+=","-=","*=","/="]),gt=new Set("+-*/%<>=!(){}[],;.:?|@$"),tt=n=>n==="n"?`
-`:n==="t"?"	":n==="r"?"\r":n==="0"?"\0":n,Ke=n=>n>="0"&&n<="9",wt=/[A-Za-zÀ-ɏ_]/,bt=/[A-Za-z0-9À-ɏ_]/;function We(n,i){let a=typeof i=="number"?{line:i}:i||{},l=a.file||null,c=[],g=n.length,u=0,T=a.line||1,y=-((a.col||1)-1),h=$=>$-y+1,P=($,E,D,v)=>{let W=new M($,E,D,l);return W.incomplete=!!v,W},w=$=>{T++,y=$+1};for(;u<g;){let $=n[u];if($===`
+`:n==="t"?"	":n==="r"?"\r":n==="0"?"\0":n,Ke=n=>n>="0"&&n<="9",wt=/[A-Za-zÀ-ɏ_]/,bt=/[A-Za-z0-9À-ɏ_]/;function We(n,i){let a=typeof i=="number"?{line:i}:i||{},l=a.file||null,c=[],g=n.length,u=0,T=a.line||1,y=-((a.col||1)-1),h=$=>$-y+1,P=($,A,D,v)=>{let W=new M($,A,D,l);return W.incomplete=!!v,W},w=$=>{T++,y=$+1};for(;u<g;){let $=n[u];if($===`
 `){w(u),u++;continue}if($===" "||$==="	"||$==="\r"){u++;continue}if($==="/"&&n[u+1]==="/"){for(;u<g&&n[u]!==`
 `;)u++;continue}if($==="/"&&n[u+1]==="*"){let v=T,W=h(u);for(u+=2;u<g&&!(n[u]==="*"&&n[u+1]==="/");)n[u]===`
 `&&w(u),u++;if(u>=g)throw P("Comentario sin cerrar: falta */",v,W,!0);u+=2;continue}if(Ke($)){let v=u,W=h(u);for(;u<g&&(Ke(n[u])||n[u]==="_");)u++;if(n[u]==="."&&Ke(n[u+1]||""))for(u++;u<g&&(Ke(n[u])||n[u]==="_");)u++;c.push({type:"num",value:Number(n.slice(v,u).replace(/_/g,"")),line:T,col:W});continue}if($==="'"){let v=T,W=h(u),B="";for(u++;u<g&&n[u]!=="'";){if(n[u]==="\\"&&u+1<g){B+=tt(n[u+1]),u+=2;continue}n[u]===`
-`&&w(u),B+=n[u++]}if(u>=g)throw P("String sin cerrar: falta la comilla ' final",v,W,!0);u++,c.push({type:"str",value:B,line:v,col:W});continue}if($==='"'){let v=T,W=h(u),B=[],X="",te=!1;for(u++;u<g&&n[u]!=='"';){let re=n[u];if(re==="\\"&&u+1<g){X+=tt(n[u+1]),u+=2;continue}if(re==="{"){te=!0,X&&B.push(X),X="";let le=T,ue=h(u);u++;let ae=T,$e=h(u),ie=1,o=u;for(;u<g;){let b=n[u];if(b==='"'||b==="'"){for(u++;u<g&&n[u]!==b;)n[u]==="\\"&&u++,u++;u<g&&u++;continue}if(b==="{")ie++;else if(b==="}"&&(ie--,ie===0))break;b===`
+`&&w(u),B+=n[u++]}if(u>=g)throw P("String sin cerrar: falta la comilla ' final",v,W,!0);u++,c.push({type:"str",value:B,line:v,col:W});continue}if($==='"'){let v=T,W=h(u),B=[],X="",ee=!1;for(u++;u<g&&n[u]!=='"';){let re=n[u];if(re==="\\"&&u+1<g){X+=tt(n[u+1]),u+=2;continue}if(re==="{"){ee=!0,X&&B.push(X),X="";let le=T,ue=h(u);u++;let ae=T,$e=h(u),ie=1,o=u;for(;u<g;){let b=n[u];if(b==='"'||b==="'"){for(u++;u<g&&n[u]!==b;)n[u]==="\\"&&u++,u++;u<g&&u++;continue}if(b==="{")ie++;else if(b==="}"&&(ie--,ie===0))break;b===`
 `&&w(u),u++}if(u>=g)throw P("Falta '}' para cerrar la interpolaci\xF3n dentro del string",le,ue,!0);let p=n.slice(o,u);if(u++,!p.trim())throw P("Hay un {} vac\xEDo dentro del string. Usa \\{ para escribir una llave",le,ue);B.push({code:p,line:ae,col:$e});continue}re===`
-`&&w(u),X+=re,u++}if(u>=g)throw P('String sin cerrar: falta la comilla " final',v,W,!0);u++,te?(X&&B.push(X),c.push({type:"template",parts:B,line:v,col:W})):c.push({type:"str",value:X,line:v,col:W});continue}if(wt.test($)){let v=u,W=h(u);for(;u<g&&bt.test(n[u]);)u++;let B=n.slice(v,u);c.push({type:De.has(B)?B:"id",value:B,line:T,col:W});continue}let E=n.slice(u,u+3),D=n.slice(u,u+2);if(mt.has(E)){c.push({type:E,line:T,col:h(u)}),u+=3;continue}if(yt.has(D)){c.push({type:D,line:T,col:h(u)}),u+=2;continue}if(gt.has($)){c.push({type:$,line:T,col:h(u)}),u++;continue}throw P(`Car\xE1cter inesperado '${$}'`,T,h(u))}return c.push({type:"eof",line:T,col:h(u)}),c}function xe(n){return n.type==="eof"?"el final del programa":n.type==="num"?`el n\xFAmero ${n.value}`:n.type==="str"||n.type==="template"?"un string":n.value!==void 0?`'${n.value}'`:`'${n.type}'`}var $t=new Set(["=","+=","-=","*=","/="]),xt=new Set(["var","member","index"]),_t=new Set("div span p a button h1 h2 h3 h4 h5 h6 ul ol li img input textarea select option label form section header footer main nav article aside strong em small code pre table thead tbody tr td th br hr figure figcaption details summary video audio canvas i b fieldset legend dl dt dd blockquote mark time sup sub iframe picture source tfoot caption dialog".split(" ")),St=new Set(["State","Input","Output"]);function Ze(n,i){let a=typeof i=="string"?{mode:i}:i||{},l=a.file||null,c=0,g=0,u=0,T=0,y=f=>n[Math.min(c+(f||0),n.length-1)],h=f=>y().type===f,P=f=>y().type==="id"&&y().value===f,w=f=>h(f)?(c++,!0):!1,$=(f,m)=>{let S=m||y(),k=new M(f,S.line,S.col,l);return k.incomplete=S.type==="eof",k},E=(f,m)=>{if(!h(f))throw $(`Se esperaba ${m||"'"+f+"'"} pero se encontr\xF3 ${xe(y())}`);return n[c++]},D=()=>{w(";")},v=()=>c>0&&y().line===n[c-1].line;function W(){if(w("["))W(),E("]");else if(w("(")){for(;!h(")")&&!h("eof")&&(W(),!!w(",")););E(")")}else E("id","un nombre de tipo");if(w("<")){for(;!h(">")&&!h("eof")&&(W(),!!w(",")););E(">")}w("?")}function B(){let f=y();E("{","'{' para abrir un bloque"),g++;let m=T;T=0;let S=[];for(u>0&&(S.view=!0);!h("}");){if(h("eof"))throw $(`Falta '}' para cerrar el bloque abierto en la l\xEDnea ${f.line}`);S.push(b())}return E("}"),T=m,g--,S}function X(){let f=u;u=0;try{return B()}finally{u=f}}function te(){let f=u;u=0;try{return A()}finally{u=f}}function re(){T++;try{return A()}finally{T--}}function le(){let f=[];for(;w("@");){let m=E("id","el nombre del decorador");f.push({name:m.value,args:w("(")?je(")"):[],line:m.line})}return f}function ue(f){let m=[],S=[];for(;!h(f);){if(m.push(E("id","el nombre de un par\xE1metro").value),w(":")&&W(),w("="))S[m.length-1]=f==="|"?be():A();else if(S.length)throw $(`El par\xE1metro '${m[m.length-1]}' necesita un valor por defecto porque va despu\xE9s de otro que lo tiene`,n[c-1]);if(!w(","))break}return E(f,`'${f}' para cerrar los par\xE1metros`),m.defaults=S.length?S:null,m}function ae(f,m){E("(","'(' con los par\xE1metros");let S=ue(")");return w("->")&&W(),{type:"function",name:f,params:S,defaults:S.defaults,body:X(),line:m,file:l}}function $e(){if(w("(")){let f=[];for(;!h(")")&&(f.push(E("id","un nombre").value),!!w(",")););return E(")"),f}return E("id","un nombre").value}function ie(f){let m=y();if(m.type!=="str")throw $(`Se esperaba ${f} entre comillas pero se encontr\xF3 ${xe(m)}`);return c++,m.value}function o(f){if(g>0)throw $("import solo puede ir en el nivel superior del archivo, fuera de bloques y funciones");c++;let m=null,S=null;if(w("{")){for(m=[];!h("}");){if(h("eof"))throw $("Falta '}' para cerrar la lista del import");let C=E("id","un nombre para importar").value,K=C;if(P("as")&&(c++,K=E("id","el nombre local despu\xE9s de as").value),m.push([C,K]),!w(","))break}E("}","'}' para cerrar la lista del import")}else S=E("id","un nombre o '{' despu\xE9s de import").value;if(!P("from"))throw $(`Se esperaba 'from' despu\xE9s de import pero se encontr\xF3 ${xe(y())}`);c++;let k=ie("la ruta del m\xF3dulo");return D(),{type:"import",names:m,alias:S,path:k,line:f}}function p(f){if(g>0)throw $("export solo puede ir en el nivel superior del archivo");if(c++,!(h("let")||h("var")||h("fn")||h("class")||h("struct")||h("@")))throw $(`Despu\xE9s de export va let, var, fn, class o struct, pero se encontr\xF3 ${xe(y())}`);let m=b(),S=m.type==="class"?[m.name]:Array.isArray(m.target)?m.target:[m.target];return{type:"export",decl:m,names:S,line:f}}function b(){let f=y(),m=f.line;switch(f.type){case"import":return o(m);case"export":return p(m);case"@":{let k=le();if(h("export")&&(y(1).type==="struct"||y(1).type==="class")){let K=p(m);return K.decl.decorators=k,K}if(!h("struct")&&!h("class"))throw $(`Un decorador como @${k[0].name} va justo antes de un struct o una class`);let C=b();return C.decorators=k,C}case"let":case"var":{c++;let k=$e();w(":")&&W();let C=null;if(w("="))C=A();else if(f.type==="let")throw $(`let ${Array.isArray(k)?"(...)":k} necesita un valor. Usa var si lo vas a asignar despu\xE9s`,f);return D(),{type:"decl",constant:f.type==="let",target:k,value:C,line:m}}case"async":if(y(1).type==="fn"&&y(2).type==="id"){c+=2;let k=E("id").value,C=ae(k,m);return C.isAsync=!0,{type:"decl",constant:!0,target:k,value:C,line:m}}break;case"fn":if(y(1).type==="id"){c++;let k=E("id").value;return{type:"decl",constant:!0,target:k,value:ae(k,m),line:m}}break;case"class":case"struct":{c++;let k=E("id","el nombre de la clase").value,C=null;if(w(":")){let t=E("id","el nombre de la clase padre");C={type:"var",name:t.value,line:t.line}}E("{","'{' para abrir la clase"),g++;let K=[],e=[];for(;!h("}");){if(h("eof"))throw $(`Falta '}' para cerrar la clase ${k}`);let t=h("@")?le():null;if(t){for(let _ of t)if(!St.has(_.name))throw $(`@${_.name} no se puede usar en un campo. Usa @State, @Input o @Output`,n[c-1]);if(!h("let")&&!h("var"))throw $(`Despu\xE9s de @${t[0].name} va var y el nombre del campo`)}if(h("let")||h("var")){c++;let _=E("id","el nombre de un campo");w(":")&&W();let N=w("=")?A():{type:"lit",value:null,line:_.line};e.push({name:_.value,value:N,decor:t?t[0].name:null}),D();continue}if(P("view")&&y(1).type==="{"){let _=n[c++];u++;let N;try{N=B()}finally{u--}K.push({type:"function",name:"view",params:[],defaults:null,body:N,isView:!0,line:_.line,file:l});continue}let r=w("async");w("fn");let s=E("id","el nombre de un m\xE9todo"),d=ae(s.value,s.line);r&&(d.isAsync=!0),K.push(d),w(";")}return E("}"),g--,{type:"class",name:k,parent:C,methods:K,fields:e,line:m}}case"if":return{type:"exp",exp:x(),line:m};case"match":return{type:"exp",exp:I(),line:m};case"while":return c++,{type:"while",cond:re(),body:B(),line:m};case"loop":return c++,{type:"loop",body:B(),line:m};case"for":{c++;let k=$e();E("in","'in' despu\xE9s de la variable del for");let C=re();return{type:"for",target:k,iter:C,body:B(),line:m}}case"break":return c++,D(),{type:"break",line:m};case"continue":return c++,D(),{type:"continue",line:m};case"return":{c++;let k=null;return!h(";")&&!h("}")&&!h("eof")&&v()&&(k=A()),D(),{type:"return",value:k,line:m}}case"throw":{c++;let k=A();return D(),{type:"throw",value:k,line:m}}case"do":{c++;let k=B();E("catch","catch despu\xE9s del bloque do");let C="error";return w("(")?(C=E("id").value,E(")")):h("id")&&(C=E("id").value),{type:"try",body:k,name:C,handler:B(),line:m}}case"else":throw $("else debe ir justo despu\xE9s del bloque de un if",f)}let S=A();if($t.has(y().type)){let k=n[c++];if(!xt.has(S.type))throw $("No se puede asignar a esta expresi\xF3n",k);let C=A();return D(),{type:"assign",target:S,op:k.type,value:C,line:m}}return D(),{type:"exp",exp:S,line:m}}function x(){let f=y().line;E("if");let m=re(),S=B(),k=null;return w("else")&&(h("if")?(k=[{type:"exp",exp:x(),line:y().line}],u>0&&(k.view=!0)):k=B()),{type:"if",cond:m,then:S,otherwise:k,line:f}}function O(){let f=y();if(f.type==="id")return c++,f.value==="_"?{kind:"any"}:{kind:"bind",name:f.value};let m=()=>{let k=w("-"),C=y();if(C.type==="num")return c++,k?-C.value:C.value;if(k)throw $("Se esperaba un n\xFAmero despu\xE9s de '-' en el patr\xF3n",C);if(C.type==="str")return c++,C.value;if(C.type==="true")return c++,!0;if(C.type==="false")return c++,!1;if(C.type==="nil")return c++,null;throw $(`${xe(C)} no se puede usar como patr\xF3n`,C)},S=m();if(h("..")||h("..=")){let k=n[c++].type==="..=";return{kind:"range",from:S,to:m(),inclusive:k}}return{kind:"lit",value:S}}function I(){let f=y().line;E("match");let m=re();E("{","'{' para abrir el match");let S=[];for(;!h("}");){if(h("eof"))throw $("Falta '}' para cerrar el match");let k=[O()];for(;w("|");)k.push(O());let C=w("if")?A():null;E("=>","'=>' despu\xE9s del patr\xF3n");let K,e=!1;h("{")?(K=B(),e=!0):K=A(),S.push({pats:k,guard:C,body:K,isBlock:e}),w(",")}return E("}"),{type:"match",value:m,arms:S,line:f}}let A=()=>Be();function q(f,m){let S=new Set(m);return function(){let k=f();for(;S.has(y().type)&&!((y().type==="||"||y().type==="-")&&!v());){let C=y().line;k={type:"bin",op:n[c++].type,left:k,right:f(),line:C}}return k}}function Q(){let f=oe();if(h("**")){let m=y().line;return c++,{type:"bin",op:"**",left:f,right:Q(),line:m}}return f}function oe(){if(h("await")){let f=y().line;return c++,{type:"await",value:oe(),line:f}}if(h("-")||h("!")){let f=y().line;return{type:"unary",op:n[c++].type,value:oe(),line:f}}return Oe()}let ce=q(Q,["*","/","%"]),be=q(ce,["+","-"]);function Le(){let f=be();if(h("..")||h("..=")){let m=y().line,S=n[c++].type==="..=";return{type:"range",from:f,to:be(),inclusive:S,line:m}}return f}let He=q(Le,["<",">","<=",">="]),Ye=q(He,["==","!="]),ze=q(Ye,["&&"]),fe=q(ze,["||"]),Be=q(fe,["??"]);function Ae(){let f=y();if(typeof f.value=="string"&&/^[A-Za-zÀ-ɏ_]/.test(f.value))return c++,f.value;throw $(`Se esperaba el nombre de una propiedad despu\xE9s de '.' pero se encontr\xF3 ${xe(f)}`,f)}function je(f){let m=[];for(;!h(f);){if(h("eof"))throw $(`Falta '${f}'`);if(m.push(A()),!w(","))break}return E(f,`'${f}'`),m}function Re(f){for(;f&&(f.type==="call"||f.type==="member");)f=f.type==="call"?f.fn:f.obj;return f&&f.type==="comp"&&!f.content?f:null}function Oe(){let f=de();for(;;){let m=y().line;if(h("(")&&v())c++,f={type:"call",fn:f,args:je(")"),line:m};else if(h("[")&&v()){c++;let S=A();E("]","']'"),f={type:"index",obj:f,index:S,line:m}}else if(h("."))c++,f={type:"member",obj:f,name:Ae(),line:m};else if(h("?."))c++,f={type:"member",obj:f,name:Ae(),optional:!0,line:m};else if(u>0&&T===0&&h("{")&&v()&&Re(f))Re(f).content=B();else return f}}function Ne(f,m){return h("{")?{type:"function",name:"closure",params:f,defaults:f.defaults,body:X(),closure:!0,line:m,file:l}:{type:"function",name:"closure",params:f,defaults:f.defaults,body:te(),isExpr:!0,closure:!0,line:m,file:l}}let Ve=f=>typeof f.value=="string"&&/^[A-Za-z_À-ɏ][\wÀ-ɏ]*$/.test(f.value)&&(f.type==="id"||De.has(f.type));function j(){let f=n[c++],m=f.line,S=[],k={type:"lit",value:f.value,line:m};if(w("(")){for(f.value==="element"&&(k=te(),w(","));!h(")");){if(h("eof"))throw $("Falta ')' para cerrar el elemento");if(h(".")&&Ve(y(1))){c++;let e=n[c++],t=e.value;for(;h("-")&&Ve(y(1))&&y().line===e.line&&y().col===e.col+String(e.value).length&&y(1).col===y().col+1;)c++,e=n[c++],t+="-"+e.value;S.push({type:"cls",name:t,line:m})}else S.push(te());if(!w(","))break}E(")","')' para cerrar el elemento")}else if(f.value==="element")throw $('element necesita la etiqueta: element("mi-etiqueta")',f);let C=null,K=null;return h("{")&&v()&&(f.value==="button"?K={type:"function",name:"closure",params:[],defaults:null,body:X(),closure:!0,line:m,file:l}:C=B()),{type:"elem",tag:k,args:S,content:C,action:K,line:m}}function Qe(){let f=n[c++],m=f.line,S=[];if(w("(")){for(;!h(")");){if(h("eof"))throw $(`Falta ')' para cerrar ${f.value}(`);if(h(".")&&y(1).type==="id"?(c++,S.push({type:"cls",name:n[c++].value,line:m})):S.push(te()),!w(","))break}E(")",`')' para cerrar ${f.value}(`)}let k=h("{")&&v()?B():null;return{type:"comp",fn:{type:"var",name:f.value,line:m},args:S,content:k,line:m}}function de(){let f=y(),m=f.line;switch(f.type){case"num":case"str":return c++,{type:"lit",value:f.value,line:m};case"template":return c++,{type:"template",parts:f.parts.map(S=>typeof S=="string"?S:Ze(We(S.code,{line:S.line,col:S.col,file:l}),{mode:"expr",file:l})),line:m};case"true":return c++,{type:"lit",value:!0,line:m};case"false":return c++,{type:"lit",value:!1,line:m};case"nil":return c++,{type:"lit",value:null,line:m};case"self":return c++,{type:"self",line:m};case"super":return c++,E(".","'.' despu\xE9s de super"),{type:"super",name:Ae(),line:m};case"id":{let S=y(1),k=S.line===f.line&&(S.type==="("||S.type==="{");return u>0&&T===0&&k&&(_t.has(f.value)||f.value==="element")?j():u>0&&T===0&&k&&/^[A-Z]/.test(f.value)?Qe():(c++,{type:"var",name:f.value,line:m})}case"$":return c++,{type:"bindref",name:E("id","el nombre de la variable o campo que se une, por ejemplo $nombre").value,line:m};case"|":return c++,Ne(ue("|"),m);case"||":return c++,Ne([],m);case"if":return x();case"match":return I();case"(":{c++;let S=A();if(w(",")){let k=[S];for(;!h(")")&&(k.push(A()),!!w(",")););return E(")","')'"),{type:"list",items:k,line:m}}return E(")","')'"),S}case"[":return c++,{type:"list",items:je("]"),line:m};case"{":{c++;let S=[];for(;!h("}");){let k=y();if(k.type==="eof")throw $("Falta '}' para cerrar el mapa");let C;if(k.type==="num")C=String(k.value);else if(typeof k.value=="string")C=k.value;else throw $(`Se esperaba una clave pero se encontr\xF3 ${xe(k)}`,k);if(c++,w(":")?S.push([C,A()]):k.type==="id"?S.push([C,{type:"var",name:C,line:k.line}]):E(":","':' despu\xE9s de la clave"),!w(","))break}return E("}","'}' para cerrar el mapa"),{type:"map",pairs:S,line:m}}case"fn":{c++;let S=h("id")?E("id").value:"anonymous";return ae(S,m)}case"async":{c++;let S;if(w("fn"))S=ae(h("id")?E("id").value:"anonymous",m);else if(w("||"))S=Ne([],m);else if(w("|"))S=Ne(ue("|"),m);else throw $("Despu\xE9s de async va fn o un closure: async fn cargar() { } o async || { }");return S.isAsync=!0,S}}throw $(`No se esperaba ${xe(f)}`,f)}if(a.mode==="expr"){let f=A();if(!h("eof"))throw $("Texto inesperado dentro de {} en un string");return f}let Ue=[];for(;!h("eof");)Ue.push(b());return Ue}function qe(n,i){return Ze(We(n,{file:i}),{file:i})}function Ge(n){return n.filter(i=>i.type==="import").map(i=>i.path)}function U(n){if(n==null)return"nil";if(Array.isArray(n))return n.map(U).join(" ");if(typeof n=="string")return JSON.stringify(n);let i=a=>Array.isArray(a)?`(${a.join(" ")})`:a;switch(n.type){case"lit":return typeof n.value=="string"?JSON.stringify(n.value):n.value===null?"nil":String(n.value);case"var":return n.name;case"self":return"self";case"template":return`(str ${n.parts.map(U).join(" ")})`;case"list":return`[${n.items.map(U).join(" ")}]`;case"map":return`{${n.pairs.map(([a,l])=>` ${a}: ${U(l)}`).join("")} }`;case"bin":return`(${n.op} ${U(n.left)} ${U(n.right)})`;case"unary":return`(${n.op} ${U(n.value)})`;case"range":return`(${n.inclusive?"..=":".."} ${U(n.from)} ${U(n.to)})`;case"member":return`(${n.optional?"?.":"."} ${U(n.obj)} ${n.name})`;case"index":return`([] ${U(n.obj)} ${U(n.index)})`;case"call":return`(${U(n.fn)}${n.args.map(a=>" "+U(a)).join("")})`;case"function":return`(fn (${n.params.join(" ")}) ${U(n.body)})`;case"decl":return`(${n.constant?"let":"var"} ${i(n.target)} ${U(n.value)})`;case"assign":return`(${n.op} ${U(n.target)} ${U(n.value)})`;case"exp":return U(n.exp);case"return":return`(return ${U(n.value)})`;case"if":return`(if ${U(n.cond)} ${U(n.then)}${n.otherwise?" "+U(n.otherwise):""})`;case"match":return`(match ${U(n.value)} \u2026)`;case"while":return`(while ${U(n.cond)} ${U(n.body)})`;case"for":return`(for ${i(n.target)} ${U(n.iter)} ${U(n.body)})`;case"import":return`(import ${n.alias||"{"+n.names.map(a=>a[1]).join(" ")+"}"} ${JSON.stringify(n.path)})`;case"export":return`(export ${U(n.decl)})`;case"cls":return"."+n.name;case"bindref":return"$"+n.name;case"comp":return`(${n.fn.name}${n.args.map(a=>" "+U(a)).join("")}${n.content?" "+U(n.content):""})`;case"elem":{let a=n.tag.type==="lit"?n.tag.value:U(n.tag),l=n.args.map(u=>" "+U(u)).join(""),c=n.content?" "+U(n.content):"",g=n.action?` (click ${U(n.action.body)})`:"";return`(<${a}>${l}${c}${g})`}}return`(${n.type})`}function kt(n,i){if(n===i)return 0;let a=n.length,l=i.length;if(!a)return l;if(!l)return a;let c=null,g=Array.from({length:l+1},(u,T)=>T);for(let u=1;u<=a;u++){let T=[u];for(let y=1;y<=l;y++){let h=n[u-1]===i[y-1]?0:1;T[y]=Math.min(g[y]+1,T[y-1]+1,g[y-1]+h),c&&u>1&&y>1&&n[u-1]===i[y-2]&&n[u-2]===i[y-1]&&(T[y]=Math.min(T[y],c[y-2]+1))}c=g,g=T}return g[l]}var nt={length:"len",size:"len",count:"len",lenght:"len",toUpperCase:"upper",toLowerCase:"lower",uppercase:"upper",lowercase:"lower",includes:"contains",indexOf:"index_of",forEach:"for_each",toString:"to_string",startsWith:"starts_with",endsWith:"ends_with",padStart:"pad_start",padEnd:"pad_end",reverse:"reversed",sort:"sorted",append:"push",add:"push",strip:"trim",console:"log",println:"log",print:"log",print_line:"log",printf:"write",puts:"log",echo:"log",null:"nil",None:"nil",undefined:"nil",True:"true",False:"false",self_:"self",const:"let",def:"fn",function:"fn",func:"fn",elif:"else if",try:"do",except:"catch"};function At(n,i){let a=[...i],l=Object.prototype.hasOwnProperty.call(nt,n)?nt[n]:null;if(l&&(a.includes(l)||/\s/.test(l)||l==="nil"||l==="true"||l==="false"||l==="fn"||l==="let"||l==="do"||l==="catch"))return l;let c=Math.max(1,Math.floor(n.length/3)),g=null,u=1/0,T=n.toLowerCase();for(let y of a){if(y===n)continue;let h=y.toLowerCase()===T?.5:kt(T,y.toLowerCase());(h<u||h===u&&g&&y.length<g.length)&&(g=y,u=h)}return u<=c?g:null}function Pe(n,i){let a=At(n,i);return a?` \xBFQuisiste decir '${a}'?`:""}var V=class{constructor(i){this.vars=new Map,this.consts=null,this.parent=i||null}define(i,a,l){this.vars.set(i,a),l?(this.consts||(this.consts=new Set)).add(i):this.consts&&this.consts.delete(i)}has(i){for(let a=this;a;a=a.parent)if(a.vars.has(i)||a.inst&&(i in a.inst.fields||a.inst.cls.findMethod(i)))return!0;return!1}get(i,a){for(let l=this;l;l=l.parent){if(l.vars.has(i))return l.vars.get(i);if(l.inst){if(i in l.inst.fields)return l.inst.fields[i];let c=l.inst.cls.findMethod(i);if(c)return c.bind(l.inst)}}throw i==="self"?new M("self solo existe dentro de un m\xE9todo",a):i==="super"?new M("super solo existe dentro de una clase con padre",a):new M(`No existe '${i}' en este \xE1mbito.${Pe(i,this.names())}`.replace(/\.$/,""),a)}names(){let i=new Set;for(let a=this;a;a=a.parent){for(let l of a.vars.keys())i.add(l);if(a.inst){for(let l of Object.keys(a.inst.fields))i.add(l);for(let l=a.inst.cls;l;l=l.parent)for(let c of l.methods.keys())i.add(c)}}return i}set(i,a,l){for(let g=this;g;g=g.parent){if(g.vars.has(i)){if(g.consts&&g.consts.has(i))throw new M(`No se puede asignar dos veces a '${i}'. Decl\xE1rala con var para que pueda cambiar`,l);g.vars.set(i,a);return}if(g.inst&&i in g.inst.fields){g.inst.fields[i]=a;return}}let c=Pe(i,this.names());throw new M(c?`No existe '${i}' en este \xE1mbito.${c}`:`No existe '${i}' en este \xE1mbito. Decl\xE1rala primero con var`,l)}},_e=class n{constructor(i,a,l){this.decl=i,this.env=a,this.isInit=!!l}get name(){return this.decl.name}bind(i){let a=new V(this.env);return a.define("self",i,!0),a.inst=i,new n(this.decl,a,this.isInit)}},pe=class{constructor(i,a,l,c,g){this.name=i,this.parent=a,this.methods=l,this.fields=c,this.env=g}findMethod(i){return this.methods.has(i)?this.methods.get(i):this.parent?this.parent.findMethod(i):null}},G=class{constructor(i){this.cls=i,this.fields=Object.create(null)}},se=class{constructor(i){this.tag=i,this.classes=[],this.attrs=Object.create(null),this.on=Object.create(null),this.bind=null,this.children=[]}},rt=Symbol("tangerine.binding"),it=(n,i)=>({[rt]:!0,get:n,set:i}),Ie=n=>n!==null&&typeof n=="object"&&!!n[rt],Ce=Symbol("tangerine.state"),ge=n=>n!==null&&typeof n=="object"&&!!n[Ce],ee=n=>n!==null&&typeof n=="object"&&Object.getPrototypeOf(n)===null,we=n=>{let i=Object.create(null);for(let a in n)i[a]=n[a];return i},H=n=>n!=null&&n!==!1,J=n=>n===void 0?null:n;function Se(n,i){if(n=J(n),i=J(i),n===i)return!0;if(Array.isArray(n)&&Array.isArray(i))return n.length===i.length&&n.every((a,l)=>Se(a,i[l]));if(ee(n)&&ee(i)){let a=Object.keys(n),l=Object.keys(i);return a.length===l.length&&a.every(c=>c in i&&Se(n[c],i[c]))}return!1}function Y(n){return n=J(n),n===null?"Nil":typeof n=="number"?Number.isInteger(n)?"Int":"Float":typeof n=="string"?"String":typeof n=="boolean"?"Bool":Array.isArray(n)?"List":n instanceof _e||typeof n=="function"?"Fn":n instanceof pe?"Class":n instanceof G?n.cls.name:ge(n)?"State":n instanceof se?"View":Ie(n)?"Binding":ee(n)?"Map":n instanceof Promise?"Promise":"Element"}function L(n,i,a){if(a=a||0,ge(n))return L(n[Ce].read(),i,a);if(n instanceof se)return n.tag?`<${n.tag}>`:"<view>";if(n instanceof Promise)return"<promise>";if(Ie(n))return L(n.get(),i,a);if(n=J(n),n===null)return"nil";if(typeof n=="string")return i?JSON.stringify(n):n;if(typeof n=="number")return Number.isInteger(n)||!isFinite(n)?String(n):String(Math.round(n*1e10)/1e10);if(typeof n=="boolean")return String(n);if(a>5)return"\u2026";if(Array.isArray(n))return"["+n.map(c=>L(c,!0,a+1)).join(", ")+"]";if(n instanceof _e)return n.decl.closure?"<closure>":`<fn ${n.name}>`;if(n instanceof pe)return`<class ${n.name}>`;if(typeof n=="function")return`<fn ${n.tngName||"nativa"}>`;let l=c=>{let g=Object.keys(c);return g.length?"{ "+g.map(u=>`${u}: ${L(c[u],!0,a+1)}`).join(", ")+" }":"{}"};return n instanceof G?n.cls.name+" "+l(n.fields):ee(n)?l(n):typeof globalThis.Element<"u"&&n instanceof globalThis.Element?`<${n.tagName.toLowerCase()}>`:String(n)}function ye(n){if(n==null)return null;if(Array.isArray(n))return n.map(ye);if(typeof n=="object"&&Object.getPrototypeOf(n)===Object.prototype){let i=Object.create(null);for(let a of Object.keys(n))i[a]=ye(n[a]);return i}return n}function me(n){if(n=J(n),Array.isArray(n))return n.map(me);if(ee(n)){let i={};for(let a of Object.keys(n))i[a]=me(n[a]);return i}if(n instanceof G){let i={};for(let a of Object.keys(n.fields))i[a]=me(n.fields[a]);return i}return n}function ke(n,i){if(/^[a-z][a-z0-9+.-]*:\/\//i.test(n))return n;if(i&&/^[a-z][a-z0-9+.-]*:\/\//i.test(i)&&(n.startsWith("./")||n.startsWith("../")))return new URL(n,i).href;let a=n;(n.startsWith("./")||n.startsWith("../"))&&(a=[...i?i.split("/").slice(0,-1):[],...n.split("/")].join("/"));let l=[];for(let g of a.split("/"))if(!(g==="."||g==="")){if(g===".."){l.length&&l[l.length-1]!==".."?l.pop():l.push("..");continue}l.push(g)}let c=(a.startsWith("/")?"/":"")+l.join("/");return/\.[A-Za-z0-9]+$/.test(c)||(c+=".tng"),c}function ot(n){let i=n.output,a="",l=0,c=null,g=new Map,u=new V,T=n.hooks||{decorators:Object.create(null),onInstance:null},y=null,h=0;function P(){if(++l>h&&h>0)throw new ve(`El programa dio demasiados pasos (m\xE1s de ${h}). Revisa si hay un ciclo que nunca termina.`)}function w(){l=0,h=n.stepLimit||0}function $(e,t,r,s){switch(t=J(t),r=J(r),e){case"+":if(typeof t=="number"&&typeof r=="number")return t+r;if(typeof t=="string"||typeof r=="string")return L(t)+L(r);if(Array.isArray(t)&&Array.isArray(r))return t.concat(r);throw new M(`No se puede sumar ${Y(t)} con ${Y(r)}`,s);case"==":return Se(t,r);case"!=":return!Se(t,r);case"<":case">":case"<=":case">=":if(!(typeof t=="number"&&typeof r=="number"||typeof t=="string"&&typeof r=="string"))throw new M(`No se puede comparar ${Y(t)} con ${Y(r)}`,s);return e==="<"?t<r:e===">"?t>r:e==="<="?t<=r:t>=r}if(e==="*"&&typeof t=="string"&&typeof r=="number")return t.repeat(Math.max(0,Math.floor(r)));if(typeof t!="number"||typeof r!="number")throw new M(`El operador ${e} necesita n\xFAmeros, pero recibi\xF3 ${Y(t)} y ${Y(r)}`,s);switch(e){case"-":return t-r;case"*":return t*r;case"/":if(r===0)throw new M("Divisi\xF3n entre cero",s);return t/r;case"%":if(r===0)throw new M("Resto de una divisi\xF3n entre cero",s);return t%r;case"**":return t**r}throw new M(`Operador desconocido ${e}`,s)}function E(e,t,r,s){if(typeof e!="number"||typeof t!="number")throw new M(`Un rango necesita n\xFAmeros, pero recibi\xF3 ${Y(e)} y ${Y(t)}`,s);let d=r?t:t-1;if(d-e>1e6)throw new M("Un rango no puede tener m\xE1s de un mill\xF3n de n\xFAmeros",s);let _=[];for(let N=e;N<=d;N++)_.push(N);return _}let D=(e,t)=>(t.tngName=e,t),v=(e,t)=>de(e,t),W=(e,t)=>{if(typeof e!="number")throw new M(`${t} espera un n\xFAmero, pero recibi\xF3 ${Y(e)}`);return e},B=(e,t)=>{if(!(e instanceof _e||typeof e=="function"||e instanceof pe))throw new M(`${t} espera una funci\xF3n, pero recibi\xF3 ${Y(e)}`);return e},X=(e,t)=>e<t?-1:e>t?1:0,te={to_string:e=>L(e)},re={len:e=>e.length,is_empty:e=>e.length===0,push:(e,...t)=>(e.push(...t),e),pop:e=>e.length?e.pop():null,insert:(e,t,r)=>(e.splice(W(t,"insert"),0,r),e),remove:(e,t)=>(W(t,"remove"),t>=0&&t<e.length?e.splice(t,1)[0]:null),map:(e,t)=>(B(t,"map"),e.map((r,s)=>v(t,[r,s]))),filter:(e,t)=>(B(t,"filter"),e.filter((r,s)=>H(v(t,[r,s])))),fold:(e,t,r)=>(B(r,"fold"),e.reduce((s,d,_)=>v(r,[s,d,_]),t)),reduce:(e,t)=>{if(B(t,"reduce"),!e.length)return null;let r=e[0];for(let s=1;s<e.length;s++)r=v(t,[r,e[s],s]);return r},find:(e,t)=>{for(let r=0;r<e.length;r++)if(H(v(t,[e[r],r])))return e[r];return null},position:(e,t)=>{for(let r=0;r<e.length;r++)if(H(v(t,[e[r],r])))return r;return null},any:(e,t)=>e.some((r,s)=>H(v(t,[r,s]))),all:(e,t)=>e.every((r,s)=>H(v(t,[r,s]))),count:(e,t)=>t?e.filter((r,s)=>H(v(t,[r,s]))).length:e.length,for_each:(e,t)=>(e.forEach((r,s)=>v(t,[r,s])),null),contains:(e,t)=>e.some(r=>Se(t,r)),index_of:(e,t)=>{let r=e.findIndex(s=>Se(t,s));return r<0?null:r},join:(e,t)=>e.map(r=>L(r)).join(t??""),slice:(e,t,r)=>e.slice(t??0,r??void 0),take:(e,t)=>e.slice(0,Math.max(0,t)),skip:(e,t)=>e.slice(Math.max(0,t)),reversed:e=>[...e].reverse(),sorted:e=>[...e].sort(X),sorted_by:(e,t)=>[...e].sort((r,s)=>{let d=v(t,[r,s]);return typeof d=="number"?d:0}),sorted_by_key:(e,t)=>{let r=e.map(s=>[v(t,[s]),s]);return r.sort((s,d)=>X(s[0],d[0])),r.map(s=>s[1])},enumerate:e=>e.map((t,r)=>[r,t]),zip:(e,t)=>e.slice(0,Math.min(e.length,t.length)).map((r,s)=>[r,t[s]]),chunks:(e,t)=>{if(W(t,"chunks"),t<1)throw new M("chunks necesita un tama\xF1o de al menos 1");let r=[];for(let s=0;s<e.length;s+=t)r.push(e.slice(s,s+t));return r},unique:e=>{let t=new Set,r=[];for(let s of e)s!==null&&typeof s=="object"?r.some(d=>Se(s,d))||r.push(s):t.has(s)||(t.add(s),r.push(s));return r},flatten:e=>e.flat(),sum:e=>e.reduce((t,r)=>$("+",t,r),0),min:e=>e.length?Math.min(...e):null,max:e=>e.length?Math.max(...e):null,first:e=>e.length?e[0]:null,last:e=>e.length?e[e.length-1]:null},le={len:e=>Array.from(e).length,is_empty:e=>e.length===0,upper:e=>e.toUpperCase(),lower:e=>e.toLowerCase(),capitalize:e=>e.charAt(0).toUpperCase()+e.slice(1),trim:e=>e.trim(),split:(e,t)=>e.split(t??""),lines:e=>e.split(/\r?\n/),words:e=>e.trim().split(/\s+/).filter(Boolean),replace:(e,t,r)=>e.split(String(t)).join(L(r)),contains:(e,t)=>e.includes(t),starts_with:(e,t)=>e.startsWith(t),ends_with:(e,t)=>e.endsWith(t),slice:(e,t,r)=>Array.from(e).slice(t??0,r??void 0).join(""),index_of:(e,t)=>{let r=e.indexOf(t);return r<0?null:r},repeat:(e,t)=>e.repeat(Math.max(0,t)),pad_start:(e,t,r)=>e.padStart(t,r??" "),pad_end:(e,t,r)=>e.padEnd(t,r??" "),chars:e=>Array.from(e),reversed:e=>Array.from(e).reverse().join(""),parse:e=>{let t=e.trim().replace(/_/g,""),r=Number(t);return t===""||isNaN(r)?null:r}},ue={abs:e=>Math.abs(e),round:(e,t)=>{let r=10**(t||0);return Math.round(e*r)/r},floor:e=>Math.floor(e),ceil:e=>Math.ceil(e),sqrt:e=>Math.sqrt(e),pow:(e,t)=>e**W(t,"pow"),clamp:(e,t,r)=>Math.min(Math.max(e,t),r),is_even:e=>e%2===0,is_odd:e=>Math.abs(e%2)===1,to_int:e=>Math.trunc(e),times:(e,t)=>{B(t,"times");let r=[];for(let s=0;s<e;s++)r.push(v(t,[s]));return r}},ae={keys:e=>Object.keys(e),values:e=>Object.values(e),entries:e=>Object.keys(e).map(t=>[t,e[t]]),has:(e,t)=>L(t)in e,get:(e,t,r)=>L(t)in e?e[L(t)]:r===void 0?null:r,remove:(e,t)=>{let r=L(t),s=r in e?e[r]:null;return delete e[r],s},len:e=>Object.keys(e).length,is_empty:e=>Object.keys(e).length===0},$e=(e,t,r)=>e(t,...r);function ie(e,t,r){let s=e[r]||te[r];return s?D(r,(...d)=>s(t,...d)):null}function o(e,t,r,s){if(e=J(e),e===null){if(s)return null;throw new M(`No se puede leer '${t}' de nil. Usa ?. si el valor puede ser nil`,r)}let d=null;if(Ie(e)&&(t==="get"||t==="set"))return D(t,e[t]);if(e instanceof G){if(t in e.fields)return e.fields[t];let R=e.cls.findMethod(t);if(R)return R.bind(e);if(t==="to_string")return ie(te,e,t);let Z=new Set(Object.keys(e.fields));for(let F=e.cls;F;F=F.parent)for(let Ee of F.methods.keys())Z.add(Ee);throw new M(`${e.cls.name} no tiene un campo ni un m\xE9todo llamado '${t}'.${Pe(t,Z)}`.replace(/\.$/,""),r)}if(ee(e))return t in e?e[t]:(d=ie(ae,e,t),d||null);if(Array.isArray(e))d=ie(re,e,t);else if(typeof e=="string")d=ie(le,e,t);else if(typeof e=="number")d=ie(ue,e,t);else{if(e instanceof pe&&t==="name")return e.name;d=ie({},e,t)}if(d)return d;let _=Array.isArray(e)?re:typeof e=="string"?le:typeof e=="number"?ue:{},N=[...Object.keys(_),...Object.keys(te)];throw new M(`${Y(e)} no tiene un m\xE9todo llamado '${t}'.${Pe(t,N)}`.replace(/\.$/,""),r)}function p(e,t,r,s){if(e instanceof G){e.fields[t]=r;return}if(ee(e)){e[t]=r;return}throw new M(`No se puede asignar '${t}' en ${Y(e)}`,s)}function b(e,t,r){if(e=J(e),Array.isArray(e)||typeof e=="string"){let s=typeof e=="string"?Array.from(e):e;if(typeof t!="number"||!Number.isInteger(t))throw new M(`El \xEDndice debe ser un Int, pero es ${Y(t)}`,r);let d=t<0?s.length+t:t;return d>=0&&d<s.length?s[d]:null}if(ee(e)){let s=L(t);return s in e?e[s]:null}if(e instanceof G)return o(e,L(t),r);throw new M(`No se puede indexar ${Y(e)}`,r)}function x(e,t,r,s){if(Array.isArray(e)){if(typeof t!="number"||!Number.isInteger(t))throw new M("El \xEDndice debe ser un Int",s);let d=t<0?e.length+t:t;if(d<0||d>e.length)throw new M(`El \xEDndice ${t} est\xE1 fuera de una lista de largo ${e.length}`,s);e[d]=r;return}if(ee(e)){e[L(t)]=r;return}if(e instanceof G){e.fields[L(t)]=r;return}throw new M(`No se puede indexar ${Y(e)}`,s)}function O(e){if(e=J(e),!(e===null||y===null)){if(Array.isArray(e)){for(let t of e)O(t);return}if(e instanceof se){e.tag===null?y.push(...e.children):y.push(e);return}if(e instanceof G){let t=e.cls.findMethod("view");if(t){O(de(t.bind(e),[]));return}}typeof e!="boolean"&&y.push(L(e))}}function I(e,t){if(e=J(e),typeof e=="string")return Array.from(e);if(ee(e)){let r=e;return Object.keys(r).map(s=>[s,r[s]])}if(e instanceof G){let r=e.fields;return Object.keys(r).map(s=>[s,r[s]])}if(!Array.isArray(e))throw new M(`No se puede recorrer ${Y(e)} con for`,t);return e}let A="await va al inicio de una l\xEDnea dentro de una async fn: let x = await ..., x = await ..., await ... o return await ...",q=new WeakMap;function Q(e){if(!e||typeof e!="object")return!1;if(q.has(e))return q.get(e);let t=!1;if(Array.isArray(e))t=e.some(Q);else if(e.type==="await")t=!0;else if(e.type!=="function"){for(let r in e)if(r!=="line"&&e[r]&&typeof e[r]=="object"&&Q(e[r])){t=!0;break}}return q.set(e,t),t}function oe(e,t){return e instanceof ne||e instanceof M||e instanceof he||e===Me||e===Te||e instanceof ve?e:e instanceof Error?new ne(e.message,t):new ne(ye(e),t)}async function ce(e,t){if(e.type==="await"){let r=j(e.value,t);try{return J(await r)}catch(s){throw oe(s,e.line)}}if(Q(e))throw new M(A,e.line);return j(e,t)}async function be(e,t){let r=null;for(let s of e)r=Q(s)?await He(s,t):Oe(s,t);return r}async function Le(e,t){P();try{await be(e,t)}catch(r){if(r===Me)return!1;if(r===Te)return!0;throw r}return!0}async function He(e,t){switch(e.type){case"exp":{let r=e.exp;if(r.type==="if"){let s=await ce(r.cond,t);return H(s)?be(r.then,new V(t)):r.otherwise?be(r.otherwise,new V(t)):null}return ce(r,t)}case"decl":return Ae(t,e.target,e.value?await ce(e.value,t):null,e.constant,e.line),null;case"assign":return Ne(e,t,await ce(e.value,t)),null;case"return":throw new he(e.value?await ce(e.value,t):null);case"throw":throw new ne(await ce(e.value,t),e.line);case"while":for(;H(await ce(e.cond,t))&&await Le(e.body,new V(t)););return null;case"loop":for(;await Le(e.body,new V(t)););return null;case"for":{let r=I(await ce(e.iter,t),e.line);for(let s of r){let d=new V(t);if(Ae(d,e.target,s,!1,e.line),!await Le(e.body,d))break}return null}case"try":try{return await be(e.body,new V(t))}catch(r){let s=oe(r,e.line);if(!je(s))throw s;let d=new V(t);return d.define(e.name,Re(s)),be(e.handler,d)}}throw new M(A,e.line)}async function Ye(e,t,r){let s=e.decl,d=new V(e.env),_=s.params,N=s.defaults;for(let R=0;R<_.length;R++){let Z=t[R];Z===void 0&&N&&N[R]&&(Z=j(N[R],d)),d.define(_[R],Z===void 0?null:Z)}try{return s.isExpr?await ce(s.body,d):await be(s.body,d)}catch(R){if(R instanceof he)return R.value;throw oe(R,r)}finally{K()}}function ze(e,t){if(typeof fetch!="function")throw new M("fetch no est\xE1 disponible aqu\xED. Usa Node 18 o m\xE1s reciente, o un navegador");let r=t?me(t):{},s={method:String(r.method||"GET").toUpperCase(),headers:{...r.headers||{}}};return r.body!==void 0&&r.body!==null&&(typeof r.body=="string"?s.body=r.body:(s.body=JSON.stringify(r.body),Object.keys(s.headers).some(d=>d.toLowerCase()==="content-type")||(s.headers["Content-Type"]="application/json"))),fetch(String(e),s).then(d=>{if(!d.ok)throw new Error(`HTTP ${d.status} al pedir ${e}`);return d})}function fe(e,t){if(e.view){for(let s of e)s.type==="exp"?O(j(s.exp,t)):Oe(s,t);return null}let r=null;for(let s of e)r=Oe(s,t);return r}function Be(e,t){P();try{fe(e,t)}catch(r){if(r===Me)return!1;if(r===Te)return!0;throw r}return!0}function Ae(e,t,r,s,d){if(Array.isArray(t)){if(!Array.isArray(r))throw new M(`No se puede desarmar ${Y(r)} en (${t.join(", ")})`,d);t.forEach((_,N)=>e.define(_,r[N]===void 0?null:r[N],s))}else e.define(t,r,s)}let je=e=>e instanceof ne||e instanceof M||e instanceof RangeError;function Re(e){if(e instanceof ne){let t=J(e.value);return typeof t=="string"?we({message:t,line:e.line}):t}return e instanceof RangeError?we({message:"Desbordamiento de pila: una funci\xF3n se llam\xF3 a s\xED misma demasiadas veces",line:null}):we({message:e.message,line:e.line})}function Oe(e,t){switch(e.type){case"exp":return j(e.exp,t);case"decl":return Ae(t,e.target,e.value?j(e.value,t):null,e.constant,e.line),null;case"class":{let r=null;if(e.parent&&(r=j(e.parent,t),!(r instanceof pe)))throw new M(`${e.parent.name} no es una clase`,e.line);let s=t;r&&(s=new V(t),s.define("super",r,!0));let d=new Map;for(let N of e.methods)d.set(N.name,new _e(N,s,N.name==="init"));let _=new pe(e.name,r,d,e.fields,s);t.define(e.name,_,!0);for(let N of e.decorators||[]){let R=T.decorators[N.name];if(!R)throw new M(`No existe el decorador @${N.name}. Para un componente usa @Component("mi-etiqueta")`,N.line);R(_,N.args.map(Z=>j(Z,t)),N.line)}return null}case"assign":return Ne(e,t),null;case"while":for(;H(j(e.cond,t))&&Be(e.body,new V(t)););return null;case"loop":for(;Be(e.body,new V(t)););return null;case"for":{let r=I(j(e.iter,t),e.line);for(let s of r){let d=new V(t);if(Ae(d,e.target,s,!1,e.line),!Be(e.body,d))break}return null}case"break":throw Me;case"continue":throw Te;case"return":throw new he(e.value?j(e.value,t):null);case"throw":throw new ne(j(e.value,t),e.line);case"try":try{return fe(e.body,new V(t))}catch(r){if(!je(r))throw r;let s=new V(t);return s.define(e.name,Re(r)),fe(e.handler,s)}case"import":return f(e,t),null;case"export":{if(!t.exports)throw new M("export solo puede usarse en el nivel superior de un m\xF3dulo",e.line);Oe(e.decl,t);for(let r of e.names)t.exports.add(r);return null}}throw new M(`Instrucci\xF3n desconocida ${e.type}`,e.line)}function Ne(e,t,...r){let s=e.target,d=e.line,_=r.length?r[0]:j(e.value,t),N=R=>e.op==="="?_:$(e.op[0],R,_,d);if(s.type==="var")t.set(s.name,e.op==="="?_:N(t.get(s.name,d)),d);else if(s.type==="member"){let R=j(s.obj,t);p(R,s.name,e.op==="="?_:N(o(R,s.name,d)),d)}else{let R=j(s.obj,t),Z=j(s.index,t);x(R,Z,e.op==="="?_:N(b(R,Z,d)),d)}}function Ve(e,t,r){switch(e.kind){case"any":return!0;case"bind":return r.define(e.name,t),!0;case"lit":return Se(e.value,t);case"range":return typeof t=="number"&&t>=e.from&&(e.inclusive?t<=e.to:t<e.to)}return!1}function j(e,t){switch(e.type){case"lit":return e.value;case"template":{let r="";for(let s of e.parts)r+=typeof s=="string"?s:L(j(s,t));return r}case"var":return t.get(e.name,e.line);case"self":return t.get("self",e.line);case"super":{let r=t.get("super",e.line),s=t.get("self",e.line),d=r.findMethod(e.name);if(!d)throw new M(`La clase ${r.name} no tiene un m\xE9todo llamado '${e.name}'`,e.line);return d.bind(s)}case"list":return e.items.map(r=>j(r,t));case"map":{let r=Object.create(null);for(let[s,d]of e.pairs)r[s]=j(d,t);return r}case"function":return new _e(e,t);case"await":throw new M(A,e.line);case"bindref":{let r=e.name;return t.has(r)||t.get(r,e.line),it(()=>t.get(r,e.line),s=>t.set(r,s,e.line))}case"comp":{let r=j(e.fn,t),s=e.args.map(N=>N.type==="cls"?N.name:j(N,t)),d=null;if(e.content){d=new se(null);let N=y;y=d.children;try{fe(e.content,new V(t))}finally{y=N}}let _=de(r,s,e.line);return _ instanceof G&&(d||!("children"in _.fields))&&(_.fields.children=d),_}case"elem":{let r=new se(L(j(e.tag,t)));for(let s of e.args){if(s.type==="cls"){r.classes.push(s.name);continue}let d=J(j(s,t));if(!(d===null||d===!1))if(Ie(d))r.bind=d;else if(ee(d)&&!ge(d))for(let _ of Object.keys(d)){let N=J(d[_]);_==="class"?H(N)&&r.classes.push(L(N)):_.startsWith("on_")?N!==null&&(r.on[_.slice(3)]=N):r.attrs[_]=N}else d instanceof se?r.children.push(d):r.children.push(L(d))}if(e.action&&(r.on.click=j(e.action,t)),e.content){let s=y;y=r.children;try{fe(e.content,new V(t))}finally{y=s}}return r}case"range":return E(j(e.from,t),j(e.to,t),e.inclusive,e.line);case"unary":{let r=j(e.value,t);if(e.op==="!")return!H(r);if(typeof r!="number")throw new M(`No se puede negar ${Y(r)}`,e.line);return-r}case"bin":{if(e.op==="&&"){let r=j(e.left,t);return H(r)?j(e.right,t):r}if(e.op==="||"){let r=j(e.left,t);return H(r)?r:j(e.right,t)}if(e.op==="??"){let r=J(j(e.left,t));return r!==null?r:j(e.right,t)}return $(e.op,j(e.left,t),j(e.right,t),e.line)}case"if":return H(j(e.cond,t))?fe(e.then,new V(t)):e.otherwise?fe(e.otherwise,new V(t)):null;case"match":{let r=j(e.value,t);for(let s of e.arms)for(let d of s.pats){let _=new V(t);if(Ve(d,r,_)&&!(s.guard&&!H(j(s.guard,_))))return s.isBlock?fe(s.body,_):j(s.body,_)}throw new M(`Ning\xFAn caso del match acepta ${L(r,!0)}. Agrega un caso _ =>`,e.line)}case"member":return o(j(e.obj,t),e.name,e.line,e.optional);case"index":return b(j(e.obj,t),j(e.index,t),e.line);case"call":{if(e.fn.type==="member"){let r=j(e.fn.obj,t);if(e.fn.optional&&J(r)===null)return null;let s=Array.isArray(r)?re:typeof r=="string"?le:typeof r=="number"?ue:ee(r)&&!(e.fn.name in r)?ae:null,d=s&&(s[e.fn.name]||te[e.fn.name]);if(d){let N=e.args.map(R=>j(R,t));return de($e,[d,r,N],e.line)}let _=o(r,e.fn.name,e.line,e.fn.optional);return de(_,e.args.map(N=>j(N,t)),e.line)}return de(j(e.fn,t),e.args.map(r=>j(r,t)),e.line)}}throw new M(`No se puede evaluar ${e.type}`,e.line)}function Qe(e,t,r){let s=new G(e),d=[];for(let N=e;N;N=N.parent)d.unshift(N);for(let N of d){if(!N.fields.length)continue;let R=new V(N.env);R.define("self",s,!0),R.inst=s;for(let Z of N.fields)s.fields[Z.name]=j(Z.value,R)}T.onInstance&&T.onInstance(s);let _=e.findMethod("init");if(_)de(_.bind(s),t,r);else if(t.length)throw new M(`${e.name} no tiene un init que reciba argumentos`,r);return s}function de(e,t,r){if(typeof e=="function"){let s;try{s=e(...t)}catch(d){throw d instanceof M?(d.line||(d.line=r),d):d instanceof Error&&!(d instanceof RangeError)?new M(d.message,r):d}return s===void 0?null:s}if(e instanceof _e){if(P(),e.decl.isAsync){let F=Ye(e,t,r);return F.tngAsync=!0,F}let s=e.decl,d=new V(e.env),_=s.params,N=s.defaults,R=c;s.file&&(c=s.file);let Z;try{for(let F=0;F<_.length;F++){let Ee=t[F];Ee===void 0&&N&&N[F]&&(Ee=j(N[F],d)),d.define(_[F],Ee===void 0?null:Ee)}if(s.isView){let F=new se(null),Ee=y;y=F.children;try{fe(s.body,d)}finally{y=Ee}Z=F}else Z=s.isExpr?j(s.body,d):fe(s.body,d)}catch(F){if(F instanceof he)Z=F.value;else throw(F instanceof M||F instanceof ne)&&(!F.file&&s.file&&(F.file=s.file),F.trace||(F.trace=[]),F.trace.length<50&&F.trace.push({name:s.closure?"closure":s.name,line:r||null,file:R})),F===Me||F===Te?new M(`${F.control} solo se puede usar dentro de un ciclo`,r,null,s.file):F}finally{c=R}return e.isInit?d.get("self"):Z}if(e instanceof pe)return Qe(e,t,r);throw new M(`${L(e,!0)} no es una funci\xF3n`,r)}function Ue(e,t,r){let s=g.get(e);if(s){if(s.state==="loading")throw new M(`Importaci\xF3n circular: '${e}' se importa a s\xED mismo a trav\xE9s de otros m\xF3dulos`,t,null,r);return s.exports}let d=n.read(e);if(d==null)throw new M(`No se encontr\xF3 el m\xF3dulo '${e}'`,t,null,r);let _={state:"loading",exports:null};g.set(e,_);try{let N=m(String(d),e),R=Object.create(null);for(let Z of N.exports)R[Z]=N.vars.get(Z);return _.exports=R,_.state="ready",R}catch(N){throw g.delete(e),N}}function f(e,t){let r=t.file||null,s;try{s=n.resolve(e.path,r)}catch(_){throw _ instanceof M&&(_.line||(_.line=e.line),_.file||(_.file=r)),_}let d=Ue(s,e.line,r);if(e.alias){t.define(e.alias,d,!0);return}for(let[_,N]of e.names){if(!(_ in d))throw new M(`El m\xF3dulo '${e.path}' no exporta '${_}'`,e.line);t.define(N,d[_],!0)}}function m(e,t,r){let s=qe(e,t);r=r||new V(u),r.file=t,r.exports=new Set;let d=c;c=t;try{let _=null;for(let N of s)_=Oe(N,r);r.last=_}catch(_){if(_ instanceof he)return r.last=_.value,r;throw(_ instanceof M||_ instanceof ne)&&!_.file&&(_.file=t),_}finally{c=d}return r}function S(e){if(e instanceof M)return Xe(e.line,e.col,e.file)+e.message;if(e instanceof ne){let t=J(e.value),r;return ee(t)&&typeof t.message=="string"?r=t.message:t instanceof G&&typeof t.fields.message=="string"?r=t.fields.message:r=L(t),Xe(e.line,null,e.file)+"Error no atrapado: "+r}return e instanceof ve?e.message:e instanceof RangeError?"Desbordamiento de pila: una funci\xF3n se llam\xF3 a s\xED misma demasiadas veces.":e===Me||e===Te?`${e.control} solo se puede usar dentro de un ciclo.`:"Error interno: "+(e&&e.message)}function k(e){if(!e||!e.trace||!e.trace.length)return[];let t=e.trace.slice(0,12).map(r=>{let s=r.line?`${r.file?r.file+", ":""}l\xEDnea ${r.line}`:r.file||"";return`en ${r.name}()${s?", llamada en "+s:""}`});return e.trace.length>12&&t.push(`\u2026 y ${e.trace.length-12} llamadas m\xE1s`),t}let C={log:(...e)=>{i(a+e.map(t=>L(t)).join(" ")),a=""},write:(...e)=>{a+=e.map(t=>L(t)).join(" ")},sleep:e=>new Promise(t=>setTimeout(()=>t(null),Number(e)||0)),fetch_json:(e,t)=>ze(e,t).then(r=>r.text()).then(r=>r?ye(JSON.parse(r)):null),fetch_text:(e,t)=>ze(e,t).then(r=>r.text()),type_of:e=>Y(e),assert:(e,t)=>{if(!H(e))throw new ne(we({message:t==null?"La afirmaci\xF3n fall\xF3":L(t)}))},min:(...e)=>{let t=e.length===1&&Array.isArray(e[0])?e[0]:e;return t.length?Math.min(...t):null},max:(...e)=>{let t=e.length===1&&Array.isArray(e[0])?e[0]:e;return t.length?Math.max(...t):null},random:()=>Math.random(),random_int:(e,t)=>Math.floor(Math.random()*(W(t,"random_int")-W(e,"random_int")+1))+e,to_json:(e,t)=>JSON.stringify(me(e),null,t||void 0)??"null",from_json:e=>{try{return ye(JSON.parse(String(e)))}catch(t){throw new M("from_json recibi\xF3 un texto que no es JSON v\xE1lido: "+t.message)}},PI:Math.PI};for(let e in C)typeof C[e]=="function"&&(C[e].tngName=e);for(let e in C)u.define(e,C[e],!0);function K(){if(a){let e=a;a="",i(e)}}return{global:u,define(e,t){typeof t=="function"&&!t.tngName&&(t.tngName=e),u.define(e,t,!0)},run(e,t,r){w();try{return m(String(e),t||null,r).last}finally{K()}},invoke(e,t){w();try{let r=de(e,t||[]);return r&&r.tngAsync&&r.catch(s=>{s instanceof he||n.onError(S(oe(s)))}),r}catch(r){return r instanceof he?r.value:(n.onError(S(r)),null)}finally{K()}},call:(e,t)=>de(e,t||[]),message:S,trace:k,loadModule:e=>{w();try{return Ue(e,null,null)}finally{K()}},forget:e=>g.delete(e),newEnv:()=>new V(u),setOutput(e){i=e},get output(){return i},flush:K}}var Et=1e3;function st(){return{name:"reactivo",install(n){let i=(w,$)=>n._rt.call(w,$||[]),a=null,l=new Set,c=!1;function g(w){if(!w.muerto&&(l.add(w),!c)){c=!0;try{let $=0;for(;l.size;){if(++$>Et)throw new Error("Un effect cambia un estado que \xE9l mismo lee, y se repite sin fin.");let E=[...l];l.clear();for(let D of E)D.muerto||D.correr()}}finally{c=!1,l.clear()}}}function u(w){let $=J(w),E=new Set;return{read(){return a&&(E.add(a),a.deps.add(E)),$},peek:()=>$,write(D){if(D=J(D),D===$&&(D===null||typeof D!="object"))return D;$=D;for(let v of[...E])g(v);return D}}}function T(w){for(let $ of w.deps)$.delete(w);w.deps.clear();for(let $ of w.hijos)$.muerto=!0,T($);w.hijos=[]}function y(w){let $={deps:new Set,hijos:[],muerto:!1,correr(){T($);let E=a;a=$;try{w()}finally{a=E}}};return a&&a.hijos.push($),$.correr(),$}let h=(w,$)=>($.tngName=w,$);function P(w,$){let E=Object.create(null);return E.get=h("get",()=>w.read()),$||(E.set=h("set",D=>w.write(D)),E.update=h("update",D=>w.write(i(D,[w.peek()])))),Object.defineProperty(E,Ce,{value:w}),E}n.reactive={isState:ge,effect:y,signal:u,dispose(w){w&&(w.muerto=!0,T(w))},watch(w,$){ge(w)?y(()=>$(w[Ce].read())):$(w)},peek:w=>ge(w)?w[Ce].peek():w,set:(w,$)=>w[Ce].write($)},n.defineAll({state:w=>P(u(w),!1),computed:w=>{let $=u(null);return y(()=>$.write(i(w))),P($,!0)},effect:w=>(y(()=>i(w)),null),is_state:w=>ge(w)})}}}var at=Symbol("tangerine.listeners"),Ot=/^[a-z][a-z0-9]*(-[a-z0-9]+)+$/,Nt=new Set(["br","hr","img","input","meta","link","source","area","col","embed","wbr"]);function lt(n){let i=[];for(let l=n;l;l=l.parent)i.unshift(l);let a=[];for(let l of i)for(let c of l.fields)c.decor&&a.push(c);return a}var Fe=n=>String(n).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");function Je(n){if(typeof n=="string")return Fe(n);if(!(n instanceof se))return"";let i=n.children.map(Je).join("");if(n.tag===null)return i;let a="";n.classes.length&&(a+=` class="${Fe(n.classes.join(" "))}"`);for(let c of Object.keys(n.attrs)){if(c==="key"||c==="ref"||c==="raw")continue;let g=J(n.attrs[c]);g===null||g===!1||(a+=g===!0?` ${c}`:` ${c}="${Fe(L(g))}"`)}if(n.bind){let c=J(n.bind.get());n.attrs.type==="checkbox"?H(c)&&(a+=" checked"):n.tag!=="textarea"&&c!==null&&(a+=` value="${Fe(L(c))}"`)}if(Nt.has(n.tag))return`<${n.tag}${a}>`;let l=n.tag==="textarea"&&n.bind?Fe(L(J(n.bind.get())??"")):i;return`<${n.tag}${a}>${l}</${n.tag}>`}function ut(){return{name:"componentes",install(n){let i=(u,T)=>n._rt.call(u,T||[]),a=new Map,l=[];function c(u){let T=[],y=we([]);return y.emit=h=>{for(let P of T.slice())P(J(h));return null},y.emit.tngName="emit",y.listen=h=>(T.push(P=>i(h,[P])),null),y.listen.tngName="listen",Object.defineProperty(y,at,{value:T}),Object.defineProperty(y,"toString",{value:()=>`<output ${u}>`}),y}n.hooks.onInstance=u=>{let T=lt(u.cls);if(T.length)for(let y of T){if(y.decor==="Output"){u.fields[y.name]=c(y.name);continue}let h=n.reactive.signal(u.fields[y.name]);Object.defineProperty(u.fields,y.name,{get:()=>h.read(),set:P=>h.write(P),enumerable:!0,configurable:!0})}},n.hooks.decorators.Component=(u,T)=>{let y=T[0];if(typeof y!="string"||!Ot.test(y))throw new Error(`@Component necesita una etiqueta en min\xFAsculas con guion, por ejemplo @Component("mi-${u.name.toLowerCase()}")`);if(!u.findMethod("view"))throw new Error(`El componente ${u.name} necesita un view { } con lo que muestra`);let h=lt(u);u.component={tag:y,inputs:h.filter(P=>P.decor==="Input").map(P=>P.name),outputs:h.filter(P=>P.decor==="Output").map(P=>P.name)},a.set(y,u);for(let P of l)P(u)};function g(u){let T=u instanceof G&&u.cls.findMethod("view");if(!T)throw new Error(`${L(u)} no tiene un view { }`);return i(T.bind(u),[])}n.components={registry:a,renderView:g,onDefine:u=>l.push(u),toHTML:Je,LISTENERS:at,isBinding:Ie},n.defineAll({render_html:u=>u instanceof G?Je(g(u)):u instanceof se?Je(u):ee(u)?"":Je(String(L(u)))})}}}var Mt="5.2.0",ct=[],Tt=n=>!/^(\.{1,2}\/|\/|[a-z][a-z0-9+.-]*:\/\/)/i.test(n);function ft(n,i,a){if(a&&Tt(n)){if(Object.prototype.hasOwnProperty.call(a,n))return a[n];let l=null;for(let c of Object.keys(a))c.endsWith("/")&&n.startsWith(c)&&(!l||c.length>l.length)&&(l=c);if(l)return ke(a[l]+n.slice(l.length),null)}return ke(n,i)}var z=class n{constructor(i={}){this.options=i,this.imports={...i.imports||{}},this.modules=new Map(Object.entries(i.modules||{}).map(([l,c])=>[ke(l,null),c]));let a=this;if(this.hooks={decorators:Object.create(null),onInstance:null},this._rt=ot({output:i.output||(l=>console.log(l)),get stepLimit(){return a.stepLimit},resolve:i.resolve||((l,c)=>ft(l,c,a.imports)),read:l=>a.modules.has(l)?a.modules.get(l):i.read?i.read(l):null,onError:i.onError||(l=>console.error("Tangerine: "+l)),hooks:this.hooks}),this.stepLimit=i.stepLimit||0,this.plugins=[],this.use(st()),this.use(ut()),i.globalPlugins!==!1)for(let l of ct)this.use(l);for(let l of i.plugins||[])this.use(l);i.natives&&this.defineAll(i.natives)}define(i,a){return this._rt.define(i,a),this}defineAll(i){for(let a of Object.keys(i))this.define(a,i[a]);return this}use(i){let a=(typeof i=="function"||i)&&i.name;if(a&&this.plugins.includes(a))return this;if(typeof i=="function")i(this);else if(i&&typeof i.install=="function")i.install(this);else throw new TypeError("Un plugin debe ser una funci\xF3n o un objeto con install(tng)");return a&&this.plugins.push(a),this}addModule(i,a){return this.modules.set(this._key(i),String(a)),this}run(i,a={}){try{return this._rt.run(i,a.file?this._key(a.file):null)}catch(l){throw this._wrap(l)}}import(i){try{return this._rt.loadModule(this._key(i))}catch(a){throw this._wrap(a)}}forget(i){return this._rt.forget(this._key(i)),this}runModule(i){let a=this._key(i),l=this.modules.has(a)?this.modules.get(a):this.options.read?this.options.read(a):null;if(l==null)throw new M(`No se encontr\xF3 el m\xF3dulo '${a}'`);return this.run(l,{file:a})}runCode(i,a={}){let l=[],c=this._rt.output;this._rt.setOutput(g=>l.push(g));try{return this._rt.run(String(i),a.file||null),we({output:l,error:null,trace:[]})}catch(g){return we({output:l,error:this._rt.message(g),trace:this._rt.trace(g)})}finally{this._rt.setOutput(c)}}session(){let i=this._rt.newEnv();return{run:a=>{try{return this._rt.run(a,null,i)}catch(l){throw this._wrap(l)}},has:a=>i.has(a)}}invoke(i,a){return this._rt.invoke(i,a)}call(i,a){try{return this._rt.call(i,a)}catch(l){throw this._wrap(l)}}trace(i){return this._rt.trace(i&&i.original&&!i.trace?i.original:i)}message(i){return i instanceof M&&!i.original?this._rt.message(i):i&&i.tngMessage?i.tngMessage:this._rt.message(i&&i.original?i.original:i)}globals(){return[...this._rt.global.vars.keys()]}show(i,a){return L(i,a)}truthy(i){return H(i)}_key(i){return this.options.resolve?this.options.resolve(i,null):ke(i,null)}_wrap(i){let a=this._rt.message(i),l=i instanceof M?i:new M(a,i&&i.line,null,i&&i.file);return l.tngMessage=a,l!==i&&(l.original=i,i&&i.trace&&(l.trace=i.trace)),l}static registerPlugin(i){ct.push(i)}static runCode(i,a){let l=new n({stepLimit:4e5,...a}).runCode(i);return{output:l.output,error:l.error,trace:l.trace}}};z.VERSION=Mt;z.KEYWORDS=De;z.lexer=We;z.parser=Ze;z.parse=qe;z.sx=U;z.show=L;z.truthy=H;z.makeMap=we;z.isMap=ee;z.typeOf=Y;z.fromJS=ye;z.toJS=me;z.importsOf=Ge;z.resolvePath=ke;z.resolveWithMap=ft;z.TngError=M;z.Thrown=ne;var It=()=>!!(typeof matchMedia<"u"&&matchMedia("(prefers-reduced-motion: reduce)").matches);function et(){return{name:"dom",install(n){let i=o=>n.show(o),a=o=>n.truthy(o),l=(o,p)=>n.invoke(o,p),c=null,g=(o,p)=>n.reactive?n.reactive.watch(o,p):p(o),u=(o,p)=>n._rt.call(o,p||[]),T=o=>typeof Element<"u"&&o instanceof Element,y=o=>o.replace(/_/g,"-").replace(/([a-z0-9])([A-Z])/g,"$1-$2").toLowerCase(),h=o=>o.replace(/[-_]([a-z0-9])/g,(p,b)=>b.toUpperCase()),P=()=>n.components,w=o=>!!(P()&&P().registry.has(o));function $(o){let p=Object.create(null);return p.type=o.type,p.key=o.key===void 0?null:o.key,p.value=o.target&&"value"in o.target?o.target.value:null,p.detail=o.detail===void 0?null:ye(o.detail),p.target=o.target||null,p}function E(o,p){let b=o.__tngAttrs||Object.create(null),x=p.tag.includes("-");for(let I of Object.keys(b))I in p.attrs||(o.removeAttribute(I),x&&(o[h(I)]=void 0));for(let I of Object.keys(p.attrs)){if(I==="key"||I==="ref"||I==="raw")continue;let A=J(p.attrs[I]);if(ge(A)&&(A=A.get()),x&&A!==null&&typeof A!="string"){o[h(I)]=A;continue}if(I==="value"&&"value"in o){let q=A===null?"":i(A);o.value!==q&&(o.value=q);continue}if(I==="checked"&&"checked"in o){o.checked=a(A);continue}if(A===null||A===!1)o.removeAttribute(I);else{let q=A===!0?"":i(A);o.getAttribute(I)!==q&&o.setAttribute(I,q)}}o.__tngAttrs=p.attrs;let O=p.classes.join(" ");(o.getAttribute("class")||"")!==O&&(O?o.setAttribute("class",O):o.removeAttribute("class"))}function D(o,p){o.__tngOn=p.on;let b=o.__tngTypes||(o.__tngTypes=new Set);for(let x of Object.keys(p.on))b.has(x)||(b.add(x),o.addEventListener(x,O=>{let I=o.__tngOn&&o.__tngOn[x];I&&(x==="submit"&&O.preventDefault(),l(I,I.decl&&I.decl.params.length?[$(O)]:[]))}))}function v(o,p){if(o.__tngBind=p.bind,!p.bind)return;let b=o.type==="checkbox"||o.type==="radio",x=J(p.bind.get());if(b)o.checked=a(x);else{let I=x===null?"":i(x);o.value!==I&&(o.value=I)}if(o.__tngBound)return;o.__tngBound=!0;let O=o.type==="number"||o.type==="range";o.addEventListener(b||o.tagName==="SELECT"?"change":"input",()=>{let I=o.__tngBind;if(!I)return;let A=b?o.checked:O?o.value===""?null:Number(o.value):o.value;l(()=>I.set(A))})}function W(o,p){E(o,p),D(o,p),v(o,p)}function B(o){if(typeof o=="string")return document.createTextNode(o);let p=document.createElement(o.tag);if(o.tag==="button"&&!("type"in o.attrs)&&(p.type="button"),p.__tngKey=te(o),E(p,o),D(p,o),!w(o.tag))for(let x of o.children)p.appendChild(B(x));v(p,o);let b=J(o.attrs.ref);return b&&queueMicrotask(()=>l(b,[p])),p}let X=(o,p)=>typeof p=="string"?o.nodeType===3:o.nodeType===1&&o.tagName.toLowerCase()===p.tag.toLowerCase(),te=o=>typeof o=="string"||o.attrs.key===void 0||o.attrs.key===null?null:i(o.attrs.key);function re(o,p){let b=new Map;for(let O of Array.from(o.childNodes))O.__tngKey!=null&&b.set(O.__tngKey,O);let x=0;for(let O of p){let I=te(O),A;I!==null?(A=b.get(I),b.delete(I),A&&!X(A,O)&&(A=null)):(A=o.childNodes[x],A&&(A.__tngKey!=null||!X(A,O))&&(A=null)),A?typeof O=="string"?A.data!==O&&(A.data=O):(W(A,O),!w(O.tag)&&!a(O.attrs.raw)&&le(A,O.children)):A=B(O);let q=o.childNodes[x];q!==A&&o.insertBefore(A,q||null),x++}for(;o.childNodes.length>p.length;)o.lastChild.remove()}function le(o,p){if(p.some(x=>te(x)!==null))return re(o,p);let b=0;for(let x of p){let O=o.childNodes[b];O?X(O,x)?typeof x=="string"?O.data!==x&&(O.data=x):(W(O,x),!w(x.tag)&&!a(x.attrs.raw)&&le(O,x.children)):o.replaceChild(B(x),O):o.appendChild(B(x)),b++}for(;o.childNodes.length>p.length;)o.lastChild.remove()}function ue(o,p){return n.reactive.effect(()=>{let b=P().renderView(p);le(o,b instanceof se?b.tag===null?b.children:[b]:[])})}function ae(o,p){let b=o instanceof G&&o.cls.findMethod(p);b&&l(b.bind(o))}let $e=(o,p)=>{if(typeof p=="number"){let b=Number(o);return Number.isNaN(b)?p:b}return typeof p=="boolean"?o!=="false"&&o!==null:o};function ie(o){if(typeof customElements>"u")return;let p=o.component;if(customElements.get(p.tag))return;let b=P().LISTENERS,x=Object.create(null);class O extends HTMLElement{static get observedAttributes(){return p.inputs.map(y)}constructor(){super(),this._tng=null,this._fx=null,this._pending=Object.create(null)}_set(A,q){l(()=>{this._tng.fields[A]=q})}connectedCallback(){if(!this._tng){let A=l(o);if(!(A instanceof G))return;this._tng=A;for(let q of p.inputs){q in x||(x[q]=J(A.fields[q]));let Q=this.getAttribute(y(q));Q!==null&&(A.fields[q]=$e(Q,x[q])),q in this._pending&&(A.fields[q]=this._pending[q])}for(let q of p.outputs){let Q=A.fields[q];Q&&Q[b]&&Q[b].push(oe=>this.dispatchEvent(new CustomEvent(q,{detail:me(oe),bubbles:!0,composed:!0})))}}if(!this._fx){let A=this;l(()=>{A._fx=ue(A,A._tng)}),this._fx&&ae(this._tng,"on_mount")}}disconnectedCallback(){this._fx&&(n.reactive.dispose(this._fx),this._fx=null,ae(this._tng,"on_destroy"))}attributeChangedCallback(A,q,Q){let oe=p.inputs.find(ce=>y(ce)===A);!oe||!this._tng||this._set(oe,Q===null?x[oe]:$e(Q,x[oe]))}}for(let I of p.inputs){let A={get(){return this._tng?me(this._tng.fields[I]):this._pending[I]},set(q){let Q=q instanceof Node?q:ye(q);this._tng?this._set(I,Q):this._pending[I]=Q},configurable:!0};Object.defineProperty(O.prototype,I,A),h(I)!==I&&Object.defineProperty(O.prototype,h(I),A)}customElements.define(p.tag,O)}if(n.components){for(let o of n.components.registry.values())ie(o);n.components.onDefine(ie)}n.defineAll({mount:(o,p)=>{let b=typeof o=="string"?document.querySelector(o):o;if(!b)throw new Error(`mount no encontr\xF3 '${o}' en la p\xE1gina`);let x=p instanceof pe?n._rt.call(p,[]):p;if(!(x instanceof G))throw new Error('mount necesita un struct con view { }, por ejemplo mount("#app", App)');return ue(b,x),ae(x,"on_mount"),x},query:o=>document.querySelector(o),focus:o=>(o&&o.focus&&o.focus({preventScroll:!0}),o),query_all:o=>Array.from(document.querySelectorAll(o)),el:(o,p,b)=>{let x=document.createElement(o);return g(p,O=>{x.className=O?i(O):""}),o==="button"&&(x.type="button"),g(b,O=>{O!=null&&(x.textContent=i(O))}),x},append:(o,p)=>(o.appendChild(p),p),remove:o=>(o&&o.remove(),null),add_text:(o,p)=>(o.appendChild(document.createTextNode(i(p))),o),set_text:(o,p)=>(g(p,b=>{o.textContent=i(b)}),o),attr:(o,p,b)=>(g(b,x=>{x==null||x===!1?o.removeAttribute(p):o.setAttribute(p,x===!0?"":i(x))}),o),get_attr:(o,p)=>o.getAttribute(p),toggle_class:(o,p,b)=>(b===void 0?o.classList.toggle(p):g(b,x=>o.classList.toggle(p,a(x))),o),set_style:(o,p,b)=>(g(b,x=>o.style.setProperty(p,x==null?"":i(x))),o),clear:o=>(o.replaceChildren(),o),set_visible:(o,p)=>(g(p,b=>{o.hidden=!a(b)}),o),value:o=>o.value,set_value:(o,p)=>(g(p,b=>{o.value=b==null?"":i(b)}),o),bind:(o,p)=>{if(!n.reactive||!n.reactive.isState(p))throw new Error('bind necesita un state: bind(campo, state(""))');let b=o.type==="checkbox"||o.type==="radio",x=o.type==="number"||o.type==="range";return g(p,O=>{if(b)o.checked=a(O);else{let I=O==null?"":i(O);o.value!==I&&(o.value=I)}}),o.addEventListener(b||o.tagName==="SELECT"?"change":"input",()=>{let O=b?o.checked:x?o.value===""?null:Number(o.value):o.value;l(()=>n.reactive.set(p,O))}),o},render:(o,p)=>{let b=()=>{o.replaceChildren();let x=u(p,p&&p.decl&&p.decl.params.length?[o]:[]);for(let O of Array.isArray(x)?x:[x])T(O)&&O.parentNode!==o&&o.appendChild(O)};return n.reactive?n.reactive.effect(b):b(),o},on:(o,p,b)=>{let x=!!(b&&b.decl&&b.decl.params.length);return o.addEventListener(p,O=>{if(!x)return l(b);let I=Object.create(null);I.type=O.type,I.key=O.key===void 0?null:O.key,I.value=O.target&&"value"in O.target?O.target.value:null,I.target=O.target||null,l(b,[I])}),o},on_shortcut:(o,p)=>(o.addEventListener("keydown",b=>{b.key==="Enter"&&(b.ctrlKey||b.metaKey)&&(b.preventDefault(),l(p))}),o),now:()=>performance.now(),after:(o,p)=>(setTimeout(()=>l(p),o),null),copy:(o,p)=>{let b=p?p.textContent:"",x=O=>{p&&(p.textContent=O,setTimeout(()=>p.textContent=b,1800))};try{navigator.clipboard.writeText(i(o)).then(()=>x("Copiado"),()=>x("Selecciona y copia a mano"))}catch{x("Selecciona y copia a mano")}return null},save:(o,p)=>{try{localStorage.setItem(o,i(p))}catch{}return null},load:o=>{try{return localStorage.getItem(o)}catch{return null}},on_route:o=>(c=()=>l(o,[decodeURIComponent(location.hash.slice(1))]),window.addEventListener("hashchange",c),c(),null),go:o=>(location.hash.slice(1)===o?c&&c():location.hash=o,null),scroll_top:()=>(window.scrollTo(0,0),null),scroll_to:o=>(o&&requestAnimationFrame(()=>o.scrollIntoView({behavior:It()?"auto":"smooth",block:"start"})),null),when_visible:(o,p)=>(typeof IntersectionObserver>"u"||new IntersectionObserver(b=>{b.some(x=>x.isIntersecting)&&l(p)},{rootMargin:"-90px 0px -70% 0px"}).observe(o),null)})}}}z.registerPlugin(et());z.dom=et;globalThis.Tangerine=z;async function ht(n,i,a){let l=ke(i,null);if(a.has(l)||n.modules.has(l))return l;a.add(l);let c=await fetch(l);if(!c.ok)throw new Error(`No se pudo descargar '${l}' (HTTP ${c.status})`);let g=await c.text();n.addModule(l,g);let u=[];try{u=Ge(qe(g,l))}catch{}return await Promise.all(u.map(T=>ht(n,ke(T,l),a))),l}z.prototype.load=async function(n){let i=await ht(this,n,new Set);return this.runModule(i)};function pt(n){console.error("Tangerine: "+n);let i=document.getElementById("app")||document.body;if(!i)return;let a=document.createElement("pre");a.className="tangerine-fallo",a.style.cssText="white-space:pre-wrap;font:14px/1.5 ui-monospace,monospace;color:#b42318;background:#fff4f2;border:1px solid #f3c6bf;border-radius:8px;padding:12px 16px;margin:16px",a.textContent=`Tangerine no pudo ejecutar el programa.
+`&&w(u),X+=re,u++}if(u>=g)throw P('String sin cerrar: falta la comilla " final',v,W,!0);u++,ee?(X&&B.push(X),c.push({type:"template",parts:B,line:v,col:W})):c.push({type:"str",value:X,line:v,col:W});continue}if(wt.test($)){let v=u,W=h(u);for(;u<g&&bt.test(n[u]);)u++;let B=n.slice(v,u);c.push({type:De.has(B)?B:"id",value:B,line:T,col:W});continue}let A=n.slice(u,u+3),D=n.slice(u,u+2);if(mt.has(A)){c.push({type:A,line:T,col:h(u)}),u+=3;continue}if(yt.has(D)){c.push({type:D,line:T,col:h(u)}),u+=2;continue}if(gt.has($)){c.push({type:$,line:T,col:h(u)}),u++;continue}throw P(`Car\xE1cter inesperado '${$}'`,T,h(u))}return c.push({type:"eof",line:T,col:h(u)}),c}function xe(n){return n.type==="eof"?"el final del programa":n.type==="num"?`el n\xFAmero ${n.value}`:n.type==="str"||n.type==="template"?"un string":n.value!==void 0?`'${n.value}'`:`'${n.type}'`}var $t=new Set(["=","+=","-=","*=","/="]),xt=new Set(["var","member","index"]),_t=new Set("div span p a button h1 h2 h3 h4 h5 h6 ul ol li img input textarea select option label form section header footer main nav article aside strong em small code pre table thead tbody tr td th br hr figure figcaption details summary video audio canvas i b fieldset legend dl dt dd blockquote mark time sup sub iframe picture source tfoot caption dialog".split(" ")),St=new Set(["State","Input","Output"]);function Ze(n,i){let a=typeof i=="string"?{mode:i}:i||{},l=a.file||null,c=0,g=0,u=0,T=0,y=f=>n[Math.min(c+(f||0),n.length-1)],h=f=>y().type===f,P=f=>y().type==="id"&&y().value===f,w=f=>h(f)?(c++,!0):!1,$=(f,m)=>{let S=m||y(),k=new M(f,S.line,S.col,l);return k.incomplete=S.type==="eof",k},A=(f,m)=>{if(!h(f))throw $(`Se esperaba ${m||"'"+f+"'"} pero se encontr\xF3 ${xe(y())}`);return n[c++]},D=()=>{w(";")},v=()=>c>0&&y().line===n[c-1].line;function W(){if(w("["))W(),A("]");else if(w("(")){for(;!h(")")&&!h("eof")&&(W(),!!w(",")););A(")")}else A("id","un nombre de tipo");if(w("<")){for(;!h(">")&&!h("eof")&&(W(),!!w(",")););A(">")}w("?")}function B(){let f=y();A("{","'{' para abrir un bloque"),g++;let m=T;T=0;let S=[];for(u>0&&(S.view=!0);!h("}");){if(h("eof"))throw $(`Falta '}' para cerrar el bloque abierto en la l\xEDnea ${f.line}`);S.push(b())}return A("}"),T=m,g--,S}function X(){let f=u;u=0;try{return B()}finally{u=f}}function ee(){let f=u;u=0;try{return E()}finally{u=f}}function re(){T++;try{return E()}finally{T--}}function le(){let f=[];for(;w("@");){let m=A("id","el nombre del decorador");f.push({name:m.value,args:w("(")?je(")"):[],line:m.line})}return f}function ue(f){let m=[],S=[];for(;!h(f);){if(m.push(A("id","el nombre de un par\xE1metro").value),w(":")&&W(),w("="))S[m.length-1]=f==="|"?be():E();else if(S.length)throw $(`El par\xE1metro '${m[m.length-1]}' necesita un valor por defecto porque va despu\xE9s de otro que lo tiene`,n[c-1]);if(!w(","))break}return A(f,`'${f}' para cerrar los par\xE1metros`),m.defaults=S.length?S:null,m}function ae(f,m){A("(","'(' con los par\xE1metros");let S=ue(")");return w("->")&&W(),{type:"function",name:f,params:S,defaults:S.defaults,body:X(),line:m,file:l}}function $e(){if(w("(")){let f=[];for(;!h(")")&&(f.push(A("id","un nombre").value),!!w(",")););return A(")"),f}return A("id","un nombre").value}function ie(f){let m=y();if(m.type!=="str")throw $(`Se esperaba ${f} entre comillas pero se encontr\xF3 ${xe(m)}`);return c++,m.value}function o(f){if(g>0)throw $("import solo puede ir en el nivel superior del archivo, fuera de bloques y funciones");c++;let m=null,S=null;if(w("{")){for(m=[];!h("}");){if(h("eof"))throw $("Falta '}' para cerrar la lista del import");let C=A("id","un nombre para importar").value,K=C;if(P("as")&&(c++,K=A("id","el nombre local despu\xE9s de as").value),m.push([C,K]),!w(","))break}A("}","'}' para cerrar la lista del import")}else S=A("id","un nombre o '{' despu\xE9s de import").value;if(!P("from"))throw $(`Se esperaba 'from' despu\xE9s de import pero se encontr\xF3 ${xe(y())}`);c++;let k=ie("la ruta del m\xF3dulo");return D(),{type:"import",names:m,alias:S,path:k,line:f}}function p(f){if(g>0)throw $("export solo puede ir en el nivel superior del archivo");if(c++,!(h("let")||h("var")||h("fn")||h("class")||h("struct")||h("@")))throw $(`Despu\xE9s de export va let, var, fn, class o struct, pero se encontr\xF3 ${xe(y())}`);let m=b(),S=m.type==="class"?[m.name]:Array.isArray(m.target)?m.target:[m.target];return{type:"export",decl:m,names:S,line:f}}function b(){let f=y(),m=f.line;switch(f.type){case"import":return o(m);case"export":return p(m);case"@":{let k=le();if(h("export")&&(y(1).type==="struct"||y(1).type==="class")){let K=p(m);return K.decl.decorators=k,K}if(!h("struct")&&!h("class"))throw $(`Un decorador como @${k[0].name} va justo antes de un struct o una class`);let C=b();return C.decorators=k,C}case"let":case"var":{c++;let k=$e();w(":")&&W();let C=null;if(w("="))C=ee();else if(f.type==="let")throw $(`let ${Array.isArray(k)?"(...)":k} necesita un valor. Usa var si lo vas a asignar despu\xE9s`,f);return D(),{type:"decl",constant:f.type==="let",target:k,value:C,line:m}}case"async":if(y(1).type==="fn"&&y(2).type==="id"){c+=2;let k=A("id").value,C=ae(k,m);return C.isAsync=!0,{type:"decl",constant:!0,target:k,value:C,line:m}}break;case"fn":if(y(1).type==="id"){c++;let k=A("id").value;return{type:"decl",constant:!0,target:k,value:ae(k,m),line:m}}break;case"class":case"struct":{c++;let k=A("id","el nombre de la clase").value,C=null;if(w(":")){let t=A("id","el nombre de la clase padre");C={type:"var",name:t.value,line:t.line}}A("{","'{' para abrir la clase"),g++;let K=[],e=[];for(;!h("}");){if(h("eof"))throw $(`Falta '}' para cerrar la clase ${k}`);let t=h("@")?le():null;if(t){for(let _ of t)if(!St.has(_.name))throw $(`@${_.name} no se puede usar en un campo. Usa @State, @Input o @Output`,n[c-1]);if(!h("let")&&!h("var"))throw $(`Despu\xE9s de @${t[0].name} va var y el nombre del campo`)}if(h("let")||h("var")){c++;let _=A("id","el nombre de un campo");w(":")&&W();let N=w("=")?E():{type:"lit",value:null,line:_.line};e.push({name:_.value,value:N,decor:t?t[0].name:null}),D();continue}if(P("view")&&y(1).type==="{"){let _=n[c++];u++;let N;try{N=B()}finally{u--}K.push({type:"function",name:"view",params:[],defaults:null,body:N,isView:!0,line:_.line,file:l});continue}let r=w("async");w("fn");let s=A("id","el nombre de un m\xE9todo"),d=ae(s.value,s.line);r&&(d.isAsync=!0),K.push(d),w(";")}return A("}"),g--,{type:"class",name:k,parent:C,methods:K,fields:e,line:m}}case"if":return{type:"exp",exp:x(),line:m};case"match":return{type:"exp",exp:I(),line:m};case"while":return c++,{type:"while",cond:re(),body:B(),line:m};case"loop":return c++,{type:"loop",body:B(),line:m};case"for":{c++;let k=$e();A("in","'in' despu\xE9s de la variable del for");let C=re();return{type:"for",target:k,iter:C,body:B(),line:m}}case"break":return c++,D(),{type:"break",line:m};case"continue":return c++,D(),{type:"continue",line:m};case"return":{c++;let k=null;return!h(";")&&!h("}")&&!h("eof")&&v()&&(k=E()),D(),{type:"return",value:k,line:m}}case"throw":{c++;let k=E();return D(),{type:"throw",value:k,line:m}}case"do":{c++;let k=B();A("catch","catch despu\xE9s del bloque do");let C="error";return w("(")?(C=A("id").value,A(")")):h("id")&&(C=A("id").value),{type:"try",body:k,name:C,handler:B(),line:m}}case"else":throw $("else debe ir justo despu\xE9s del bloque de un if",f)}let S=E();if($t.has(y().type)){let k=n[c++];if(!xt.has(S.type))throw $("No se puede asignar a esta expresi\xF3n",k);let C=ee();return D(),{type:"assign",target:S,op:k.type,value:C,line:m}}return D(),{type:"exp",exp:S,line:m}}function x(){let f=y().line;A("if");let m=re(),S=B(),k=null;return w("else")&&(h("if")?(k=[{type:"exp",exp:x(),line:y().line}],u>0&&(k.view=!0)):k=B()),{type:"if",cond:m,then:S,otherwise:k,line:f}}function O(){let f=y();if(f.type==="id")return c++,f.value==="_"?{kind:"any"}:{kind:"bind",name:f.value};let m=()=>{let k=w("-"),C=y();if(C.type==="num")return c++,k?-C.value:C.value;if(k)throw $("Se esperaba un n\xFAmero despu\xE9s de '-' en el patr\xF3n",C);if(C.type==="str")return c++,C.value;if(C.type==="true")return c++,!0;if(C.type==="false")return c++,!1;if(C.type==="nil")return c++,null;throw $(`${xe(C)} no se puede usar como patr\xF3n`,C)},S=m();if(h("..")||h("..=")){let k=n[c++].type==="..=";return{kind:"range",from:S,to:m(),inclusive:k}}return{kind:"lit",value:S}}function I(){let f=y().line;A("match");let m=re();A("{","'{' para abrir el match");let S=[];for(;!h("}");){if(h("eof"))throw $("Falta '}' para cerrar el match");let k=[O()];for(;w("|");)k.push(O());let C=w("if")?E():null;A("=>","'=>' despu\xE9s del patr\xF3n");let K,e=!1;h("{")?(K=B(),e=!0):K=E(),S.push({pats:k,guard:C,body:K,isBlock:e}),w(",")}return A("}"),{type:"match",value:m,arms:S,line:f}}let E=()=>Be();function q(f,m){let S=new Set(m);return function(){let k=f();for(;S.has(y().type)&&!((y().type==="||"||y().type==="-")&&!v());){let C=y().line;k={type:"bin",op:n[c++].type,left:k,right:f(),line:C}}return k}}function Q(){let f=oe();if(h("**")){let m=y().line;return c++,{type:"bin",op:"**",left:f,right:Q(),line:m}}return f}function oe(){if(h("await")){let f=y().line;return c++,{type:"await",value:oe(),line:f}}if(h("-")||h("!")){let f=y().line;return{type:"unary",op:n[c++].type,value:oe(),line:f}}return Oe()}let ce=q(Q,["*","/","%"]),be=q(ce,["+","-"]);function Le(){let f=be();if(h("..")||h("..=")){let m=y().line,S=n[c++].type==="..=";return{type:"range",from:f,to:be(),inclusive:S,line:m}}return f}let He=q(Le,["<",">","<=",">="]),Ye=q(He,["==","!="]),ze=q(Ye,["&&"]),fe=q(ze,["||"]),Be=q(fe,["??"]);function Ae(){let f=y();if(typeof f.value=="string"&&/^[A-Za-zÀ-ɏ_]/.test(f.value))return c++,f.value;throw $(`Se esperaba el nombre de una propiedad despu\xE9s de '.' pero se encontr\xF3 ${xe(f)}`,f)}function je(f){let m=[];for(;!h(f);){if(h("eof"))throw $(`Falta '${f}'`);if(m.push(E()),!w(","))break}return A(f,`'${f}'`),m}function Re(f){for(;f&&(f.type==="call"||f.type==="member");)f=f.type==="call"?f.fn:f.obj;return f&&f.type==="comp"&&!f.content?f:null}function Oe(){let f=de();for(;;){let m=y().line;if(h("(")&&v())c++,f={type:"call",fn:f,args:je(")"),line:m};else if(h("[")&&v()){c++;let S=E();A("]","']'"),f={type:"index",obj:f,index:S,line:m}}else if(h("."))c++,f={type:"member",obj:f,name:Ae(),line:m};else if(h("?."))c++,f={type:"member",obj:f,name:Ae(),optional:!0,line:m};else if(u>0&&T===0&&h("{")&&v()&&Re(f))Re(f).content=B();else return f}}function Ne(f,m){return h("{")?{type:"function",name:"closure",params:f,defaults:f.defaults,body:X(),closure:!0,line:m,file:l}:{type:"function",name:"closure",params:f,defaults:f.defaults,body:ee(),isExpr:!0,closure:!0,line:m,file:l}}let Ve=f=>typeof f.value=="string"&&/^[A-Za-z_À-ɏ][\wÀ-ɏ]*$/.test(f.value)&&(f.type==="id"||De.has(f.type));function j(){let f=n[c++],m=f.line,S=[],k={type:"lit",value:f.value,line:m};if(w("(")){for(f.value==="element"&&(k=ee(),w(","));!h(")");){if(h("eof"))throw $("Falta ')' para cerrar el elemento");if(h(".")&&Ve(y(1))){c++;let e=n[c++],t=e.value;for(;h("-")&&Ve(y(1))&&y().line===e.line&&y().col===e.col+String(e.value).length&&y(1).col===y().col+1;)c++,e=n[c++],t+="-"+e.value;S.push({type:"cls",name:t,line:m})}else S.push(ee());if(!w(","))break}A(")","')' para cerrar el elemento")}else if(f.value==="element")throw $('element necesita la etiqueta: element("mi-etiqueta")',f);let C=null,K=null;return h("{")&&v()&&(f.value==="button"?K={type:"function",name:"closure",params:[],defaults:null,body:X(),closure:!0,line:m,file:l}:C=B()),{type:"elem",tag:k,args:S,content:C,action:K,line:m}}function Qe(){let f=n[c++],m=f.line,S=[];if(w("(")){for(;!h(")");){if(h("eof"))throw $(`Falta ')' para cerrar ${f.value}(`);if(h(".")&&y(1).type==="id"?(c++,S.push({type:"cls",name:n[c++].value,line:m})):S.push(ee()),!w(","))break}A(")",`')' para cerrar ${f.value}(`)}let k=h("{")&&v()?B():null;return{type:"comp",fn:{type:"var",name:f.value,line:m},args:S,content:k,line:m}}function de(){let f=y(),m=f.line;switch(f.type){case"num":case"str":return c++,{type:"lit",value:f.value,line:m};case"template":return c++,{type:"template",parts:f.parts.map(S=>typeof S=="string"?S:Ze(We(S.code,{line:S.line,col:S.col,file:l}),{mode:"expr",file:l})),line:m};case"true":return c++,{type:"lit",value:!0,line:m};case"false":return c++,{type:"lit",value:!1,line:m};case"nil":return c++,{type:"lit",value:null,line:m};case"self":return c++,{type:"self",line:m};case"super":return c++,A(".","'.' despu\xE9s de super"),{type:"super",name:Ae(),line:m};case"id":{let S=y(1),k=S.line===f.line&&(S.type==="("||S.type==="{");return u>0&&T===0&&k&&(_t.has(f.value)||f.value==="element")?j():u>0&&T===0&&k&&/^[A-Z]/.test(f.value)?Qe():(c++,{type:"var",name:f.value,line:m})}case"$":return c++,{type:"bindref",name:A("id","el nombre de la variable o campo que se une, por ejemplo $nombre").value,line:m};case"|":return c++,Ne(ue("|"),m);case"||":return c++,Ne([],m);case"if":return x();case"match":return I();case"(":{c++;let S=E();if(w(",")){let k=[S];for(;!h(")")&&(k.push(E()),!!w(",")););return A(")","')'"),{type:"list",items:k,line:m}}return A(")","')'"),S}case"[":return c++,{type:"list",items:je("]"),line:m};case"{":{c++;let S=[];for(;!h("}");){let k=y();if(k.type==="eof")throw $("Falta '}' para cerrar el mapa");let C;if(k.type==="num")C=String(k.value);else if(typeof k.value=="string")C=k.value;else throw $(`Se esperaba una clave pero se encontr\xF3 ${xe(k)}`,k);if(c++,w(":")?S.push([C,E()]):k.type==="id"?S.push([C,{type:"var",name:C,line:k.line}]):A(":","':' despu\xE9s de la clave"),!w(","))break}return A("}","'}' para cerrar el mapa"),{type:"map",pairs:S,line:m}}case"fn":{c++;let S=h("id")?A("id").value:"anonymous";return ae(S,m)}case"async":{c++;let S;if(w("fn"))S=ae(h("id")?A("id").value:"anonymous",m);else if(w("||"))S=Ne([],m);else if(w("|"))S=Ne(ue("|"),m);else throw $("Despu\xE9s de async va fn o un closure: async fn cargar() { } o async || { }");return S.isAsync=!0,S}}throw $(`No se esperaba ${xe(f)}`,f)}if(a.mode==="expr"){let f=E();if(!h("eof"))throw $("Texto inesperado dentro de {} en un string");return f}let Ue=[];for(;!h("eof");)Ue.push(b());return Ue}function qe(n,i){return Ze(We(n,{file:i}),{file:i})}function Ge(n){return n.filter(i=>i.type==="import").map(i=>i.path)}function U(n){if(n==null)return"nil";if(Array.isArray(n))return n.map(U).join(" ");if(typeof n=="string")return JSON.stringify(n);let i=a=>Array.isArray(a)?`(${a.join(" ")})`:a;switch(n.type){case"lit":return typeof n.value=="string"?JSON.stringify(n.value):n.value===null?"nil":String(n.value);case"var":return n.name;case"self":return"self";case"template":return`(str ${n.parts.map(U).join(" ")})`;case"list":return`[${n.items.map(U).join(" ")}]`;case"map":return`{${n.pairs.map(([a,l])=>` ${a}: ${U(l)}`).join("")} }`;case"bin":return`(${n.op} ${U(n.left)} ${U(n.right)})`;case"unary":return`(${n.op} ${U(n.value)})`;case"range":return`(${n.inclusive?"..=":".."} ${U(n.from)} ${U(n.to)})`;case"member":return`(${n.optional?"?.":"."} ${U(n.obj)} ${n.name})`;case"index":return`([] ${U(n.obj)} ${U(n.index)})`;case"call":return`(${U(n.fn)}${n.args.map(a=>" "+U(a)).join("")})`;case"function":return`(fn (${n.params.join(" ")}) ${U(n.body)})`;case"decl":return`(${n.constant?"let":"var"} ${i(n.target)} ${U(n.value)})`;case"assign":return`(${n.op} ${U(n.target)} ${U(n.value)})`;case"exp":return U(n.exp);case"return":return`(return ${U(n.value)})`;case"if":return`(if ${U(n.cond)} ${U(n.then)}${n.otherwise?" "+U(n.otherwise):""})`;case"match":return`(match ${U(n.value)} \u2026)`;case"while":return`(while ${U(n.cond)} ${U(n.body)})`;case"for":return`(for ${i(n.target)} ${U(n.iter)} ${U(n.body)})`;case"import":return`(import ${n.alias||"{"+n.names.map(a=>a[1]).join(" ")+"}"} ${JSON.stringify(n.path)})`;case"export":return`(export ${U(n.decl)})`;case"cls":return"."+n.name;case"bindref":return"$"+n.name;case"comp":return`(${n.fn.name}${n.args.map(a=>" "+U(a)).join("")}${n.content?" "+U(n.content):""})`;case"elem":{let a=n.tag.type==="lit"?n.tag.value:U(n.tag),l=n.args.map(u=>" "+U(u)).join(""),c=n.content?" "+U(n.content):"",g=n.action?` (click ${U(n.action.body)})`:"";return`(<${a}>${l}${c}${g})`}}return`(${n.type})`}function kt(n,i){if(n===i)return 0;let a=n.length,l=i.length;if(!a)return l;if(!l)return a;let c=null,g=Array.from({length:l+1},(u,T)=>T);for(let u=1;u<=a;u++){let T=[u];for(let y=1;y<=l;y++){let h=n[u-1]===i[y-1]?0:1;T[y]=Math.min(g[y]+1,T[y-1]+1,g[y-1]+h),c&&u>1&&y>1&&n[u-1]===i[y-2]&&n[u-2]===i[y-1]&&(T[y]=Math.min(T[y],c[y-2]+1))}c=g,g=T}return g[l]}var nt={length:"len",size:"len",count:"len",lenght:"len",toUpperCase:"upper",toLowerCase:"lower",uppercase:"upper",lowercase:"lower",includes:"contains",indexOf:"index_of",forEach:"for_each",toString:"to_string",startsWith:"starts_with",endsWith:"ends_with",padStart:"pad_start",padEnd:"pad_end",reverse:"reversed",sort:"sorted",append:"push",add:"push",strip:"trim",console:"log",println:"log",print:"log",print_line:"log",printf:"write",puts:"log",echo:"log",null:"nil",None:"nil",undefined:"nil",True:"true",False:"false",self_:"self",const:"let",def:"fn",function:"fn",func:"fn",elif:"else if",try:"do",except:"catch"};function At(n,i){let a=[...i],l=Object.prototype.hasOwnProperty.call(nt,n)?nt[n]:null;if(l&&(a.includes(l)||/\s/.test(l)||l==="nil"||l==="true"||l==="false"||l==="fn"||l==="let"||l==="do"||l==="catch"))return l;let c=Math.max(1,Math.floor(n.length/3)),g=null,u=1/0,T=n.toLowerCase();for(let y of a){if(y===n)continue;let h=y.toLowerCase()===T?.5:kt(T,y.toLowerCase());(h<u||h===u&&g&&y.length<g.length)&&(g=y,u=h)}return u<=c?g:null}function Pe(n,i){let a=At(n,i);return a?` \xBFQuisiste decir '${a}'?`:""}var V=class{constructor(i){this.vars=new Map,this.consts=null,this.parent=i||null}define(i,a,l){this.vars.set(i,a),l?(this.consts||(this.consts=new Set)).add(i):this.consts&&this.consts.delete(i)}has(i){for(let a=this;a;a=a.parent)if(a.vars.has(i)||a.inst&&(i in a.inst.fields||a.inst.cls.findMethod(i)))return!0;return!1}get(i,a){for(let l=this;l;l=l.parent){if(l.vars.has(i))return l.vars.get(i);if(l.inst){if(i in l.inst.fields)return l.inst.fields[i];let c=l.inst.cls.findMethod(i);if(c)return c.bind(l.inst)}}throw i==="self"?new M("self solo existe dentro de un m\xE9todo",a):i==="super"?new M("super solo existe dentro de una clase con padre",a):new M(`No existe '${i}' en este \xE1mbito.${Pe(i,this.names())}`.replace(/\.$/,""),a)}names(){let i=new Set;for(let a=this;a;a=a.parent){for(let l of a.vars.keys())i.add(l);if(a.inst){for(let l of Object.keys(a.inst.fields))i.add(l);for(let l=a.inst.cls;l;l=l.parent)for(let c of l.methods.keys())i.add(c)}}return i}set(i,a,l){for(let g=this;g;g=g.parent){if(g.vars.has(i)){if(g.consts&&g.consts.has(i))throw new M(`No se puede asignar dos veces a '${i}'. Decl\xE1rala con var para que pueda cambiar`,l);g.vars.set(i,a);return}if(g.inst&&i in g.inst.fields){g.inst.fields[i]=a;return}}let c=Pe(i,this.names());throw new M(c?`No existe '${i}' en este \xE1mbito.${c}`:`No existe '${i}' en este \xE1mbito. Decl\xE1rala primero con var`,l)}},_e=class n{constructor(i,a,l){this.decl=i,this.env=a,this.isInit=!!l}get name(){return this.decl.name}bind(i){let a=new V(this.env);return a.define("self",i,!0),a.inst=i,new n(this.decl,a,this.isInit)}},pe=class{constructor(i,a,l,c,g){this.name=i,this.parent=a,this.methods=l,this.fields=c,this.env=g}findMethod(i){return this.methods.has(i)?this.methods.get(i):this.parent?this.parent.findMethod(i):null}},G=class{constructor(i){this.cls=i,this.fields=Object.create(null)}},se=class{constructor(i){this.tag=i,this.classes=[],this.attrs=Object.create(null),this.on=Object.create(null),this.bind=null,this.children=[]}},rt=Symbol("tangerine.binding"),it=(n,i)=>({[rt]:!0,get:n,set:i}),Ie=n=>n!==null&&typeof n=="object"&&!!n[rt],Ce=Symbol("tangerine.state"),ge=n=>n!==null&&typeof n=="object"&&!!n[Ce],te=n=>n!==null&&typeof n=="object"&&Object.getPrototypeOf(n)===null,we=n=>{let i=Object.create(null);for(let a in n)i[a]=n[a];return i},H=n=>n!=null&&n!==!1,J=n=>n===void 0?null:n;function Se(n,i){if(n=J(n),i=J(i),n===i)return!0;if(Array.isArray(n)&&Array.isArray(i))return n.length===i.length&&n.every((a,l)=>Se(a,i[l]));if(te(n)&&te(i)){let a=Object.keys(n),l=Object.keys(i);return a.length===l.length&&a.every(c=>c in i&&Se(n[c],i[c]))}return!1}function Y(n){return n=J(n),n===null?"Nil":typeof n=="number"?Number.isInteger(n)?"Int":"Float":typeof n=="string"?"String":typeof n=="boolean"?"Bool":Array.isArray(n)?"List":n instanceof _e||typeof n=="function"?"Fn":n instanceof pe?"Class":n instanceof G?n.cls.name:ge(n)?"State":n instanceof se?"View":Ie(n)?"Binding":te(n)?"Map":n instanceof Promise?"Promise":"Element"}function L(n,i,a){if(a=a||0,ge(n))return L(n[Ce].read(),i,a);if(n instanceof se)return n.tag?`<${n.tag}>`:"<view>";if(n instanceof Promise)return"<promise>";if(Ie(n))return L(n.get(),i,a);if(n=J(n),n===null)return"nil";if(typeof n=="string")return i?JSON.stringify(n):n;if(typeof n=="number")return Number.isInteger(n)||!isFinite(n)?String(n):String(Math.round(n*1e10)/1e10);if(typeof n=="boolean")return String(n);if(a>5)return"\u2026";if(Array.isArray(n))return"["+n.map(c=>L(c,!0,a+1)).join(", ")+"]";if(n instanceof _e)return n.decl.closure?"<closure>":`<fn ${n.name}>`;if(n instanceof pe)return`<class ${n.name}>`;if(typeof n=="function")return`<fn ${n.tngName||"nativa"}>`;let l=c=>{let g=Object.keys(c);return g.length?"{ "+g.map(u=>`${u}: ${L(c[u],!0,a+1)}`).join(", ")+" }":"{}"};return n instanceof G?n.cls.name+" "+l(n.fields):te(n)?l(n):typeof globalThis.Element<"u"&&n instanceof globalThis.Element?`<${n.tagName.toLowerCase()}>`:String(n)}function ye(n){if(n==null)return null;if(Array.isArray(n))return n.map(ye);if(typeof n=="object"&&Object.getPrototypeOf(n)===Object.prototype){let i=Object.create(null);for(let a of Object.keys(n))i[a]=ye(n[a]);return i}return n}function me(n){if(n=J(n),Array.isArray(n))return n.map(me);if(te(n)){let i={};for(let a of Object.keys(n))i[a]=me(n[a]);return i}if(n instanceof G){let i={};for(let a of Object.keys(n.fields))i[a]=me(n.fields[a]);return i}return n}function ke(n,i){if(/^[a-z][a-z0-9+.-]*:\/\//i.test(n))return n;if(i&&/^[a-z][a-z0-9+.-]*:\/\//i.test(i)&&(n.startsWith("./")||n.startsWith("../")))return new URL(n,i).href;let a=n;(n.startsWith("./")||n.startsWith("../"))&&(a=[...i?i.split("/").slice(0,-1):[],...n.split("/")].join("/"));let l=[];for(let g of a.split("/"))if(!(g==="."||g==="")){if(g===".."){l.length&&l[l.length-1]!==".."?l.pop():l.push("..");continue}l.push(g)}let c=(a.startsWith("/")?"/":"")+l.join("/");return/\.[A-Za-z0-9]+$/.test(c)||(c+=".tng"),c}function ot(n){let i=n.output,a="",l=0,c=null,g=new Map,u=new V,T=n.hooks||{decorators:Object.create(null),onInstance:null},y=null,h=0;function P(){if(++l>h&&h>0)throw new ve(`El programa dio demasiados pasos (m\xE1s de ${h}). Revisa si hay un ciclo que nunca termina.`)}function w(){l=0,h=n.stepLimit||0}function $(e,t,r,s){switch(t=J(t),r=J(r),e){case"+":if(typeof t=="number"&&typeof r=="number")return t+r;if(typeof t=="string"||typeof r=="string")return L(t)+L(r);if(Array.isArray(t)&&Array.isArray(r))return t.concat(r);throw new M(`No se puede sumar ${Y(t)} con ${Y(r)}`,s);case"==":return Se(t,r);case"!=":return!Se(t,r);case"<":case">":case"<=":case">=":if(!(typeof t=="number"&&typeof r=="number"||typeof t=="string"&&typeof r=="string"))throw new M(`No se puede comparar ${Y(t)} con ${Y(r)}`,s);return e==="<"?t<r:e===">"?t>r:e==="<="?t<=r:t>=r}if(e==="*"&&typeof t=="string"&&typeof r=="number")return t.repeat(Math.max(0,Math.floor(r)));if(typeof t!="number"||typeof r!="number")throw new M(`El operador ${e} necesita n\xFAmeros, pero recibi\xF3 ${Y(t)} y ${Y(r)}`,s);switch(e){case"-":return t-r;case"*":return t*r;case"/":if(r===0)throw new M("Divisi\xF3n entre cero",s);return t/r;case"%":if(r===0)throw new M("Resto de una divisi\xF3n entre cero",s);return t%r;case"**":return t**r}throw new M(`Operador desconocido ${e}`,s)}function A(e,t,r,s){if(typeof e!="number"||typeof t!="number")throw new M(`Un rango necesita n\xFAmeros, pero recibi\xF3 ${Y(e)} y ${Y(t)}`,s);let d=r?t:t-1;if(d-e>1e6)throw new M("Un rango no puede tener m\xE1s de un mill\xF3n de n\xFAmeros",s);let _=[];for(let N=e;N<=d;N++)_.push(N);return _}let D=(e,t)=>(t.tngName=e,t),v=(e,t)=>de(e,t),W=(e,t)=>{if(typeof e!="number")throw new M(`${t} espera un n\xFAmero, pero recibi\xF3 ${Y(e)}`);return e},B=(e,t)=>{if(!(e instanceof _e||typeof e=="function"||e instanceof pe))throw new M(`${t} espera una funci\xF3n, pero recibi\xF3 ${Y(e)}`);return e},X=(e,t)=>e<t?-1:e>t?1:0,ee={to_string:e=>L(e)},re={len:e=>e.length,is_empty:e=>e.length===0,push:(e,...t)=>(e.push(...t),e),pop:e=>e.length?e.pop():null,insert:(e,t,r)=>(e.splice(W(t,"insert"),0,r),e),remove:(e,t)=>(W(t,"remove"),t>=0&&t<e.length?e.splice(t,1)[0]:null),map:(e,t)=>(B(t,"map"),e.map((r,s)=>v(t,[r,s]))),filter:(e,t)=>(B(t,"filter"),e.filter((r,s)=>H(v(t,[r,s])))),fold:(e,t,r)=>(B(r,"fold"),e.reduce((s,d,_)=>v(r,[s,d,_]),t)),reduce:(e,t)=>{if(B(t,"reduce"),!e.length)return null;let r=e[0];for(let s=1;s<e.length;s++)r=v(t,[r,e[s],s]);return r},find:(e,t)=>{for(let r=0;r<e.length;r++)if(H(v(t,[e[r],r])))return e[r];return null},position:(e,t)=>{for(let r=0;r<e.length;r++)if(H(v(t,[e[r],r])))return r;return null},any:(e,t)=>e.some((r,s)=>H(v(t,[r,s]))),all:(e,t)=>e.every((r,s)=>H(v(t,[r,s]))),count:(e,t)=>t?e.filter((r,s)=>H(v(t,[r,s]))).length:e.length,for_each:(e,t)=>(e.forEach((r,s)=>v(t,[r,s])),null),contains:(e,t)=>e.some(r=>Se(t,r)),index_of:(e,t)=>{let r=e.findIndex(s=>Se(t,s));return r<0?null:r},join:(e,t)=>e.map(r=>L(r)).join(t??""),slice:(e,t,r)=>e.slice(t??0,r??void 0),take:(e,t)=>e.slice(0,Math.max(0,t)),skip:(e,t)=>e.slice(Math.max(0,t)),reversed:e=>[...e].reverse(),sorted:e=>[...e].sort(X),sorted_by:(e,t)=>[...e].sort((r,s)=>{let d=v(t,[r,s]);return typeof d=="number"?d:0}),sorted_by_key:(e,t)=>{let r=e.map(s=>[v(t,[s]),s]);return r.sort((s,d)=>X(s[0],d[0])),r.map(s=>s[1])},enumerate:e=>e.map((t,r)=>[r,t]),zip:(e,t)=>e.slice(0,Math.min(e.length,t.length)).map((r,s)=>[r,t[s]]),chunks:(e,t)=>{if(W(t,"chunks"),t<1)throw new M("chunks necesita un tama\xF1o de al menos 1");let r=[];for(let s=0;s<e.length;s+=t)r.push(e.slice(s,s+t));return r},unique:e=>{let t=new Set,r=[];for(let s of e)s!==null&&typeof s=="object"?r.some(d=>Se(s,d))||r.push(s):t.has(s)||(t.add(s),r.push(s));return r},flatten:e=>e.flat(),sum:e=>e.reduce((t,r)=>$("+",t,r),0),min:e=>e.length?Math.min(...e):null,max:e=>e.length?Math.max(...e):null,first:e=>e.length?e[0]:null,last:e=>e.length?e[e.length-1]:null},le={len:e=>Array.from(e).length,is_empty:e=>e.length===0,upper:e=>e.toUpperCase(),lower:e=>e.toLowerCase(),capitalize:e=>e.charAt(0).toUpperCase()+e.slice(1),trim:e=>e.trim(),split:(e,t)=>e.split(t??""),lines:e=>e.split(/\r?\n/),words:e=>e.trim().split(/\s+/).filter(Boolean),replace:(e,t,r)=>e.split(String(t)).join(L(r)),contains:(e,t)=>e.includes(t),starts_with:(e,t)=>e.startsWith(t),ends_with:(e,t)=>e.endsWith(t),slice:(e,t,r)=>Array.from(e).slice(t??0,r??void 0).join(""),index_of:(e,t)=>{let r=e.indexOf(t);return r<0?null:r},repeat:(e,t)=>e.repeat(Math.max(0,t)),pad_start:(e,t,r)=>e.padStart(t,r??" "),pad_end:(e,t,r)=>e.padEnd(t,r??" "),chars:e=>Array.from(e),reversed:e=>Array.from(e).reverse().join(""),parse:e=>{let t=e.trim().replace(/_/g,""),r=Number(t);return t===""||isNaN(r)?null:r}},ue={abs:e=>Math.abs(e),round:(e,t)=>{let r=10**(t||0);return Math.round(e*r)/r},floor:e=>Math.floor(e),ceil:e=>Math.ceil(e),sqrt:e=>Math.sqrt(e),pow:(e,t)=>e**W(t,"pow"),clamp:(e,t,r)=>Math.min(Math.max(e,t),r),is_even:e=>e%2===0,is_odd:e=>Math.abs(e%2)===1,to_int:e=>Math.trunc(e),times:(e,t)=>{B(t,"times");let r=[];for(let s=0;s<e;s++)r.push(v(t,[s]));return r}},ae={keys:e=>Object.keys(e),values:e=>Object.values(e),entries:e=>Object.keys(e).map(t=>[t,e[t]]),has:(e,t)=>L(t)in e,get:(e,t,r)=>L(t)in e?e[L(t)]:r===void 0?null:r,remove:(e,t)=>{let r=L(t),s=r in e?e[r]:null;return delete e[r],s},len:e=>Object.keys(e).length,is_empty:e=>Object.keys(e).length===0},$e=(e,t,r)=>e(t,...r);function ie(e,t,r){let s=e[r]||ee[r];return s?D(r,(...d)=>s(t,...d)):null}function o(e,t,r,s){if(e=J(e),e===null){if(s)return null;throw new M(`No se puede leer '${t}' de nil. Usa ?. si el valor puede ser nil`,r)}let d=null;if(Ie(e)&&(t==="get"||t==="set"))return D(t,e[t]);if(e instanceof G){if(t in e.fields)return e.fields[t];let R=e.cls.findMethod(t);if(R)return R.bind(e);if(t==="to_string")return ie(ee,e,t);let Z=new Set(Object.keys(e.fields));for(let F=e.cls;F;F=F.parent)for(let Ee of F.methods.keys())Z.add(Ee);throw new M(`${e.cls.name} no tiene un campo ni un m\xE9todo llamado '${t}'.${Pe(t,Z)}`.replace(/\.$/,""),r)}if(te(e))return t in e?e[t]:(d=ie(ae,e,t),d||null);if(Array.isArray(e))d=ie(re,e,t);else if(typeof e=="string")d=ie(le,e,t);else if(typeof e=="number")d=ie(ue,e,t);else{if(e instanceof pe&&t==="name")return e.name;d=ie({},e,t)}if(d)return d;let _=Array.isArray(e)?re:typeof e=="string"?le:typeof e=="number"?ue:{},N=[...Object.keys(_),...Object.keys(ee)];throw new M(`${Y(e)} no tiene un m\xE9todo llamado '${t}'.${Pe(t,N)}`.replace(/\.$/,""),r)}function p(e,t,r,s){if(e instanceof G){e.fields[t]=r;return}if(te(e)){e[t]=r;return}throw new M(`No se puede asignar '${t}' en ${Y(e)}`,s)}function b(e,t,r){if(e=J(e),Array.isArray(e)||typeof e=="string"){let s=typeof e=="string"?Array.from(e):e;if(typeof t!="number"||!Number.isInteger(t))throw new M(`El \xEDndice debe ser un Int, pero es ${Y(t)}`,r);let d=t<0?s.length+t:t;return d>=0&&d<s.length?s[d]:null}if(te(e)){let s=L(t);return s in e?e[s]:null}if(e instanceof G)return o(e,L(t),r);throw new M(`No se puede indexar ${Y(e)}`,r)}function x(e,t,r,s){if(Array.isArray(e)){if(typeof t!="number"||!Number.isInteger(t))throw new M("El \xEDndice debe ser un Int",s);let d=t<0?e.length+t:t;if(d<0||d>e.length)throw new M(`El \xEDndice ${t} est\xE1 fuera de una lista de largo ${e.length}`,s);e[d]=r;return}if(te(e)){e[L(t)]=r;return}if(e instanceof G){e.fields[L(t)]=r;return}throw new M(`No se puede indexar ${Y(e)}`,s)}function O(e){if(e=J(e),!(e===null||y===null)){if(Array.isArray(e)){for(let t of e)O(t);return}if(e instanceof se){e.tag===null?y.push(...e.children):y.push(e);return}if(e instanceof G){let t=e.cls.findMethod("view");if(t){O(de(t.bind(e),[]));return}}typeof e!="boolean"&&y.push(L(e))}}function I(e,t){if(e=J(e),typeof e=="string")return Array.from(e);if(te(e)){let r=e;return Object.keys(r).map(s=>[s,r[s]])}if(e instanceof G){let r=e.fields;return Object.keys(r).map(s=>[s,r[s]])}if(!Array.isArray(e))throw new M(`No se puede recorrer ${Y(e)} con for`,t);return e}let E="await va al inicio de una l\xEDnea dentro de una async fn: let x = await ..., x = await ..., await ... o return await ...",q=new WeakMap;function Q(e){if(!e||typeof e!="object")return!1;if(q.has(e))return q.get(e);let t=!1;if(Array.isArray(e))t=e.some(Q);else if(e.type==="await")t=!0;else if(e.type!=="function"){for(let r in e)if(r!=="line"&&e[r]&&typeof e[r]=="object"&&Q(e[r])){t=!0;break}}return q.set(e,t),t}function oe(e,t){return e instanceof ne||e instanceof M||e instanceof he||e===Me||e===Te||e instanceof ve?e:e instanceof Error?new ne(e.message,t):new ne(ye(e),t)}async function ce(e,t){if(e.type==="await"){let r=j(e.value,t);try{return J(await r)}catch(s){throw oe(s,e.line)}}if(Q(e))throw new M(E,e.line);return j(e,t)}async function be(e,t){let r=null;for(let s of e)r=Q(s)?await He(s,t):Oe(s,t);return r}async function Le(e,t){P();try{await be(e,t)}catch(r){if(r===Me)return!1;if(r===Te)return!0;throw r}return!0}async function He(e,t){switch(e.type){case"exp":{let r=e.exp;if(r.type==="if"){let s=await ce(r.cond,t);return H(s)?be(r.then,new V(t)):r.otherwise?be(r.otherwise,new V(t)):null}return ce(r,t)}case"decl":return Ae(t,e.target,e.value?await ce(e.value,t):null,e.constant,e.line),null;case"assign":return Ne(e,t,await ce(e.value,t)),null;case"return":throw new he(e.value?await ce(e.value,t):null);case"throw":throw new ne(await ce(e.value,t),e.line);case"while":for(;H(await ce(e.cond,t))&&await Le(e.body,new V(t)););return null;case"loop":for(;await Le(e.body,new V(t)););return null;case"for":{let r=I(await ce(e.iter,t),e.line);for(let s of r){let d=new V(t);if(Ae(d,e.target,s,!1,e.line),!await Le(e.body,d))break}return null}case"try":try{return await be(e.body,new V(t))}catch(r){let s=oe(r,e.line);if(!je(s))throw s;let d=new V(t);return d.define(e.name,Re(s)),be(e.handler,d)}}throw new M(E,e.line)}async function Ye(e,t,r){let s=e.decl,d=new V(e.env),_=s.params,N=s.defaults;for(let R=0;R<_.length;R++){let Z=t[R];Z===void 0&&N&&N[R]&&(Z=j(N[R],d)),d.define(_[R],Z===void 0?null:Z)}try{return s.isExpr?await ce(s.body,d):await be(s.body,d)}catch(R){if(R instanceof he)return R.value;throw oe(R,r)}finally{K()}}function ze(e,t){if(typeof fetch!="function")throw new M("fetch no est\xE1 disponible aqu\xED. Usa Node 18 o m\xE1s reciente, o un navegador");let r=t?me(t):{},s={method:String(r.method||"GET").toUpperCase(),headers:{...r.headers||{}}};return r.body!==void 0&&r.body!==null&&(typeof r.body=="string"?s.body=r.body:(s.body=JSON.stringify(r.body),Object.keys(s.headers).some(d=>d.toLowerCase()==="content-type")||(s.headers["Content-Type"]="application/json"))),fetch(String(e),s).then(d=>{if(!d.ok)throw new Error(`HTTP ${d.status} al pedir ${e}`);return d})}function fe(e,t){if(e.view){for(let s of e)s.type==="exp"?O(j(s.exp,t)):Oe(s,t);return null}let r=null;for(let s of e)r=Oe(s,t);return r}function Be(e,t){P();try{fe(e,t)}catch(r){if(r===Me)return!1;if(r===Te)return!0;throw r}return!0}function Ae(e,t,r,s,d){if(Array.isArray(t)){if(!Array.isArray(r))throw new M(`No se puede desarmar ${Y(r)} en (${t.join(", ")})`,d);t.forEach((_,N)=>e.define(_,r[N]===void 0?null:r[N],s))}else e.define(t,r,s)}let je=e=>e instanceof ne||e instanceof M||e instanceof RangeError;function Re(e){if(e instanceof ne){let t=J(e.value);return typeof t=="string"?we({message:t,line:e.line}):t}return e instanceof RangeError?we({message:"Desbordamiento de pila: una funci\xF3n se llam\xF3 a s\xED misma demasiadas veces",line:null}):we({message:e.message,line:e.line})}function Oe(e,t){switch(e.type){case"exp":return j(e.exp,t);case"decl":return Ae(t,e.target,e.value?j(e.value,t):null,e.constant,e.line),null;case"class":{let r=null;if(e.parent&&(r=j(e.parent,t),!(r instanceof pe)))throw new M(`${e.parent.name} no es una clase`,e.line);let s=t;r&&(s=new V(t),s.define("super",r,!0));let d=new Map;for(let N of e.methods)d.set(N.name,new _e(N,s,N.name==="init"));let _=new pe(e.name,r,d,e.fields,s);t.define(e.name,_,!0);for(let N of e.decorators||[]){let R=T.decorators[N.name];if(!R)throw new M(`No existe el decorador @${N.name}. Para un componente usa @Component("mi-etiqueta")`,N.line);R(_,N.args.map(Z=>j(Z,t)),N.line)}return null}case"assign":return Ne(e,t),null;case"while":for(;H(j(e.cond,t))&&Be(e.body,new V(t)););return null;case"loop":for(;Be(e.body,new V(t)););return null;case"for":{let r=I(j(e.iter,t),e.line);for(let s of r){let d=new V(t);if(Ae(d,e.target,s,!1,e.line),!Be(e.body,d))break}return null}case"break":throw Me;case"continue":throw Te;case"return":throw new he(e.value?j(e.value,t):null);case"throw":throw new ne(j(e.value,t),e.line);case"try":try{return fe(e.body,new V(t))}catch(r){if(!je(r))throw r;let s=new V(t);return s.define(e.name,Re(r)),fe(e.handler,s)}case"import":return f(e,t),null;case"export":{if(!t.exports)throw new M("export solo puede usarse en el nivel superior de un m\xF3dulo",e.line);Oe(e.decl,t);for(let r of e.names)t.exports.add(r);return null}}throw new M(`Instrucci\xF3n desconocida ${e.type}`,e.line)}function Ne(e,t,...r){let s=e.target,d=e.line,_=r.length?r[0]:j(e.value,t),N=R=>e.op==="="?_:$(e.op[0],R,_,d);if(s.type==="var")t.set(s.name,e.op==="="?_:N(t.get(s.name,d)),d);else if(s.type==="member"){let R=j(s.obj,t);p(R,s.name,e.op==="="?_:N(o(R,s.name,d)),d)}else{let R=j(s.obj,t),Z=j(s.index,t);x(R,Z,e.op==="="?_:N(b(R,Z,d)),d)}}function Ve(e,t,r){switch(e.kind){case"any":return!0;case"bind":return r.define(e.name,t),!0;case"lit":return Se(e.value,t);case"range":return typeof t=="number"&&t>=e.from&&(e.inclusive?t<=e.to:t<e.to)}return!1}function j(e,t){switch(e.type){case"lit":return e.value;case"template":{let r="";for(let s of e.parts)r+=typeof s=="string"?s:L(j(s,t));return r}case"var":return t.get(e.name,e.line);case"self":return t.get("self",e.line);case"super":{let r=t.get("super",e.line),s=t.get("self",e.line),d=r.findMethod(e.name);if(!d)throw new M(`La clase ${r.name} no tiene un m\xE9todo llamado '${e.name}'`,e.line);return d.bind(s)}case"list":return e.items.map(r=>j(r,t));case"map":{let r=Object.create(null);for(let[s,d]of e.pairs)r[s]=j(d,t);return r}case"function":return new _e(e,t);case"await":throw new M(E,e.line);case"bindref":{let r=e.name;return t.has(r)||t.get(r,e.line),it(()=>t.get(r,e.line),s=>t.set(r,s,e.line))}case"comp":{let r=j(e.fn,t),s=e.args.map(N=>N.type==="cls"?N.name:j(N,t)),d=null;if(e.content){d=new se(null);let N=y;y=d.children;try{fe(e.content,new V(t))}finally{y=N}}let _=de(r,s,e.line);return _ instanceof G&&(d||!("children"in _.fields))&&(_.fields.children=d),_}case"elem":{let r=new se(L(j(e.tag,t)));for(let s of e.args){if(s.type==="cls"){r.classes.push(s.name);continue}let d=J(j(s,t));if(!(d===null||d===!1))if(Ie(d))r.bind=d;else if(te(d)&&!ge(d))for(let _ of Object.keys(d)){let N=J(d[_]);_==="class"?H(N)&&r.classes.push(L(N)):_.startsWith("on_")?N!==null&&(r.on[_.slice(3)]=N):r.attrs[_]=N}else d instanceof se?r.children.push(d):r.children.push(L(d))}if(e.action&&(r.on.click=j(e.action,t)),e.content){let s=y;y=r.children;try{fe(e.content,new V(t))}finally{y=s}}return r}case"range":return A(j(e.from,t),j(e.to,t),e.inclusive,e.line);case"unary":{let r=j(e.value,t);if(e.op==="!")return!H(r);if(typeof r!="number")throw new M(`No se puede negar ${Y(r)}`,e.line);return-r}case"bin":{if(e.op==="&&"){let r=j(e.left,t);return H(r)?j(e.right,t):r}if(e.op==="||"){let r=j(e.left,t);return H(r)?r:j(e.right,t)}if(e.op==="??"){let r=J(j(e.left,t));return r!==null?r:j(e.right,t)}return $(e.op,j(e.left,t),j(e.right,t),e.line)}case"if":return H(j(e.cond,t))?fe(e.then,new V(t)):e.otherwise?fe(e.otherwise,new V(t)):null;case"match":{let r=j(e.value,t);for(let s of e.arms)for(let d of s.pats){let _=new V(t);if(Ve(d,r,_)&&!(s.guard&&!H(j(s.guard,_))))return s.isBlock?fe(s.body,_):j(s.body,_)}throw new M(`Ning\xFAn caso del match acepta ${L(r,!0)}. Agrega un caso _ =>`,e.line)}case"member":return o(j(e.obj,t),e.name,e.line,e.optional);case"index":return b(j(e.obj,t),j(e.index,t),e.line);case"call":{if(e.fn.type==="member"){let r=j(e.fn.obj,t);if(e.fn.optional&&J(r)===null)return null;let s=Array.isArray(r)?re:typeof r=="string"?le:typeof r=="number"?ue:te(r)&&!(e.fn.name in r)?ae:null,d=s&&(s[e.fn.name]||ee[e.fn.name]);if(d){let N=e.args.map(R=>j(R,t));return de($e,[d,r,N],e.line)}let _=o(r,e.fn.name,e.line,e.fn.optional);return de(_,e.args.map(N=>j(N,t)),e.line)}return de(j(e.fn,t),e.args.map(r=>j(r,t)),e.line)}}throw new M(`No se puede evaluar ${e.type}`,e.line)}function Qe(e,t,r){let s=new G(e),d=[];for(let N=e;N;N=N.parent)d.unshift(N);for(let N of d){if(!N.fields.length)continue;let R=new V(N.env);R.define("self",s,!0),R.inst=s;for(let Z of N.fields)s.fields[Z.name]=j(Z.value,R)}T.onInstance&&T.onInstance(s);let _=e.findMethod("init");if(_)de(_.bind(s),t,r);else if(t.length)throw new M(`${e.name} no tiene un init que reciba argumentos`,r);return s}function de(e,t,r){if(typeof e=="function"){let s;try{s=e(...t)}catch(d){throw d instanceof M?(d.line||(d.line=r),d):d instanceof Error&&!(d instanceof RangeError)?new M(d.message,r):d}return s===void 0?null:s}if(e instanceof _e){if(P(),e.decl.isAsync){let F=Ye(e,t,r);return F.tngAsync=!0,F}let s=e.decl,d=new V(e.env),_=s.params,N=s.defaults,R=c;s.file&&(c=s.file);let Z;try{for(let F=0;F<_.length;F++){let Ee=t[F];Ee===void 0&&N&&N[F]&&(Ee=j(N[F],d)),d.define(_[F],Ee===void 0?null:Ee)}if(s.isView){let F=new se(null),Ee=y;y=F.children;try{fe(s.body,d)}finally{y=Ee}Z=F}else Z=s.isExpr?j(s.body,d):fe(s.body,d)}catch(F){if(F instanceof he)Z=F.value;else throw(F instanceof M||F instanceof ne)&&(!F.file&&s.file&&(F.file=s.file),F.trace||(F.trace=[]),F.trace.length<50&&F.trace.push({name:s.closure?"closure":s.name,line:r||null,file:R})),F===Me||F===Te?new M(`${F.control} solo se puede usar dentro de un ciclo`,r,null,s.file):F}finally{c=R}return e.isInit?d.get("self"):Z}if(e instanceof pe)return Qe(e,t,r);throw new M(`${L(e,!0)} no es una funci\xF3n`,r)}function Ue(e,t,r){let s=g.get(e);if(s){if(s.state==="loading")throw new M(`Importaci\xF3n circular: '${e}' se importa a s\xED mismo a trav\xE9s de otros m\xF3dulos`,t,null,r);return s.exports}let d=n.read(e);if(d==null)throw new M(`No se encontr\xF3 el m\xF3dulo '${e}'`,t,null,r);let _={state:"loading",exports:null};g.set(e,_);try{let N=m(String(d),e),R=Object.create(null);for(let Z of N.exports)R[Z]=N.vars.get(Z);return _.exports=R,_.state="ready",R}catch(N){throw g.delete(e),N}}function f(e,t){let r=t.file||null,s;try{s=n.resolve(e.path,r)}catch(_){throw _ instanceof M&&(_.line||(_.line=e.line),_.file||(_.file=r)),_}let d=Ue(s,e.line,r);if(e.alias){t.define(e.alias,d,!0);return}for(let[_,N]of e.names){if(!(_ in d))throw new M(`El m\xF3dulo '${e.path}' no exporta '${_}'`,e.line);t.define(N,d[_],!0)}}function m(e,t,r){let s=qe(e,t);r=r||new V(u),r.file=t,r.exports=new Set;let d=c;c=t;try{let _=null;for(let N of s)_=Oe(N,r);r.last=_}catch(_){if(_ instanceof he)return r.last=_.value,r;throw(_ instanceof M||_ instanceof ne)&&!_.file&&(_.file=t),_}finally{c=d}return r}function S(e){if(e instanceof M)return Xe(e.line,e.col,e.file)+e.message;if(e instanceof ne){let t=J(e.value),r;return te(t)&&typeof t.message=="string"?r=t.message:t instanceof G&&typeof t.fields.message=="string"?r=t.fields.message:r=L(t),Xe(e.line,null,e.file)+"Error no atrapado: "+r}return e instanceof ve?e.message:e instanceof RangeError?"Desbordamiento de pila: una funci\xF3n se llam\xF3 a s\xED misma demasiadas veces.":e===Me||e===Te?`${e.control} solo se puede usar dentro de un ciclo.`:"Error interno: "+(e&&e.message)}function k(e){if(!e||!e.trace||!e.trace.length)return[];let t=e.trace.slice(0,12).map(r=>{let s=r.line?`${r.file?r.file+", ":""}l\xEDnea ${r.line}`:r.file||"";return`en ${r.name}()${s?", llamada en "+s:""}`});return e.trace.length>12&&t.push(`\u2026 y ${e.trace.length-12} llamadas m\xE1s`),t}let C={log:(...e)=>{i(a+e.map(t=>L(t)).join(" ")),a=""},write:(...e)=>{a+=e.map(t=>L(t)).join(" ")},sleep:e=>new Promise(t=>setTimeout(()=>t(null),Number(e)||0)),fetch_json:(e,t)=>ze(e,t).then(r=>r.text()).then(r=>r?ye(JSON.parse(r)):null),fetch_text:(e,t)=>ze(e,t).then(r=>r.text()),type_of:e=>Y(e),assert:(e,t)=>{if(!H(e))throw new ne(we({message:t==null?"La afirmaci\xF3n fall\xF3":L(t)}))},min:(...e)=>{let t=e.length===1&&Array.isArray(e[0])?e[0]:e;return t.length?Math.min(...t):null},max:(...e)=>{let t=e.length===1&&Array.isArray(e[0])?e[0]:e;return t.length?Math.max(...t):null},random:()=>Math.random(),random_int:(e,t)=>Math.floor(Math.random()*(W(t,"random_int")-W(e,"random_int")+1))+e,to_json:(e,t)=>JSON.stringify(me(e),null,t||void 0)??"null",from_json:e=>{try{return ye(JSON.parse(String(e)))}catch(t){throw new M("from_json recibi\xF3 un texto que no es JSON v\xE1lido: "+t.message)}},PI:Math.PI};for(let e in C)typeof C[e]=="function"&&(C[e].tngName=e);for(let e in C)u.define(e,C[e],!0);function K(){if(a){let e=a;a="",i(e)}}return{global:u,define(e,t){typeof t=="function"&&!t.tngName&&(t.tngName=e),u.define(e,t,!0)},run(e,t,r){w();try{return m(String(e),t||null,r).last}finally{K()}},invoke(e,t){w();try{let r=de(e,t||[]);return r&&r.tngAsync&&r.catch(s=>{s instanceof he||n.onError(S(oe(s)))}),r}catch(r){return r instanceof he?r.value:(n.onError(S(r)),null)}finally{K()}},call:(e,t)=>de(e,t||[]),message:S,trace:k,loadModule:e=>{w();try{return Ue(e,null,null)}finally{K()}},forget:e=>g.delete(e),newEnv:()=>new V(u),setOutput(e){i=e},get output(){return i},flush:K}}var Et=1e3;function st(){return{name:"reactivo",install(n){let i=(w,$)=>n._rt.call(w,$||[]),a=null,l=new Set,c=!1;function g(w){if(!w.muerto&&(l.add(w),!c)){c=!0;try{let $=0;for(;l.size;){if(++$>Et)throw new Error("Un effect cambia un estado que \xE9l mismo lee, y se repite sin fin.");let A=[...l];l.clear();for(let D of A)D.muerto||D.correr()}}finally{c=!1,l.clear()}}}function u(w){let $=J(w),A=new Set;return{read(){return a&&(A.add(a),a.deps.add(A)),$},peek:()=>$,write(D){if(D=J(D),D===$&&(D===null||typeof D!="object"))return D;$=D;for(let v of[...A])g(v);return D}}}function T(w){for(let $ of w.deps)$.delete(w);w.deps.clear();for(let $ of w.hijos)$.muerto=!0,T($);w.hijos=[]}function y(w){let $={deps:new Set,hijos:[],muerto:!1,correr(){T($);let A=a;a=$;try{w()}finally{a=A}}};return a&&a.hijos.push($),$.correr(),$}let h=(w,$)=>($.tngName=w,$);function P(w,$){let A=Object.create(null);return A.get=h("get",()=>w.read()),$||(A.set=h("set",D=>w.write(D)),A.update=h("update",D=>w.write(i(D,[w.peek()])))),Object.defineProperty(A,Ce,{value:w}),A}n.reactive={isState:ge,effect:y,signal:u,dispose(w){w&&(w.muerto=!0,T(w))},watch(w,$){ge(w)?y(()=>$(w[Ce].read())):$(w)},peek:w=>ge(w)?w[Ce].peek():w,set:(w,$)=>w[Ce].write($)},n.defineAll({state:w=>P(u(w),!1),computed:w=>{let $=u(null);return y(()=>$.write(i(w))),P($,!0)},effect:w=>(y(()=>i(w)),null),is_state:w=>ge(w)})}}}var at=Symbol("tangerine.listeners"),Ot=/^[a-z][a-z0-9]*(-[a-z0-9]+)+$/,Nt=new Set(["br","hr","img","input","meta","link","source","area","col","embed","wbr"]);function lt(n){let i=[];for(let l=n;l;l=l.parent)i.unshift(l);let a=[];for(let l of i)for(let c of l.fields)c.decor&&a.push(c);return a}var Fe=n=>String(n).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");function Je(n){if(typeof n=="string")return Fe(n);if(!(n instanceof se))return"";let i=n.children.map(Je).join("");if(n.tag===null)return i;let a="";n.classes.length&&(a+=` class="${Fe(n.classes.join(" "))}"`);for(let c of Object.keys(n.attrs)){if(c==="key"||c==="ref"||c==="raw")continue;let g=J(n.attrs[c]);g===null||g===!1||(a+=g===!0?` ${c}`:` ${c}="${Fe(L(g))}"`)}if(n.bind){let c=J(n.bind.get());n.attrs.type==="checkbox"?H(c)&&(a+=" checked"):n.tag!=="textarea"&&c!==null&&(a+=` value="${Fe(L(c))}"`)}if(Nt.has(n.tag))return`<${n.tag}${a}>`;let l=n.tag==="textarea"&&n.bind?Fe(L(J(n.bind.get())??"")):i;return`<${n.tag}${a}>${l}</${n.tag}>`}function ut(){return{name:"componentes",install(n){let i=(u,T)=>n._rt.call(u,T||[]),a=new Map,l=[];function c(u){let T=[],y=we([]);return y.emit=h=>{for(let P of T.slice())P(J(h));return null},y.emit.tngName="emit",y.listen=h=>(T.push(P=>i(h,[P])),null),y.listen.tngName="listen",Object.defineProperty(y,at,{value:T}),Object.defineProperty(y,"toString",{value:()=>`<output ${u}>`}),y}n.hooks.onInstance=u=>{let T=lt(u.cls);if(T.length)for(let y of T){if(y.decor==="Output"){u.fields[y.name]=c(y.name);continue}let h=n.reactive.signal(u.fields[y.name]);Object.defineProperty(u.fields,y.name,{get:()=>h.read(),set:P=>h.write(P),enumerable:!0,configurable:!0})}},n.hooks.decorators.Component=(u,T)=>{let y=T[0];if(typeof y!="string"||!Ot.test(y))throw new Error(`@Component necesita una etiqueta en min\xFAsculas con guion, por ejemplo @Component("mi-${u.name.toLowerCase()}")`);if(!u.findMethod("view"))throw new Error(`El componente ${u.name} necesita un view { } con lo que muestra`);let h=lt(u);u.component={tag:y,inputs:h.filter(P=>P.decor==="Input").map(P=>P.name),outputs:h.filter(P=>P.decor==="Output").map(P=>P.name)},a.set(y,u);for(let P of l)P(u)};function g(u){let T=u instanceof G&&u.cls.findMethod("view");if(!T)throw new Error(`${L(u)} no tiene un view { }`);return i(T.bind(u),[])}n.components={registry:a,renderView:g,onDefine:u=>l.push(u),toHTML:Je,LISTENERS:at,isBinding:Ie},n.defineAll({render_html:u=>u instanceof G?Je(g(u)):u instanceof se?Je(u):te(u)?"":Je(String(L(u)))})}}}var Mt="5.2.1",ct=[],Tt=n=>!/^(\.{1,2}\/|\/|[a-z][a-z0-9+.-]*:\/\/)/i.test(n);function ft(n,i,a){if(a&&Tt(n)){if(Object.prototype.hasOwnProperty.call(a,n))return a[n];let l=null;for(let c of Object.keys(a))c.endsWith("/")&&n.startsWith(c)&&(!l||c.length>l.length)&&(l=c);if(l)return ke(a[l]+n.slice(l.length),null)}return ke(n,i)}var z=class n{constructor(i={}){this.options=i,this.imports={...i.imports||{}},this.modules=new Map(Object.entries(i.modules||{}).map(([l,c])=>[ke(l,null),c]));let a=this;if(this.hooks={decorators:Object.create(null),onInstance:null},this._rt=ot({output:i.output||(l=>console.log(l)),get stepLimit(){return a.stepLimit},resolve:i.resolve||((l,c)=>ft(l,c,a.imports)),read:l=>a.modules.has(l)?a.modules.get(l):i.read?i.read(l):null,onError:i.onError||(l=>console.error("Tangerine: "+l)),hooks:this.hooks}),this.stepLimit=i.stepLimit||0,this.plugins=[],this.use(st()),this.use(ut()),i.globalPlugins!==!1)for(let l of ct)this.use(l);for(let l of i.plugins||[])this.use(l);i.natives&&this.defineAll(i.natives)}define(i,a){return this._rt.define(i,a),this}defineAll(i){for(let a of Object.keys(i))this.define(a,i[a]);return this}use(i){let a=(typeof i=="function"||i)&&i.name;if(a&&this.plugins.includes(a))return this;if(typeof i=="function")i(this);else if(i&&typeof i.install=="function")i.install(this);else throw new TypeError("Un plugin debe ser una funci\xF3n o un objeto con install(tng)");return a&&this.plugins.push(a),this}addModule(i,a){return this.modules.set(this._key(i),String(a)),this}run(i,a={}){try{return this._rt.run(i,a.file?this._key(a.file):null)}catch(l){throw this._wrap(l)}}import(i){try{return this._rt.loadModule(this._key(i))}catch(a){throw this._wrap(a)}}forget(i){return this._rt.forget(this._key(i)),this}runModule(i){let a=this._key(i),l=this.modules.has(a)?this.modules.get(a):this.options.read?this.options.read(a):null;if(l==null)throw new M(`No se encontr\xF3 el m\xF3dulo '${a}'`);return this.run(l,{file:a})}runCode(i,a={}){let l=[],c=this._rt.output;this._rt.setOutput(g=>l.push(g));try{return this._rt.run(String(i),a.file||null),we({output:l,error:null,trace:[]})}catch(g){return we({output:l,error:this._rt.message(g),trace:this._rt.trace(g)})}finally{this._rt.setOutput(c)}}session(){let i=this._rt.newEnv();return{run:a=>{try{return this._rt.run(a,null,i)}catch(l){throw this._wrap(l)}},has:a=>i.has(a)}}invoke(i,a){return this._rt.invoke(i,a)}call(i,a){try{return this._rt.call(i,a)}catch(l){throw this._wrap(l)}}trace(i){return this._rt.trace(i&&i.original&&!i.trace?i.original:i)}message(i){return i instanceof M&&!i.original?this._rt.message(i):i&&i.tngMessage?i.tngMessage:this._rt.message(i&&i.original?i.original:i)}globals(){return[...this._rt.global.vars.keys()]}show(i,a){return L(i,a)}truthy(i){return H(i)}_key(i){return this.options.resolve?this.options.resolve(i,null):ke(i,null)}_wrap(i){let a=this._rt.message(i),l=i instanceof M?i:new M(a,i&&i.line,null,i&&i.file);return l.tngMessage=a,l!==i&&(l.original=i,i&&i.trace&&(l.trace=i.trace)),l}static registerPlugin(i){ct.push(i)}static runCode(i,a){let l=new n({stepLimit:4e5,...a}).runCode(i);return{output:l.output,error:l.error,trace:l.trace}}};z.VERSION=Mt;z.KEYWORDS=De;z.lexer=We;z.parser=Ze;z.parse=qe;z.sx=U;z.show=L;z.truthy=H;z.makeMap=we;z.isMap=te;z.typeOf=Y;z.fromJS=ye;z.toJS=me;z.importsOf=Ge;z.resolvePath=ke;z.resolveWithMap=ft;z.TngError=M;z.Thrown=ne;var It=()=>!!(typeof matchMedia<"u"&&matchMedia("(prefers-reduced-motion: reduce)").matches);function et(){return{name:"dom",install(n){let i=o=>n.show(o),a=o=>n.truthy(o),l=(o,p)=>n.invoke(o,p),c=null,g=(o,p)=>n.reactive?n.reactive.watch(o,p):p(o),u=(o,p)=>n._rt.call(o,p||[]),T=o=>typeof Element<"u"&&o instanceof Element,y=o=>o.replace(/_/g,"-").replace(/([a-z0-9])([A-Z])/g,"$1-$2").toLowerCase(),h=o=>o.replace(/[-_]([a-z0-9])/g,(p,b)=>b.toUpperCase()),P=()=>n.components,w=o=>!!(P()&&P().registry.has(o));function $(o){let p=Object.create(null);return p.type=o.type,p.key=o.key===void 0?null:o.key,p.value=o.target&&"value"in o.target?o.target.value:null,p.detail=o.detail===void 0?null:ye(o.detail),p.target=o.target||null,p}function A(o,p){let b=o.__tngAttrs||Object.create(null),x=p.tag.includes("-");for(let I of Object.keys(b))I in p.attrs||(o.removeAttribute(I),x&&(o[h(I)]=void 0));for(let I of Object.keys(p.attrs)){if(I==="key"||I==="ref"||I==="raw")continue;let E=J(p.attrs[I]);if(ge(E)&&(E=E.get()),x&&E!==null&&typeof E!="string"){o[h(I)]=E;continue}if(I==="value"&&"value"in o){let q=E===null?"":i(E);o.value!==q&&(o.value=q);continue}if(I==="checked"&&"checked"in o){o.checked=a(E);continue}if(E===null||E===!1)o.removeAttribute(I);else{let q=E===!0?"":i(E);o.getAttribute(I)!==q&&o.setAttribute(I,q)}}o.__tngAttrs=p.attrs;let O=p.classes.join(" ");(o.getAttribute("class")||"")!==O&&(O?o.setAttribute("class",O):o.removeAttribute("class"))}function D(o,p){o.__tngOn=p.on;let b=o.__tngTypes||(o.__tngTypes=new Set);for(let x of Object.keys(p.on))b.has(x)||(b.add(x),o.addEventListener(x,O=>{let I=o.__tngOn&&o.__tngOn[x];I&&(x==="submit"&&O.preventDefault(),l(I,I.decl&&I.decl.params.length?[$(O)]:[]))}))}function v(o,p){if(o.__tngBind=p.bind,!p.bind)return;let b=o.type==="checkbox"||o.type==="radio",x=J(p.bind.get());if(b)o.checked=a(x);else{let I=x===null?"":i(x);o.value!==I&&(o.value=I)}if(o.__tngBound)return;o.__tngBound=!0;let O=o.type==="number"||o.type==="range";o.addEventListener(b||o.tagName==="SELECT"?"change":"input",()=>{let I=o.__tngBind;if(!I)return;let E=b?o.checked:O?o.value===""?null:Number(o.value):o.value;l(()=>I.set(E))})}function W(o,p){A(o,p),D(o,p),v(o,p)}function B(o){if(typeof o=="string")return document.createTextNode(o);let p=document.createElement(o.tag);if(o.tag==="button"&&!("type"in o.attrs)&&(p.type="button"),p.__tngKey=ee(o),A(p,o),D(p,o),!w(o.tag))for(let x of o.children)p.appendChild(B(x));v(p,o);let b=J(o.attrs.ref);return b&&queueMicrotask(()=>l(b,[p])),p}let X=(o,p)=>typeof p=="string"?o.nodeType===3:o.nodeType===1&&o.tagName.toLowerCase()===p.tag.toLowerCase(),ee=o=>typeof o=="string"||o.attrs.key===void 0||o.attrs.key===null?null:i(o.attrs.key);function re(o,p){let b=new Map;for(let O of Array.from(o.childNodes))O.__tngKey!=null&&b.set(O.__tngKey,O);let x=0;for(let O of p){let I=ee(O),E;I!==null?(E=b.get(I),b.delete(I),E&&!X(E,O)&&(E=null)):(E=o.childNodes[x],E&&(E.__tngKey!=null||!X(E,O))&&(E=null)),E?typeof O=="string"?E.data!==O&&(E.data=O):(W(E,O),!w(O.tag)&&!a(O.attrs.raw)&&le(E,O.children)):E=B(O);let q=o.childNodes[x];q!==E&&o.insertBefore(E,q||null),x++}for(;o.childNodes.length>p.length;)o.lastChild.remove()}function le(o,p){if(p.some(x=>ee(x)!==null))return re(o,p);let b=0;for(let x of p){let O=o.childNodes[b];O?X(O,x)?typeof x=="string"?O.data!==x&&(O.data=x):(W(O,x),!w(x.tag)&&!a(x.attrs.raw)&&le(O,x.children)):o.replaceChild(B(x),O):o.appendChild(B(x)),b++}for(;o.childNodes.length>p.length;)o.lastChild.remove()}function ue(o,p){return n.reactive.effect(()=>{let b=P().renderView(p);le(o,b instanceof se?b.tag===null?b.children:[b]:[])})}function ae(o,p){let b=o instanceof G&&o.cls.findMethod(p);b&&l(b.bind(o))}let $e=(o,p)=>{if(typeof p=="number"){let b=Number(o);return Number.isNaN(b)?p:b}return typeof p=="boolean"?o!=="false"&&o!==null:o};function ie(o){if(typeof customElements>"u")return;let p=o.component;if(customElements.get(p.tag))return;let b=P().LISTENERS,x=Object.create(null);class O extends HTMLElement{static get observedAttributes(){return p.inputs.map(y)}constructor(){super(),this._tng=null,this._fx=null,this._pending=Object.create(null)}_set(E,q){l(()=>{this._tng.fields[E]=q})}connectedCallback(){if(!this._tng){let E=l(o);if(!(E instanceof G))return;this._tng=E;for(let q of p.inputs){q in x||(x[q]=J(E.fields[q]));let Q=this.getAttribute(y(q));Q!==null&&(E.fields[q]=$e(Q,x[q])),q in this._pending&&(E.fields[q]=this._pending[q])}for(let q of p.outputs){let Q=E.fields[q];Q&&Q[b]&&Q[b].push(oe=>this.dispatchEvent(new CustomEvent(q,{detail:me(oe),bubbles:!0,composed:!0})))}}if(!this._fx){let E=this;l(()=>{E._fx=ue(E,E._tng)}),this._fx&&ae(this._tng,"on_mount")}}disconnectedCallback(){this._fx&&(n.reactive.dispose(this._fx),this._fx=null,ae(this._tng,"on_destroy"))}attributeChangedCallback(E,q,Q){let oe=p.inputs.find(ce=>y(ce)===E);!oe||!this._tng||this._set(oe,Q===null?x[oe]:$e(Q,x[oe]))}}for(let I of p.inputs){let E={get(){return this._tng?me(this._tng.fields[I]):this._pending[I]},set(q){let Q=q instanceof Node?q:ye(q);this._tng?this._set(I,Q):this._pending[I]=Q},configurable:!0};Object.defineProperty(O.prototype,I,E),h(I)!==I&&Object.defineProperty(O.prototype,h(I),E)}customElements.define(p.tag,O)}if(n.components){for(let o of n.components.registry.values())ie(o);n.components.onDefine(ie)}n.defineAll({mount:(o,p)=>{let b=typeof o=="string"?document.querySelector(o):o;if(!b)throw new Error(`mount no encontr\xF3 '${o}' en la p\xE1gina`);let x=p instanceof pe?n._rt.call(p,[]):p;if(!(x instanceof G))throw new Error('mount necesita un struct con view { }, por ejemplo mount("#app", App)');return ue(b,x),ae(x,"on_mount"),x},query:o=>document.querySelector(o),focus:o=>(o&&o.focus&&o.focus({preventScroll:!0}),o),query_all:o=>Array.from(document.querySelectorAll(o)),el:(o,p,b)=>{let x=document.createElement(o);return g(p,O=>{x.className=O?i(O):""}),o==="button"&&(x.type="button"),g(b,O=>{O!=null&&(x.textContent=i(O))}),x},append:(o,p)=>(o.appendChild(p),p),remove:o=>(o&&o.remove(),null),add_text:(o,p)=>(o.appendChild(document.createTextNode(i(p))),o),set_text:(o,p)=>(g(p,b=>{o.textContent=i(b)}),o),attr:(o,p,b)=>(g(b,x=>{x==null||x===!1?o.removeAttribute(p):o.setAttribute(p,x===!0?"":i(x))}),o),get_attr:(o,p)=>o.getAttribute(p),toggle_class:(o,p,b)=>(b===void 0?o.classList.toggle(p):g(b,x=>o.classList.toggle(p,a(x))),o),set_style:(o,p,b)=>(g(b,x=>o.style.setProperty(p,x==null?"":i(x))),o),clear:o=>(o.replaceChildren(),o),set_visible:(o,p)=>(g(p,b=>{o.hidden=!a(b)}),o),value:o=>o.value,set_value:(o,p)=>(g(p,b=>{o.value=b==null?"":i(b)}),o),bind:(o,p)=>{if(!n.reactive||!n.reactive.isState(p))throw new Error('bind necesita un state: bind(campo, state(""))');let b=o.type==="checkbox"||o.type==="radio",x=o.type==="number"||o.type==="range";return g(p,O=>{if(b)o.checked=a(O);else{let I=O==null?"":i(O);o.value!==I&&(o.value=I)}}),o.addEventListener(b||o.tagName==="SELECT"?"change":"input",()=>{let O=b?o.checked:x?o.value===""?null:Number(o.value):o.value;l(()=>n.reactive.set(p,O))}),o},render:(o,p)=>{let b=()=>{o.replaceChildren();let x=u(p,p&&p.decl&&p.decl.params.length?[o]:[]);for(let O of Array.isArray(x)?x:[x])T(O)&&O.parentNode!==o&&o.appendChild(O)};return n.reactive?n.reactive.effect(b):b(),o},on:(o,p,b)=>{let x=!!(b&&b.decl&&b.decl.params.length);return o.addEventListener(p,O=>{if(!x)return l(b);let I=Object.create(null);I.type=O.type,I.key=O.key===void 0?null:O.key,I.value=O.target&&"value"in O.target?O.target.value:null,I.target=O.target||null,l(b,[I])}),o},on_shortcut:(o,p)=>(o.addEventListener("keydown",b=>{b.key==="Enter"&&(b.ctrlKey||b.metaKey)&&(b.preventDefault(),l(p))}),o),now:()=>performance.now(),after:(o,p)=>(setTimeout(()=>l(p),o),null),copy:(o,p)=>{let b=p?p.textContent:"",x=O=>{p&&(p.textContent=O,setTimeout(()=>p.textContent=b,1800))};try{navigator.clipboard.writeText(i(o)).then(()=>x("Copiado"),()=>x("Selecciona y copia a mano"))}catch{x("Selecciona y copia a mano")}return null},save:(o,p)=>{try{localStorage.setItem(o,i(p))}catch{}return null},load:o=>{try{return localStorage.getItem(o)}catch{return null}},on_route:o=>(c=()=>l(o,[decodeURIComponent(location.hash.slice(1))]),window.addEventListener("hashchange",c),c(),null),go:o=>(location.hash.slice(1)===o?c&&c():location.hash=o,null),scroll_top:()=>(window.scrollTo(0,0),null),scroll_to:o=>(o&&requestAnimationFrame(()=>o.scrollIntoView({behavior:It()?"auto":"smooth",block:"start"})),null),when_visible:(o,p)=>(typeof IntersectionObserver>"u"||new IntersectionObserver(b=>{b.some(x=>x.isIntersecting)&&l(p)},{rootMargin:"-90px 0px -70% 0px"}).observe(o),null)})}}}z.registerPlugin(et());z.dom=et;globalThis.Tangerine=z;async function ht(n,i,a){let l=ke(i,null);if(a.has(l)||n.modules.has(l))return l;a.add(l);let c=await fetch(l);if(!c.ok)throw new Error(`No se pudo descargar '${l}' (HTTP ${c.status})`);let g=await c.text();n.addModule(l,g);let u=[];try{u=Ge(qe(g,l))}catch{}return await Promise.all(u.map(T=>ht(n,ke(T,l),a))),l}z.prototype.load=async function(n){let i=await ht(this,n,new Set);return this.runModule(i)};function pt(n){console.error("Tangerine: "+n);let i=document.getElementById("app")||document.body;if(!i)return;let a=document.createElement("pre");a.className="tangerine-fallo",a.style.cssText="white-space:pre-wrap;font:14px/1.5 ui-monospace,monospace;color:#b42318;background:#fff4f2;border:1px solid #f3c6bf;border-radius:8px;padding:12px 16px;margin:16px",a.textContent=`Tangerine no pudo ejecutar el programa.
 `+n,i.appendChild(a)}z.start=async function(n={}){let i=document.getElementById("tangerine-imports"),a=n.imports;if(i&&!a)try{a=JSON.parse(i.textContent)}catch{pt("El mapa de paquetes (tangerine-imports) no es JSON v\xE1lido")}let l=new z({...n,imports:a}),c=Array.from(document.querySelectorAll('script[type="text/tangerine"]'));for(let g of c)g.dataset.module&&l.addModule(g.dataset.module,g.textContent);for(let g of c)if(!(g.dataset.module&&!("main"in g.dataset)))try{g.dataset.module?l.runModule(g.dataset.module):g.src||g.getAttribute("src")?await l.load(g.getAttribute("src")):l.run(g.textContent,{file:g.id?g.id+".tng":void 0})}catch(u){pt(l.message(u))}return l};var dt=typeof document<"u"?document.currentScript:null;if(typeof document<"u"&&!(dt&&dt.hasAttribute("data-manual"))){let n=()=>{z.instance=z.start()};document.readyState==="loading"?document.addEventListener("DOMContentLoaded",n):n()}var cn=z;})();
 </script>
 <script>
@@ -1299,13 +1702,13 @@ a:hover > .flecha, .t-btn:hover .flecha { transform: translateX(3px); }
 // Documentación de cada componente. El código de cada ejemplo es real:
 // la web lo ejecuta para dibujar la vista previa y lo convierte en HTML.
 
-export let grupos = ["Formularios", "Contenedores", "Feedback", "Datos", "Layout"]
+export let grupos = ["Botones", "Formularios", "Contenedores", "Navegación", "Feedback", "Datos", "Layout"]
 
 export let docs = [
   {
     id: "button",
     nombre: "Button",
-    grupo: "Formularios",
+    grupo: "Botones",
     desc: "Un botón con variantes, tamaños, ícono y estado de carga. La acción va como segundo argumento.",
     ejemplos: [
       {
@@ -1321,6 +1724,29 @@ struct Demo {
       Button("Fantasma", || nil, .ghost)
       Button("Peligro", || nil, .danger)
       Button("Enlace", || nil, .link)
+    }
+  }
+}',
+      },
+      {
+        titulo: "Más colores y tamaños",
+        codigo: 'import { Button, Row, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  view {
+    Stack(12) {
+      Row(8) {
+        Button("Suave", || nil, .soft)
+        Button("Éxito", || nil, .success)
+        Button("Aviso", || nil, .warning)
+      }
+      Row(8) {
+        Button("Mini", || nil).size("xs")
+        Button("Pequeño", || nil).size("sm")
+        Button("Normal", || nil)
+        Button("Grande", || nil).size("lg")
+        Button("Enorme", || nil).size("xl")
+      }
     }
   }
 }',
@@ -1352,8 +1778,8 @@ struct Demo {
       },
     ],
     api: [
-      ['Button(texto, accion?, variante?)', 'variante: .primary (por defecto), .secondary, .outline, .ghost, .danger, .link'],
-      ['.size("sm" | "lg")', 'Más pequeño o más grande.'],
+      ['Button(texto, accion?, variante?)', 'variante: .primary (por defecto), .secondary, .outline, .ghost, .soft, .success, .warning, .danger, .link'],
+      ['.size("xs" | "sm" | "lg" | "xl")', 'Del más pequeño al más grande.'],
       ['.loading(bool)', 'Muestra un spinner y evita doble clic.'],
       ['.icon(texto)', 'Un ícono o emoji antes del texto.'],
       ['.disabled(bool)', 'Lo desactiva.'],
@@ -1391,6 +1817,22 @@ struct Demo {
   }
 }',
       },
+      {
+        titulo: "Con prefijo y sufijo",
+        codigo: 'import { Input, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var precio = "120"
+  @State var sitio = "mi-tienda"
+
+  view {
+    Stack(14) {
+      Input("Precio", $precio, "number").prefix("$").suffix("USD")
+      Input("Tu web", $sitio).prefix("https://").suffix(".com")
+    }
+  }
+}',
+      },
     ],
     api: [
       ['Input(etiqueta, $campo, tipo?)', 'tipo: "text" (por defecto), "email", "password", "number", "search", "tel", "url", "date"...'],
@@ -1398,6 +1840,7 @@ struct Demo {
       ['.hint(texto)', 'Ayuda debajo del campo.'],
       ['.error(texto)', 'Lo marca en rojo con el mensaje. Con nil se quita.'],
       ['.disabled(bool)', 'Lo desactiva.'],
+      ['.prefix(texto)  .suffix(texto)', 'Texto pegado al campo, por ejemplo "$" o ".com".'],
     ],
   },
   {
@@ -1875,6 +2318,606 @@ struct Demo {
       ['Divider(texto?)', 'Línea separadora, con texto en medio si quieres.'],
     ],
   },
+  {
+    id: "icon-button",
+    nombre: "IconButton y ButtonGroup",
+    grupo: "Botones",
+    desc: "Botones solo con ícono, y grupos de botones unidos en una sola pieza.",
+    ejemplos: [
+      {
+        titulo: "Íconos y grupos",
+        codigo: 'import { IconButton, ButtonGroup, Button, Row, Stack, toast, Toaster } from "tangerine-lang-ui"
+
+struct Demo {
+  view {
+    Stack(16) {
+      Row(8) {
+        IconButton("✎", || toast("Editar"), "Editar")
+        IconButton("♥", || toast("Me gusta", "accent"), "Me gusta", .soft)
+        IconButton("⧉", || toast("Copiado"), "Copiar", .outline)
+        IconButton("+", || toast("Nuevo", "success"), "Nuevo", .primary).round()
+        IconButton("✕", || toast("Borrado", "danger"), "Borrar", .danger).size("sm")
+      }
+      ButtonGroup {
+        Button("Izquierda", || nil, .outline)
+        Button("Centro", || nil, .outline)
+        Button("Derecha", || nil, .outline)
+      }
+    }
+    Toaster()
+  }
+}',
+      },
+    ],
+    api: [
+      ['IconButton(icono, accion, etiqueta, variante?)', 'etiqueta la leen los lectores de pantalla y aparece al pasar el mouse. variante: .ghost (por defecto), .soft, .outline, .primary, .danger'],
+      ['.size("sm" | "lg")  .round()', 'Tamaño y forma redonda.'],
+      ['ButtonGroup { ... }', 'Une los botones de adentro.'],
+    ],
+  },
+  {
+    id: "segmented",
+    nombre: "SegmentedControl",
+    grupo: "Botones",
+    desc: "Elegir una opción entre pocas, como en iOS. El @State guarda la opción elegida.",
+    ejemplos: [
+      {
+        titulo: "Vista del calendario",
+        codigo: 'import { SegmentedControl, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var vista = "semana"
+
+  view {
+    Stack(14) {
+      SegmentedControl($vista, [["dia", "Día"], ["semana", "Semana"], ["mes", "Mes"], ["ano", "Año"]])
+      p { "Mostrando: {vista}" }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['SegmentedControl($valor, opciones)', 'opciones: ["A", "B"] o [["a", "A"], ["b", "B"]]. El campo guarda el valor.'],
+      ['.full()', 'Ocupa todo el ancho.'],
+    ],
+  },
+  {
+    id: "form",
+    nombre: "Form",
+    grupo: "Formularios",
+    desc: "Un formulario completo: Enter o el botón .submit() lo envían. Así se ven todos los campos juntos.",
+    ejemplos: [
+      {
+        titulo: "Crear cuenta",
+        codigo: 'import { Form, Input, PasswordInput, Select, Checkbox, Button, Card, toast, Toaster } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var nombre = ""
+  @State var correo = ""
+  @State var clave = ""
+  @State var pais = "co"
+  @State var acepto = false
+  @State var enviado = false
+
+  fn error_correo() { if enviado && !correo.contains("@") { "Escribe un correo válido" } else { nil } }
+  fn error_clave() { if enviado && clave.len() < 8 { "Mínimo 8 caracteres" } else { nil } }
+
+  fn enviar() {
+    enviado = true
+    if error_correo() == nil && error_clave() == nil && acepto {
+      toast("Cuenta creada para {nombre}", "success")
+    }
+  }
+
+  view {
+    Card("Crear cuenta", "Tarda un minuto").variant("elevated") {
+      Form(|| enviar()) {
+        Input("Nombre", $nombre).placeholder("Ana Pérez")
+        Input("Correo", $correo, "email").placeholder("ana@correo.com").error(error_correo())
+        PasswordInput("Contraseña", $clave).error(error_clave())
+        Select("País", $pais, [["co", "Colombia"], ["mx", "México"], ["es", "España"]])
+        Checkbox("Acepto los términos", $acepto)
+        Button("Crear cuenta").submit().full()
+      }
+    }
+    Toaster()
+  }
+}',
+      },
+    ],
+    api: [
+      ['Form(accion) { ... }', 'Llama a accion al enviar, con Enter o con un Button(...).submit().'],
+    ],
+  },
+  {
+    id: "password",
+    nombre: "PasswordInput",
+    grupo: "Formularios",
+    desc: "Contraseña con un botón para mostrarla u ocultarla.",
+    ejemplos: [
+      {
+        titulo: "Con fuerza de la contraseña",
+        codigo: 'import { PasswordInput, Progress, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var clave = ""
+
+  fn fuerza() {
+    var puntos = 0
+    if clave.len() >= 8 { puntos += 40 }
+    if clave.lower() != clave { puntos += 20 }
+    if clave.chars().any(|c| "0123456789".contains(c)) { puntos += 20 }
+    if clave.chars().any(|c| "!@#$%&*?".contains(c)) { puntos += 20 }
+    puntos
+  }
+
+  view {
+    Stack(12) {
+      PasswordInput("Contraseña", $clave).placeholder("Escribe una contraseña").hint("Usa 8 caracteres, mayúsculas, números y símbolos")
+      Progress(fuerza()).label("Seguridad")
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['PasswordInput(etiqueta, $campo)', 'El botón del ojo la muestra u oculta.'],
+      ['.placeholder(t)  .hint(t)  .error(t)', 'Como en Input.'],
+    ],
+  },
+  {
+    id: "search",
+    nombre: "SearchInput",
+    grupo: "Formularios",
+    desc: "Buscador con ícono y un botón para borrar lo escrito.",
+    ejemplos: [
+      {
+        titulo: "Filtrar una lista",
+        codigo: 'import { SearchInput, List, ListItem, Stack } from "tangerine-lang-ui"
+
+let frutas = ["Mandarina", "Limón", "Naranja", "Toronja", "Lima", "Pomelo"]
+
+struct Demo {
+  @State var buscar = ""
+
+  view {
+    Stack(12) {
+      SearchInput($buscar).placeholder("Buscar fruta...")
+      List {
+        for f in frutas.filter(|f| f.lower().contains(buscar.lower())) {
+          ListItem(f, "Cítrico")
+        }
+      }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['SearchInput($campo)', 'El botón × aparece cuando hay texto.'],
+      ['.placeholder(texto)', 'Texto de ejemplo.'],
+    ],
+  },
+  {
+    id: "number",
+    nombre: "NumberInput",
+    grupo: "Formularios",
+    desc: "Número con botones para restar y sumar, y límites.",
+    ejemplos: [
+      {
+        titulo: "Carrito",
+        codigo: 'import { NumberInput, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var cantidad = 1
+
+  view {
+    Stack(12) {
+      NumberInput("Cantidad", $cantidad).range(1, 10)
+      p { "Total: ${cantidad * 3200}" }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['NumberInput(etiqueta, $campo)', 'El campo guarda un número.'],
+      ['.range(min, max)  .step(paso)', 'Límites y cuánto suma cada clic.'],
+    ],
+  },
+  {
+    id: "slider",
+    nombre: "Slider",
+    grupo: "Formularios",
+    desc: "Elegir un valor arrastrando. La barra se llena con el color de tu tema.",
+    ejemplos: [
+      {
+        titulo: "Volumen y brillo",
+        codigo: 'import { Slider, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var volumen = 60
+  @State var brillo = 35
+
+  view {
+    Stack(18) {
+      Slider("Volumen", $volumen).unit("%")
+      Slider("Brillo", $brillo).range(0, 50).step(5)
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Slider(etiqueta, $campo)', 'El campo guarda un número.'],
+      ['.range(min, max)  .step(paso)  .unit(texto)', 'Límites, paso y unidad que se muestra junto al valor.'],
+    ],
+  },
+  {
+    id: "tags",
+    nombre: "TagInput",
+    grupo: "Formularios",
+    desc: "Agregar etiquetas: escribe y pulsa Enter. Borrar con el campo vacío quita la última.",
+    ejemplos: [
+      {
+        titulo: "Tecnologías",
+        codigo: 'import { TagInput, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var tags = ["Tangerine", "CSS"]
+
+  view {
+    Stack(10) {
+      TagInput("Tecnologías", $tags).placeholder("Agrega una y pulsa Enter")
+      p { "{tags.len()} etiquetas" }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['TagInput(etiqueta, $lista)', 'El campo guarda una lista de textos. No repite etiquetas.'],
+      ['.placeholder(texto)', 'Texto de ejemplo.'],
+    ],
+  },
+  {
+    id: "rating",
+    nombre: "Rating",
+    grupo: "Formularios",
+    desc: "Calificar con estrellas.",
+    ejemplos: [
+      {
+        titulo: "Reseña",
+        codigo: 'import { Rating, Stack, Row } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var estrellas = 4
+
+  view {
+    Stack(10) {
+      Rating($estrellas)
+      p { match estrellas { 1 => "Malo", 2 => "Regular", 3 => "Bien", 4 => "Muy bien", _ => "¡Excelente!" } }
+      Row(8) {
+        span { "Promedio:" }
+        Rating($estrellas).readonly()
+      }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Rating($campo, maximo?)', 'El campo guarda de 1 a maximo (5).'],
+      ['.readonly()', 'Solo para mostrar.'],
+    ],
+  },
+  {
+    id: "color",
+    nombre: "ColorPicker",
+    grupo: "Formularios",
+    desc: "Elegir un color de una paleta.",
+    ejemplos: [
+      {
+        titulo: "Color de etiqueta",
+        codigo: 'import { ColorPicker, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var color = "#3e63dd"
+
+  view {
+    Stack(14) {
+      ColorPicker("Color", $color)
+      div({ style: "height: 44px; border-radius: 12px; background: {color}; transition: background .3s" })
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['ColorPicker(etiqueta, $campo, colores?)', 'colores: lista de colores CSS. Si no la pones, usa ocho colores de la marca.'],
+    ],
+  },
+  {
+    id: "breadcrumb",
+    nombre: "Breadcrumb",
+    grupo: "Navegación",
+    desc: "Dónde estás dentro de la app. El último elemento es la página actual.",
+    ejemplos: [
+      {
+        titulo: "Ruta",
+        codigo: 'import { Breadcrumb } from "tangerine-lang-ui"
+
+struct Demo {
+  view {
+    Breadcrumb([["Inicio", "#"], ["Proyectos", "#"], ["Citrus", "#"], ["Ajustes"]])
+  }
+}',
+      },
+    ],
+    api: [
+      ['Breadcrumb(items)', 'items: [["Texto", "enlace"], ..., ["Página actual"]]'],
+    ],
+  },
+  {
+    id: "pagination",
+    nombre: "Pagination",
+    grupo: "Navegación",
+    desc: "Moverse entre páginas de resultados. Muestra la primera, la última y las vecinas.",
+    ejemplos: [
+      {
+        titulo: "Resultados",
+        codigo: 'import { Pagination, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var pagina = 5
+
+  view {
+    Stack(12) {
+      Pagination($pagina, 12)
+      p { "Página {pagina} de 12" }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Pagination($pagina, total)', 'El campo guarda la página, desde 1.'],
+    ],
+  },
+  {
+    id: "steps",
+    nombre: "Steps",
+    grupo: "Navegación",
+    desc: "Los pasos de un proceso y en cuál vas.",
+    ejemplos: [
+      {
+        titulo: "Registro en pasos",
+        codigo: 'import { Steps, Button, Row, Stack } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var paso = 1
+
+  view {
+    Stack(20) {
+      Steps(paso, ["Cuenta", "Perfil", "Pago", "Listo"])
+      Row(8) {
+        Button("Atrás", || { paso = (paso - 1).clamp(0, 3) }, .outline).disabled(paso == 0)
+        Button("Siguiente", || { paso = (paso + 1).clamp(0, 3) }).disabled(paso == 3)
+      }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Steps(actual, pasos)', 'actual empieza en 0. Los pasos anteriores salen con ✓.'],
+    ],
+  },
+  {
+    id: "accordion",
+    nombre: "Accordion",
+    grupo: "Navegación",
+    desc: "Secciones que se abren y cierran, ideales para preguntas frecuentes. Funcionan con teclado.",
+    ejemplos: [
+      {
+        titulo: "Preguntas frecuentes",
+        codigo: 'import { Accordion, AccordionItem } from "tangerine-lang-ui"
+
+struct Demo {
+  view {
+    Accordion {
+      AccordionItem("¿Qué es Tangerine UI?").open() {
+        p { "Una librería de componentes para Tangerine." }
+      }
+      AccordionItem("¿Funciona sin Tangerine?") {
+        p { "Sí: su CSS funciona en cualquier HTML." }
+      }
+      AccordionItem("¿Tiene modo oscuro?") {
+        p { "Sí, y sigue al sistema solo." }
+      }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Accordion { AccordionItem(titulo) { ... } }', 'Cada item tiene su contenido en el bloque.'],
+      ['AccordionItem(...).open()', 'Empieza abierto.'],
+    ],
+  },
+  {
+    id: "dropdown",
+    nombre: "Dropdown",
+    grupo: "Navegación",
+    desc: "Un menú que se abre al hacer clic. Se cierra al elegir, al hacer clic afuera o con Escape.",
+    ejemplos: [
+      {
+        titulo: "Acciones",
+        codigo: 'import { Dropdown, MenuItem, toast, Toaster } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var abierto = false
+
+  view {
+    Dropdown($abierto, "Acciones") {
+      MenuItem("Editar", || toast("Editar"), "✎")
+      MenuItem("Duplicar", || toast("Duplicado"), "⧉")
+      MenuItem("Compartir", || toast("Enlace copiado", "accent"), "↗")
+      MenuItem("Borrar", || toast("Borrado", "danger"), "✕").danger()
+    }
+    Toaster()
+  }
+}',
+      },
+    ],
+    api: [
+      ['Dropdown($abierto, texto) { ... }', 'El campo guarda si está abierto.'],
+      ['.align_end()', 'Alinea el menú a la derecha del botón.'],
+      ['MenuItem(texto, accion?, icono?)', 'Una opción del menú.'],
+      ['MenuItem(...).danger()', 'En rojo, para acciones peligrosas.'],
+    ],
+  },
+  {
+    id: "stat",
+    nombre: "Stat",
+    grupo: "Datos",
+    desc: "Un número importante con su cambio. Verde si sube, rojo si baja.",
+    ejemplos: [
+      {
+        titulo: "Tablero",
+        codigo: 'import { Stat, Grid } from "tangerine-lang-ui"
+
+struct Demo {
+  view {
+    Grid(3, 12) {
+      Stat("Ventas", "$12.480", "+12%").hint("vs. mes pasado")
+      Stat("Pedidos", "318", "+4%")
+      Stat("Devoluciones", "9", "-2%")
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Stat(titulo, valor, cambio?)', 'Si cambio empieza con + sale en verde; con -, en rojo.'],
+      ['.hint(texto)', 'Una nota pequeña debajo.'],
+    ],
+  },
+  {
+    id: "timeline",
+    nombre: "Timeline",
+    grupo: "Datos",
+    desc: "Eventos en orden, como el historial de un pedido.",
+    ejemplos: [
+      {
+        titulo: "Historial de un pedido",
+        codigo: 'import { Timeline } from "tangerine-lang-ui"
+
+struct Demo {
+  view {
+    Timeline([
+      ["En camino", "El repartidor salió con tu pedido", "11:40"],
+      ["Preparado", "Lo empacamos con cuidado", "10:05"],
+      ["Pagado", "Recibimos tu pago", "09:14"],
+      ["Pedido creado", "Ana hizo el pedido", "09:12"],
+    ])
+  }
+}',
+      },
+    ],
+    api: [
+      ['Timeline(items)', 'items: [["Título", "Texto", "Hora"], ...]. El primero se resalta.'],
+    ],
+  },
+  {
+    id: "empty",
+    nombre: "EmptyState",
+    grupo: "Datos",
+    desc: "Lo que se muestra cuando todavía no hay nada, con una acción para empezar.",
+    ejemplos: [
+      {
+        titulo: "Sin proyectos",
+        codigo: 'import { EmptyState, Button, toast, Toaster } from "tangerine-lang-ui"
+
+struct Demo {
+  view {
+    EmptyState("Aún no tienes proyectos", "Crea el primero y aparecerá aquí.", "🍊") {
+      Button("Crear proyecto", || toast("¡Proyecto creado!", "success"))
+      Button("Ver ejemplos", || nil, .ghost)
+    }
+    Toaster()
+  }
+}',
+      },
+    ],
+    api: [
+      ['EmptyState(titulo, texto?, icono?) { ... }', 'El bloque son las acciones.'],
+    ],
+  },
+  {
+    id: "list",
+    nombre: "List y Chip",
+    grupo: "Datos",
+    desc: "Listas de personas o cosas, y chips para filtros o etiquetas que se pueden quitar.",
+    ejemplos: [
+      {
+        titulo: "Equipo y filtros",
+        codigo: 'import { List, ListItem, Chip, Row, Stack, Badge, toast, Toaster } from "tangerine-lang-ui"
+
+struct Demo {
+  @State var filtros = ["Diseño", "Remoto", "Senior"]
+
+  view {
+    Stack(14) {
+      Row(6) {
+        for f in filtros {
+          Chip(f, || { filtros = filtros.filter(|x| x != f) })
+        }
+      }
+      List {
+        ListItem("Ana Pérez", "Diseño · Bogotá").avatar("Ana Pérez").extra("Admin").action(|| toast("Ana"))
+        ListItem("Luis Gómez", "Backend · CDMX").avatar("Luis Gómez").extra("Editor").action(|| toast("Luis"))
+        ListItem("Sara Ruiz", "Frontend · Madrid").avatar("Sara Ruiz") { Badge("Nueva", .accent) }
+      }
+    }
+    Toaster()
+  }
+}',
+      },
+    ],
+    api: [
+      ['List { ListItem(titulo, subtitulo?) }', 'Cada fila; su bloque se agrega bajo el texto.'],
+      ['.avatar(nombre)  .extra(texto)  .action(f)', 'Foto con iniciales, texto a la derecha y acción al hacer clic.'],
+      ['Chip(texto, al_quitar?)', 'Con al_quitar sale el botón ×.'],
+      ['Chip(...).active()', 'Resaltado.'],
+    ],
+  },
+  {
+    id: "tooltip",
+    nombre: "Tooltip",
+    grupo: "Datos",
+    desc: "Un texto que aparece al pasar el mouse o al enfocar con el teclado.",
+    ejemplos: [
+      {
+        titulo: "Ayuda en íconos",
+        codigo: 'import { Tooltip, IconButton, Row } from "tangerine-lang-ui"
+
+struct Demo {
+  view {
+    Row(10) {
+      Tooltip("Editar") { IconButton("✎", || nil, "Editar", .outline) }
+      Tooltip("Copiar enlace") { IconButton("⧉", || nil, "Copiar", .outline) }
+      Tooltip("Borrar para siempre") { IconButton("✕", || nil, "Borrar", .danger) }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Tooltip(texto) { ... }', 'Envuelve lo que lleva la ayuda.'],
+    ],
+  },
 ]
 </script>
 <script type="text/tangerine" data-module="src/ui.tng">
@@ -1964,22 +3007,32 @@ export struct Input {
     id = nuevo_id("t-input")
   }
 
+  var prefijo = nil
+  var sufijo = nil
+
   fn placeholder(p) { marcador = p; self }
   fn hint(h) { ayuda = h; self }
   fn error(e) { fallo = e; self }
   fn disabled(b = true) { desactivado = b; self }
+  // Texto pegado al campo: .prefix("$")  .suffix(".com")
+  fn prefix(t) { prefijo = t; self }
+  fn suffix(t) { sufijo = t; self }
 
   view {
     div({ class: clases(["t-field", si(fallo != nil, "has-error")]) }) {
       if etiqueta != nil { label(.t-label, { for: id }) { etiqueta } }
-      input(.t-input, valor, {
-        id: id,
-        type: tipo,
-        placeholder: marcador,
-        disabled: desactivado,
-        "aria-invalid": si(fallo != nil, "true"),
-        "aria-describedby": si(fallo != nil || ayuda != nil, "{id}-msg"),
-      })
+      div({ class: clases([si(prefijo != nil || sufijo != nil, "t-input-group")]) }) {
+        if prefijo != nil { span(.t-addon) { prefijo } }
+        input(.t-input, valor, {
+          id: id,
+          type: tipo,
+          placeholder: marcador,
+          disabled: desactivado,
+          "aria-invalid": si(fallo != nil, "true"),
+          "aria-describedby": si(fallo != nil || ayuda != nil, "{id}-msg"),
+        })
+        if sufijo != nil { span(.t-addon) { sufijo } }
+      }
       if fallo != nil {
         p(.t-field-error, { id: "{id}-msg" }) { fallo }
       } else if ayuda != nil {
@@ -2458,6 +3511,626 @@ export struct Toaster {
     }
   }
 }
+
+// ==================== 0.2: más botones ====================
+
+// IconButton("✎", || editar(), "Editar")  el tercer argumento lo leen los lectores de pantalla
+// variante: .ghost (por defecto), .soft, .outline, .primary, .danger   .size("sm" | "lg")  .round()
+export struct IconButton {
+  var icono = ""
+  var accion = nil
+  var etiqueta = ""
+  var variante = "ghost"
+  var tam = "md"
+  var redondo = false
+  var desactivado = false
+
+  init(i, a = nil, e = "", v = "ghost") {
+    icono = i
+    accion = a
+    etiqueta = e
+    variante = v
+  }
+
+  fn size(s) { tam = s; self }
+  fn round() { redondo = true; self }
+  fn disabled(b = true) { desactivado = b; self }
+
+  view {
+    element("button", {
+      class: clases(["t-btn", "t-btn-{variante}", "t-icon-btn", si(tam != "md", "t-icon-btn-{tam}"), si(redondo, "t-icon-btn-round")]),
+      type: "button",
+      "aria-label": etiqueta,
+      title: etiqueta,
+      disabled: desactivado,
+      on_click: || { if accion != nil && !desactivado { accion() } },
+    }) { span({ "aria-hidden": "true" }) { icono } }
+  }
+}
+
+// ButtonGroup { Button(...) Button(...) }  une los botones en una sola pieza
+export struct ButtonGroup {
+  view { div(.t-btn-group, { role: "group" }) { children } }
+}
+
+// SegmentedControl($vista, ["Día", "Semana", "Mes"])  o con pares [valor, texto]
+export struct SegmentedControl {
+  var valor = nil
+  var opciones = []
+  var completo = false
+
+  init(v, o) {
+    valor = v
+    opciones = o
+  }
+
+  fn full() { completo = true; self }
+
+  view {
+    div({ class: clases(["t-segmented", si(completo, "t-segmented-full")]), role: "radiogroup" }) {
+      for o in opciones {
+        let clave = if type_of(o) == "List" { o[0] } else { o }
+        let texto = if type_of(o) == "List" { o[1] } else { o }
+        element("button", {
+          class: clases(["t-segment", si(valor.get() == clave, "is-active")]),
+          type: "button",
+          role: "radio",
+          "aria-checked": if valor.get() == clave { "true" } else { "false" },
+          on_click: || valor.set(clave),
+        }) { texto }
+      }
+    }
+  }
+}
+
+// ==================== 0.2: más formularios ====================
+
+// Form(|| enviar()) { ...campos...  Button("Enviar").submit() }  Enter también envía
+export struct Form {
+  var accion = nil
+  init(a) { accion = a }
+  view {
+    form(.t-form, { novalidate: true, on_submit: || { if accion != nil { accion() } } }) { children }
+  }
+}
+
+// Recuerda qué contraseñas se están mostrando (por etiqueta)
+let claves_visibles = state({})
+
+// PasswordInput("Contraseña", $clave).hint("Mínimo 8 caracteres")  con botón para mostrarla
+export struct PasswordInput {
+  var etiqueta = "Contraseña"
+  var valor = nil
+  var marcador = nil
+  var ayuda = nil
+  var fallo = nil
+  var id = ""
+
+  init(e, v) {
+    etiqueta = e
+    valor = v
+    id = nuevo_id("t-pass")
+  }
+
+  fn placeholder(p) { marcador = p; self }
+  fn hint(h) { ayuda = h; self }
+  fn error(e) { fallo = e; self }
+
+  fn visible() { claves_visibles.get()[etiqueta] ?? false }
+  fn alternar() { claves_visibles.update(|m| { m[etiqueta] = !(m[etiqueta] ?? false); m }) }
+
+  view {
+    div({ class: clases(["t-field", si(fallo != nil, "has-error")]) }) {
+      label(.t-label, { for: id }) { etiqueta }
+      div(.t-input-wrap) {
+        input(.t-input, valor, { id: id, type: if visible() { "text" } else { "password" }, placeholder: marcador, autocomplete: "current-password", "aria-invalid": si(fallo != nil, "true") })
+        element("button", {
+          class: "t-input-action",
+          type: "button",
+          "aria-label": if visible() { "Ocultar contraseña" } else { "Mostrar contraseña" },
+          "aria-pressed": if visible() { "true" } else { "false" },
+          on_click: || alternar(),
+        }) { span({ class: if visible() { "t-ico t-ico-eye-off" } else { "t-ico t-ico-eye" }, "aria-hidden": "true" }) }
+      }
+      if fallo != nil {
+        p(.t-field-error) { fallo }
+      } else if ayuda != nil {
+        p(.t-field-hint) { ayuda }
+      }
+    }
+  }
+}
+
+// SearchInput($buscar).placeholder("Buscar...")  con ícono y botón para borrar
+export struct SearchInput {
+  var valor = nil
+  var marcador = "Buscar..."
+
+  init(v) { valor = v }
+
+  fn placeholder(p) { marcador = p; self }
+
+  view {
+    div(.t-search) {
+      span(.t-ico, .t-ico-search, { "aria-hidden": "true" })
+      input(.t-input, valor, { type: "search", placeholder: marcador, "aria-label": marcador })
+      if (valor.get() ?? "") != "" {
+        element("button", { class: "t-input-action", type: "button", "aria-label": "Borrar búsqueda", on_click: || valor.set("") }) { "×" }
+      }
+    }
+  }
+}
+
+// NumberInput("Cantidad", $n).range(1, 10).step(1)  con botones − y +
+export struct NumberInput {
+  var etiqueta = nil
+  var valor = nil
+  var minimo = -1000000000
+  var maximo = 1000000000
+  var paso = 1
+  var id = ""
+
+  init(e, v) {
+    etiqueta = e
+    valor = v
+    id = nuevo_id("t-num")
+  }
+
+  fn range(a, b) { minimo = a; maximo = b; self }
+  fn step(s) { paso = s; self }
+
+  fn cambiar(d) { valor.set(((valor.get() ?? 0) + d).clamp(minimo, maximo)) }
+
+  view {
+    div(.t-field) {
+      if etiqueta != nil { label(.t-label, { for: id }) { etiqueta } }
+      div(.t-number) {
+        element("button", { class: "t-number-btn", type: "button", "aria-label": "Restar", disabled: (valor.get() ?? 0) <= minimo, on_click: || cambiar(-paso) }) { "−" }
+        input(.t-input, valor, { id: id, type: "number", min: minimo, max: maximo, step: paso })
+        element("button", { class: "t-number-btn", type: "button", "aria-label": "Sumar", disabled: (valor.get() ?? 0) >= maximo, on_click: || cambiar(paso) }) { "+" }
+      }
+    }
+  }
+}
+
+// Slider("Volumen", $vol).range(0, 100).unit("%")
+export struct Slider {
+  var etiqueta = nil
+  var valor = nil
+  var minimo = 0
+  var maximo = 100
+  var paso = 1
+  var unidad = ""
+  var id = ""
+
+  init(e, v) {
+    etiqueta = e
+    valor = v
+    id = nuevo_id("t-slider")
+  }
+
+  fn range(a, b) { minimo = a; maximo = b; self }
+  fn step(s) { paso = s; self }
+  fn unit(u) { unidad = u; self }
+
+  view {
+    let actual = valor.get() ?? minimo
+    let pct = ((actual - minimo) / (maximo - minimo) * 100).clamp(0, 100)
+    div(.t-field) {
+      div(.t-slider-head) {
+        if etiqueta != nil { label(.t-label, { for: id }) { etiqueta } }
+        span(.t-slider-value) { "{actual}{unidad}" }
+      }
+      input(.t-slider, valor, { id: id, type: "range", min: minimo, max: maximo, step: paso, style: "--pct: {pct}%" })
+    }
+  }
+}
+
+// TagInput("Etiquetas", $tags)  escribe y pulsa Enter para agregar; Borrar quita la última
+export struct TagInput {
+  var etiqueta = nil
+  var valor = nil
+  var marcador = "Escribe y pulsa Enter"
+  var id = ""
+
+  init(e, v) {
+    etiqueta = e
+    valor = v
+    id = nuevo_id("t-tags")
+  }
+
+  fn placeholder(p) { marcador = p; self }
+
+  fn tecla(e) {
+    let texto = (e.value ?? "").trim()
+    if (e.key == "Enter" || e.key == ",") && texto != "" {
+      if !valor.get().contains(texto) { valor.set(valor.get() + [texto]) }
+      set_value(e.target, "")
+    } else if e.key == "Backspace" && texto == "" && valor.get().len() > 0 {
+      valor.set(valor.get().slice(0, valor.get().len() - 1))
+    }
+  }
+
+  view {
+    div(.t-field) {
+      if etiqueta != nil { label(.t-label, { for: id }) { etiqueta } }
+      div(.t-tags) {
+        for t in valor.get() {
+          span({ class: "t-chip", key: t }) {
+            span { t }
+            element("button", { class: "t-chip-x", type: "button", "aria-label": "Quitar {t}", on_click: || valor.set(valor.get().filter(|x| x != t)) }) { "×" }
+          }
+        }
+        input(.t-tags-input, { id: id, placeholder: marcador, on_keydown: |e| tecla(e) })
+      }
+    }
+  }
+}
+
+// Rating($estrellas)  Rating($estrellas, 10)
+export struct Rating {
+  var valor = nil
+  var maximo = 5
+  var solo_ver = false
+
+  init(v, m = 5) {
+    valor = v
+    maximo = m
+  }
+
+  fn readonly() { solo_ver = true; self }
+
+  view {
+    div({ class: clases(["t-rating", si(solo_ver, "is-readonly")]), role: "radiogroup", "aria-label": "Calificación" }) {
+      for i in 1..=maximo {
+        element("button", {
+          class: clases(["t-star", si(i <= (valor.get() ?? 0), "is-on")]),
+          type: "button",
+          role: "radio",
+          "aria-checked": if i == valor.get() { "true" } else { "false" },
+          "aria-label": "{i} de {maximo}",
+          disabled: solo_ver,
+          on_click: || valor.set(i),
+        }) { "★" }
+      }
+    }
+  }
+}
+
+// ColorPicker("Color", $color, ["#f2761d", "#3e63dd", "#30a46c"])
+export struct ColorPicker {
+  var etiqueta = nil
+  var valor = nil
+  var colores = ["#f2761d", "#e5484d", "#d6409f", "#8e4ec6", "#3e63dd", "#0894b3", "#30a46c", "#52525b"]
+
+  init(e, v, c = nil) {
+    etiqueta = e
+    valor = v
+    if c != nil { colores = c }
+  }
+
+  view {
+    div(.t-field) {
+      if etiqueta != nil { span(.t-label) { etiqueta } }
+      div(.t-swatches, { role: "radiogroup", "aria-label": etiqueta }) {
+        for c in colores {
+          element("button", {
+            class: clases(["t-swatch", si(valor.get() == c, "is-active")]),
+            type: "button",
+            role: "radio",
+            style: "--c: {c}",
+            "aria-label": c,
+            "aria-checked": if valor.get() == c { "true" } else { "false" },
+            on_click: || valor.set(c),
+          })
+        }
+      }
+    }
+  }
+}
+
+// ==================== 0.2: navegación ====================
+
+// Breadcrumb([["Inicio", "#"], ["Proyectos", "#proyectos"], ["Citrus"]])  el último es la página actual
+export struct Breadcrumb {
+  var items = []
+  init(i) { items = i }
+  view {
+    nav(.t-breadcrumb, { "aria-label": "Ruta" }) {
+      ol {
+        for (i, it) in items.enumerate() {
+          li {
+            if i < items.len() - 1 && it.len() > 1 {
+              a({ href: it[1] }) { it[0] }
+              span(.t-breadcrumb-sep, { "aria-hidden": "true" }) { "/" }
+            } else {
+              span({ "aria-current": "page" }) { it[0] }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Pagination($pagina, 12)  páginas desde 1
+export struct Pagination {
+  var pagina = nil
+  var total = 1
+
+  init(p, t) {
+    pagina = p
+    total = t
+  }
+
+  fn numeros() {
+    let actual = pagina.get()
+    var lista = []
+    for i in 1..=total {
+      if i == 1 || i == total || (i >= actual - 1 && i <= actual + 1) {
+        lista.push(i)
+      } else if lista.len() > 0 && lista.last() != 0 {
+        lista.push(0)
+      }
+    }
+    lista
+  }
+
+  view {
+    let actual = pagina.get()
+    nav(.t-pagination, { "aria-label": "Páginas" }) {
+      element("button", { class: "t-page", type: "button", "aria-label": "Anterior", disabled: actual <= 1, on_click: || pagina.set(actual - 1) }) { "‹" }
+      for n in numeros() {
+        if n == 0 {
+          span(.t-page-gap) { "…" }
+        } else {
+          element("button", {
+            class: clases(["t-page", si(n == actual, "is-active")]),
+            type: "button",
+            "aria-current": si(n == actual, "page"),
+            on_click: || pagina.set(n),
+          }) { n }
+        }
+      }
+      element("button", { class: "t-page", type: "button", "aria-label": "Siguiente", disabled: actual >= total, on_click: || pagina.set(actual + 1) }) { "›" }
+    }
+  }
+}
+
+// Steps(1, ["Cuenta", "Perfil", "Listo"])  el primero es 0
+export struct Steps {
+  var actual = 0
+  var pasos = []
+
+  init(a, p) {
+    actual = a
+    pasos = p
+  }
+
+  view {
+    ol(.t-steps) {
+      for (i, p) in pasos.enumerate() {
+        li({ class: clases(["t-step", si(i < actual, "is-done"), si(i == actual, "is-current")]), "aria-current": si(i == actual, "step") }) {
+          span(.t-step-dot) { if i < actual { "✓" } else { i + 1 } }
+          span(.t-step-label) { p }
+        }
+      }
+    }
+  }
+}
+
+// Accordion { AccordionItem("¿Pregunta?") { p { "Respuesta" } } }
+export struct Accordion {
+  view { div(.t-accordion) { children } }
+}
+
+export struct AccordionItem {
+  var titulo = ""
+  var abierto = false
+  init(t) { titulo = t }
+  fn open() { abierto = true; self }
+  view {
+    details(.t-acc-item, { open: abierto }) {
+      summary(.t-acc-head) {
+        span { titulo }
+        span(.t-acc-chev, { "aria-hidden": "true" })
+      }
+      div(.t-acc-body) { children }
+    }
+  }
+}
+
+// Dropdown($abierto, "Opciones") { MenuItem("Editar", || editar()) MenuItem("Borrar", || borrar()).danger() }
+export struct Dropdown {
+  var abierto = nil
+  var texto = ""
+  var alinear = "start"
+
+  init(a, t) {
+    abierto = a
+    texto = t
+  }
+
+  fn align_end() { alinear = "end"; self }
+
+  view {
+    div(.t-dropdown) {
+      element("button", {
+        class: "t-btn t-btn-outline",
+        type: "button",
+        "aria-haspopup": "menu",
+        "aria-expanded": if abierto.get() { "true" } else { "false" },
+        on_click: || abierto.set(!abierto.get()),
+      }) {
+        span { texto }
+        span(.t-dd-chev, { "aria-hidden": "true" })
+      }
+      if abierto.get() {
+        div(.t-dd-layer, { on_click: || abierto.set(false) })
+        div({ class: "t-dd-menu t-dd-{alinear}", role: "menu", on_click: || abierto.set(false), on_keydown: |e| { if e.key == "Escape" { abierto.set(false) } } }) { children }
+      }
+    }
+  }
+}
+
+export struct MenuItem {
+  var texto = ""
+  var accion = nil
+  var icono = nil
+  var peligro = false
+
+  init(t, a = nil, i = nil) {
+    texto = t
+    accion = a
+    icono = i
+  }
+
+  fn danger() { peligro = true; self }
+
+  view {
+    element("button", { class: clases(["t-dd-item", si(peligro, "is-danger")]), type: "button", role: "menuitem", on_click: || { if accion != nil { accion() } } }) {
+      if icono != nil { span(.t-dd-icon, { "aria-hidden": "true" }) { icono } }
+      span { texto }
+    }
+  }
+}
+
+// ==================== 0.2: datos ====================
+
+// Stat("Ventas", "$12.480", "+12%")  el cambio se pinta verde si empieza con + y rojo si con -
+export struct Stat {
+  var titulo = ""
+  var valor = ""
+  var cambio = nil
+  var ayuda = nil
+
+  init(t, v, c = nil) {
+    titulo = t
+    valor = v
+    cambio = c
+  }
+
+  fn hint(h) { ayuda = h; self }
+
+  view {
+    div(.t-stat) {
+      span(.t-stat-label) { titulo }
+      strong(.t-stat-value) { valor }
+      if cambio != nil {
+        span({ class: clases(["t-stat-delta", si("{cambio}".starts_with("+"), "is-up"), si("{cambio}".starts_with("-"), "is-down")]) }) { cambio }
+      }
+      if ayuda != nil { span(.t-stat-hint) { ayuda } }
+    }
+  }
+}
+
+// Timeline([["Pedido creado", "Ana hizo el pedido", "09:12"], ...])
+export struct Timeline {
+  var items = []
+  init(i) { items = i }
+  view {
+    ol(.t-timeline) {
+      for it in items {
+        li(.t-tl-item) {
+          span(.t-tl-dot, { "aria-hidden": "true" })
+          div(.t-tl-body) {
+            div(.t-tl-head) {
+              strong { it[0] }
+              if it.len() > 2 { span(.t-tl-time) { it[2] } }
+            }
+            if it.len() > 1 { p { it[1] } }
+          }
+        }
+      }
+    }
+  }
+}
+
+// EmptyState("Sin proyectos", "Crea el primero para empezar") { Button("Crear proyecto", || crear()) }
+export struct EmptyState {
+  var titulo = ""
+  var texto = nil
+  var icono = "✦"
+
+  init(t, x = nil, i = "✦") {
+    titulo = t
+    texto = x
+    icono = i
+  }
+
+  view {
+    div(.t-empty) {
+      span(.t-empty-icon, { "aria-hidden": "true" }) { icono }
+      h3 { titulo }
+      if texto != nil { p { texto } }
+      div(.t-empty-actions) { children }
+    }
+  }
+}
+
+// Chip("Diseño")  Chip("React", || quitar("React"))  con botón para quitar
+export struct Chip {
+  var texto = ""
+  var al_quitar = nil
+  var activo = false
+
+  init(t, q = nil) {
+    texto = t
+    al_quitar = q
+  }
+
+  fn active(b = true) { activo = b; self }
+
+  view {
+    span({ class: clases(["t-chip", si(activo, "is-active")]) }) {
+      span { texto }
+      if al_quitar != nil {
+        element("button", { class: "t-chip-x", type: "button", "aria-label": "Quitar {texto}", on_click: || al_quitar() }) { "×" }
+      }
+    }
+  }
+}
+
+// List { ListItem("Ana Pérez", "Diseño").avatar("Ana Pérez").extra("Admin") }
+export struct List {
+  view { div(.t-list, { role: "list" }) { children } }
+}
+
+export struct ListItem {
+  var titulo = ""
+  var subtitulo = nil
+  var persona = nil
+  var lateral = nil
+  var accion = nil
+
+  init(t, s = nil) {
+    titulo = t
+    subtitulo = s
+  }
+
+  fn avatar(n) { persona = n; self }
+  fn extra(x) { lateral = x; self }
+  fn action(a) { accion = a; self }
+
+  view {
+    div({ class: clases(["t-list-item", si(accion != nil, "is-clickable")]), role: "listitem", tabindex: si(accion != nil, "0"), on_click: || { if accion != nil { accion() } } }) {
+      if persona != nil { Avatar(persona).size("sm") }
+      div(.t-list-text) {
+        strong { titulo }
+        if subtitulo != nil { span { subtitulo } }
+        children
+      }
+      if lateral != nil { span(.t-list-extra) { lateral } }
+    }
+  }
+}
+
+// Tooltip("Copiar al portapapeles") { IconButton("⧉", || copiar(), "Copiar") }
+export struct Tooltip {
+  var texto = ""
+  init(t) { texto = t }
+  view { span(.t-tooltip, { "data-tooltip": texto }) { children } }
+}
 </script>
 <script type="text/tangerine" data-module="src/main.tng" data-main>
 // Web de Tangerine UI: hecha con Tangerine y con sus propios componentes.
@@ -2657,7 +4330,7 @@ struct Inicio {
         div(.hero-texto) {
           a(.hero-aviso, { href: "#c/modal" }) {
             span(.aviso-punto)
-            span { "Nuevo: 23 componentes para Tangerine 5.2" }
+            span { "Nuevo en 0.2: 48 componentes, con más formularios y navegación" }
             span(.flecha) { "→" }
           }
           h1(.hero-titulo) {

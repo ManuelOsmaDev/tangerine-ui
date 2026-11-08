@@ -53,10 +53,12 @@ Agrega el CSS a `styles` en `tangerine.json`:
 
 | Grupo | Componentes |
 | --- | --- |
-| Formularios | `Button`, `Input`, `Textarea`, `Select`, `Checkbox`, `Switch`, `RadioGroup` |
+| Botones | `Button` (9 variantes y 5 tamaños), `IconButton`, `ButtonGroup`, `SegmentedControl` |
+| Formularios | `Form`, `Input` (con prefijo y sufijo), `PasswordInput`, `SearchInput`, `NumberInput`, `Textarea`, `Select`, `Checkbox`, `Switch`, `RadioGroup`, `Slider`, `TagInput`, `Rating`, `ColorPicker` |
 | Contenedores | `Card`, `Modal`, `Tabs` |
+| Navegación | `Breadcrumb`, `Pagination`, `Steps`, `Accordion`, `Dropdown` + `MenuItem` |
 | Feedback | `Alert`, `toast` + `Toaster`, `Progress`, `Spinner`, `Skeleton` |
-| Datos | `Table`, `Badge`, `Avatar`, `Kbd` |
+| Datos | `Table`, `Stat`, `Timeline`, `List` + `ListItem`, `Chip`, `Badge`, `Avatar`, `Kbd`, `Tooltip`, `EmptyState` |
 | Layout | `Stack`, `Row`, `Grid`, `Divider` |
 
 Se escriben como en SwiftUI:

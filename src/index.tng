@@ -84,22 +84,32 @@ export struct Input {
     id = nuevo_id("t-input")
   }
 
+  var prefijo = nil
+  var sufijo = nil
+
   fn placeholder(p) { marcador = p; self }
   fn hint(h) { ayuda = h; self }
   fn error(e) { fallo = e; self }
   fn disabled(b = true) { desactivado = b; self }
+  // Texto pegado al campo: .prefix("$")  .suffix(".com")
+  fn prefix(t) { prefijo = t; self }
+  fn suffix(t) { sufijo = t; self }
 
   view {
     div({ class: clases(["t-field", si(fallo != nil, "has-error")]) }) {
       if etiqueta != nil { label(.t-label, { for: id }) { etiqueta } }
-      input(.t-input, valor, {
-        id: id,
-        type: tipo,
-        placeholder: marcador,
-        disabled: desactivado,
-        "aria-invalid": si(fallo != nil, "true"),
-        "aria-describedby": si(fallo != nil || ayuda != nil, "{id}-msg"),
-      })
+      div({ class: clases([si(prefijo != nil || sufijo != nil, "t-input-group")]) }) {
+        if prefijo != nil { span(.t-addon) { prefijo } }
+        input(.t-input, valor, {
+          id: id,
+          type: tipo,
+          placeholder: marcador,
+          disabled: desactivado,
+          "aria-invalid": si(fallo != nil, "true"),
+          "aria-describedby": si(fallo != nil || ayuda != nil, "{id}-msg"),
+        })
+        if sufijo != nil { span(.t-addon) { sufijo } }
+      }
       if fallo != nil {
         p(.t-field-error, { id: "{id}-msg" }) { fallo }
       } else if ayuda != nil {
@@ -577,4 +587,624 @@ export struct Toaster {
       }
     }
   }
+}
+
+// ==================== 0.2: más botones ====================
+
+// IconButton("✎", || editar(), "Editar")  el tercer argumento lo leen los lectores de pantalla
+// variante: .ghost (por defecto), .soft, .outline, .primary, .danger   .size("sm" | "lg")  .round()
+export struct IconButton {
+  var icono = ""
+  var accion = nil
+  var etiqueta = ""
+  var variante = "ghost"
+  var tam = "md"
+  var redondo = false
+  var desactivado = false
+
+  init(i, a = nil, e = "", v = "ghost") {
+    icono = i
+    accion = a
+    etiqueta = e
+    variante = v
+  }
+
+  fn size(s) { tam = s; self }
+  fn round() { redondo = true; self }
+  fn disabled(b = true) { desactivado = b; self }
+
+  view {
+    element("button", {
+      class: clases(["t-btn", "t-btn-{variante}", "t-icon-btn", si(tam != "md", "t-icon-btn-{tam}"), si(redondo, "t-icon-btn-round")]),
+      type: "button",
+      "aria-label": etiqueta,
+      title: etiqueta,
+      disabled: desactivado,
+      on_click: || { if accion != nil && !desactivado { accion() } },
+    }) { span({ "aria-hidden": "true" }) { icono } }
+  }
+}
+
+// ButtonGroup { Button(...) Button(...) }  une los botones en una sola pieza
+export struct ButtonGroup {
+  view { div(.t-btn-group, { role: "group" }) { children } }
+}
+
+// SegmentedControl($vista, ["Día", "Semana", "Mes"])  o con pares [valor, texto]
+export struct SegmentedControl {
+  var valor = nil
+  var opciones = []
+  var completo = false
+
+  init(v, o) {
+    valor = v
+    opciones = o
+  }
+
+  fn full() { completo = true; self }
+
+  view {
+    div({ class: clases(["t-segmented", si(completo, "t-segmented-full")]), role: "radiogroup" }) {
+      for o in opciones {
+        let clave = if type_of(o) == "List" { o[0] } else { o }
+        let texto = if type_of(o) == "List" { o[1] } else { o }
+        element("button", {
+          class: clases(["t-segment", si(valor.get() == clave, "is-active")]),
+          type: "button",
+          role: "radio",
+          "aria-checked": if valor.get() == clave { "true" } else { "false" },
+          on_click: || valor.set(clave),
+        }) { texto }
+      }
+    }
+  }
+}
+
+// ==================== 0.2: más formularios ====================
+
+// Form(|| enviar()) { ...campos...  Button("Enviar").submit() }  Enter también envía
+export struct Form {
+  var accion = nil
+  init(a) { accion = a }
+  view {
+    form(.t-form, { novalidate: true, on_submit: || { if accion != nil { accion() } } }) { children }
+  }
+}
+
+// Recuerda qué contraseñas se están mostrando (por etiqueta)
+let claves_visibles = state({})
+
+// PasswordInput("Contraseña", $clave).hint("Mínimo 8 caracteres")  con botón para mostrarla
+export struct PasswordInput {
+  var etiqueta = "Contraseña"
+  var valor = nil
+  var marcador = nil
+  var ayuda = nil
+  var fallo = nil
+  var id = ""
+
+  init(e, v) {
+    etiqueta = e
+    valor = v
+    id = nuevo_id("t-pass")
+  }
+
+  fn placeholder(p) { marcador = p; self }
+  fn hint(h) { ayuda = h; self }
+  fn error(e) { fallo = e; self }
+
+  fn visible() { claves_visibles.get()[etiqueta] ?? false }
+  fn alternar() { claves_visibles.update(|m| { m[etiqueta] = !(m[etiqueta] ?? false); m }) }
+
+  view {
+    div({ class: clases(["t-field", si(fallo != nil, "has-error")]) }) {
+      label(.t-label, { for: id }) { etiqueta }
+      div(.t-input-wrap) {
+        input(.t-input, valor, { id: id, type: if visible() { "text" } else { "password" }, placeholder: marcador, autocomplete: "current-password", "aria-invalid": si(fallo != nil, "true") })
+        element("button", {
+          class: "t-input-action",
+          type: "button",
+          "aria-label": if visible() { "Ocultar contraseña" } else { "Mostrar contraseña" },
+          "aria-pressed": if visible() { "true" } else { "false" },
+          on_click: || alternar(),
+        }) { span({ class: if visible() { "t-ico t-ico-eye-off" } else { "t-ico t-ico-eye" }, "aria-hidden": "true" }) }
+      }
+      if fallo != nil {
+        p(.t-field-error) { fallo }
+      } else if ayuda != nil {
+        p(.t-field-hint) { ayuda }
+      }
+    }
+  }
+}
+
+// SearchInput($buscar).placeholder("Buscar...")  con ícono y botón para borrar
+export struct SearchInput {
+  var valor = nil
+  var marcador = "Buscar..."
+
+  init(v) { valor = v }
+
+  fn placeholder(p) { marcador = p; self }
+
+  view {
+    div(.t-search) {
+      span(.t-ico, .t-ico-search, { "aria-hidden": "true" })
+      input(.t-input, valor, { type: "search", placeholder: marcador, "aria-label": marcador })
+      if (valor.get() ?? "") != "" {
+        element("button", { class: "t-input-action", type: "button", "aria-label": "Borrar búsqueda", on_click: || valor.set("") }) { "×" }
+      }
+    }
+  }
+}
+
+// NumberInput("Cantidad", $n).range(1, 10).step(1)  con botones − y +
+export struct NumberInput {
+  var etiqueta = nil
+  var valor = nil
+  var minimo = -1000000000
+  var maximo = 1000000000
+  var paso = 1
+  var id = ""
+
+  init(e, v) {
+    etiqueta = e
+    valor = v
+    id = nuevo_id("t-num")
+  }
+
+  fn range(a, b) { minimo = a; maximo = b; self }
+  fn step(s) { paso = s; self }
+
+  fn cambiar(d) { valor.set(((valor.get() ?? 0) + d).clamp(minimo, maximo)) }
+
+  view {
+    div(.t-field) {
+      if etiqueta != nil { label(.t-label, { for: id }) { etiqueta } }
+      div(.t-number) {
+        element("button", { class: "t-number-btn", type: "button", "aria-label": "Restar", disabled: (valor.get() ?? 0) <= minimo, on_click: || cambiar(-paso) }) { "−" }
+        input(.t-input, valor, { id: id, type: "number", min: minimo, max: maximo, step: paso })
+        element("button", { class: "t-number-btn", type: "button", "aria-label": "Sumar", disabled: (valor.get() ?? 0) >= maximo, on_click: || cambiar(paso) }) { "+" }
+      }
+    }
+  }
+}
+
+// Slider("Volumen", $vol).range(0, 100).unit("%")
+export struct Slider {
+  var etiqueta = nil
+  var valor = nil
+  var minimo = 0
+  var maximo = 100
+  var paso = 1
+  var unidad = ""
+  var id = ""
+
+  init(e, v) {
+    etiqueta = e
+    valor = v
+    id = nuevo_id("t-slider")
+  }
+
+  fn range(a, b) { minimo = a; maximo = b; self }
+  fn step(s) { paso = s; self }
+  fn unit(u) { unidad = u; self }
+
+  view {
+    let actual = valor.get() ?? minimo
+    let pct = ((actual - minimo) / (maximo - minimo) * 100).clamp(0, 100)
+    div(.t-field) {
+      div(.t-slider-head) {
+        if etiqueta != nil { label(.t-label, { for: id }) { etiqueta } }
+        span(.t-slider-value) { "{actual}{unidad}" }
+      }
+      input(.t-slider, valor, { id: id, type: "range", min: minimo, max: maximo, step: paso, style: "--pct: {pct}%" })
+    }
+  }
+}
+
+// TagInput("Etiquetas", $tags)  escribe y pulsa Enter para agregar; Borrar quita la última
+export struct TagInput {
+  var etiqueta = nil
+  var valor = nil
+  var marcador = "Escribe y pulsa Enter"
+  var id = ""
+
+  init(e, v) {
+    etiqueta = e
+    valor = v
+    id = nuevo_id("t-tags")
+  }
+
+  fn placeholder(p) { marcador = p; self }
+
+  fn tecla(e) {
+    let texto = (e.value ?? "").trim()
+    if (e.key == "Enter" || e.key == ",") && texto != "" {
+      if !valor.get().contains(texto) { valor.set(valor.get() + [texto]) }
+      set_value(e.target, "")
+    } else if e.key == "Backspace" && texto == "" && valor.get().len() > 0 {
+      valor.set(valor.get().slice(0, valor.get().len() - 1))
+    }
+  }
+
+  view {
+    div(.t-field) {
+      if etiqueta != nil { label(.t-label, { for: id }) { etiqueta } }
+      div(.t-tags) {
+        for t in valor.get() {
+          span({ class: "t-chip", key: t }) {
+            span { t }
+            element("button", { class: "t-chip-x", type: "button", "aria-label": "Quitar {t}", on_click: || valor.set(valor.get().filter(|x| x != t)) }) { "×" }
+          }
+        }
+        input(.t-tags-input, { id: id, placeholder: marcador, on_keydown: |e| tecla(e) })
+      }
+    }
+  }
+}
+
+// Rating($estrellas)  Rating($estrellas, 10)
+export struct Rating {
+  var valor = nil
+  var maximo = 5
+  var solo_ver = false
+
+  init(v, m = 5) {
+    valor = v
+    maximo = m
+  }
+
+  fn readonly() { solo_ver = true; self }
+
+  view {
+    div({ class: clases(["t-rating", si(solo_ver, "is-readonly")]), role: "radiogroup", "aria-label": "Calificación" }) {
+      for i in 1..=maximo {
+        element("button", {
+          class: clases(["t-star", si(i <= (valor.get() ?? 0), "is-on")]),
+          type: "button",
+          role: "radio",
+          "aria-checked": if i == valor.get() { "true" } else { "false" },
+          "aria-label": "{i} de {maximo}",
+          disabled: solo_ver,
+          on_click: || valor.set(i),
+        }) { "★" }
+      }
+    }
+  }
+}
+
+// ColorPicker("Color", $color, ["#f2761d", "#3e63dd", "#30a46c"])
+export struct ColorPicker {
+  var etiqueta = nil
+  var valor = nil
+  var colores = ["#f2761d", "#e5484d", "#d6409f", "#8e4ec6", "#3e63dd", "#0894b3", "#30a46c", "#52525b"]
+
+  init(e, v, c = nil) {
+    etiqueta = e
+    valor = v
+    if c != nil { colores = c }
+  }
+
+  view {
+    div(.t-field) {
+      if etiqueta != nil { span(.t-label) { etiqueta } }
+      div(.t-swatches, { role: "radiogroup", "aria-label": etiqueta }) {
+        for c in colores {
+          element("button", {
+            class: clases(["t-swatch", si(valor.get() == c, "is-active")]),
+            type: "button",
+            role: "radio",
+            style: "--c: {c}",
+            "aria-label": c,
+            "aria-checked": if valor.get() == c { "true" } else { "false" },
+            on_click: || valor.set(c),
+          })
+        }
+      }
+    }
+  }
+}
+
+// ==================== 0.2: navegación ====================
+
+// Breadcrumb([["Inicio", "#"], ["Proyectos", "#proyectos"], ["Citrus"]])  el último es la página actual
+export struct Breadcrumb {
+  var items = []
+  init(i) { items = i }
+  view {
+    nav(.t-breadcrumb, { "aria-label": "Ruta" }) {
+      ol {
+        for (i, it) in items.enumerate() {
+          li {
+            if i < items.len() - 1 && it.len() > 1 {
+              a({ href: it[1] }) { it[0] }
+              span(.t-breadcrumb-sep, { "aria-hidden": "true" }) { "/" }
+            } else {
+              span({ "aria-current": "page" }) { it[0] }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Pagination($pagina, 12)  páginas desde 1
+export struct Pagination {
+  var pagina = nil
+  var total = 1
+
+  init(p, t) {
+    pagina = p
+    total = t
+  }
+
+  fn numeros() {
+    let actual = pagina.get()
+    var lista = []
+    for i in 1..=total {
+      if i == 1 || i == total || (i >= actual - 1 && i <= actual + 1) {
+        lista.push(i)
+      } else if lista.len() > 0 && lista.last() != 0 {
+        lista.push(0)
+      }
+    }
+    lista
+  }
+
+  view {
+    let actual = pagina.get()
+    nav(.t-pagination, { "aria-label": "Páginas" }) {
+      element("button", { class: "t-page", type: "button", "aria-label": "Anterior", disabled: actual <= 1, on_click: || pagina.set(actual - 1) }) { "‹" }
+      for n in numeros() {
+        if n == 0 {
+          span(.t-page-gap) { "…" }
+        } else {
+          element("button", {
+            class: clases(["t-page", si(n == actual, "is-active")]),
+            type: "button",
+            "aria-current": si(n == actual, "page"),
+            on_click: || pagina.set(n),
+          }) { n }
+        }
+      }
+      element("button", { class: "t-page", type: "button", "aria-label": "Siguiente", disabled: actual >= total, on_click: || pagina.set(actual + 1) }) { "›" }
+    }
+  }
+}
+
+// Steps(1, ["Cuenta", "Perfil", "Listo"])  el primero es 0
+export struct Steps {
+  var actual = 0
+  var pasos = []
+
+  init(a, p) {
+    actual = a
+    pasos = p
+  }
+
+  view {
+    ol(.t-steps) {
+      for (i, p) in pasos.enumerate() {
+        li({ class: clases(["t-step", si(i < actual, "is-done"), si(i == actual, "is-current")]), "aria-current": si(i == actual, "step") }) {
+          span(.t-step-dot) { if i < actual { "✓" } else { i + 1 } }
+          span(.t-step-label) { p }
+        }
+      }
+    }
+  }
+}
+
+// Accordion { AccordionItem("¿Pregunta?") { p { "Respuesta" } } }
+export struct Accordion {
+  view { div(.t-accordion) { children } }
+}
+
+export struct AccordionItem {
+  var titulo = ""
+  var abierto = false
+  init(t) { titulo = t }
+  fn open() { abierto = true; self }
+  view {
+    details(.t-acc-item, { open: abierto }) {
+      summary(.t-acc-head) {
+        span { titulo }
+        span(.t-acc-chev, { "aria-hidden": "true" })
+      }
+      div(.t-acc-body) { children }
+    }
+  }
+}
+
+// Dropdown($abierto, "Opciones") { MenuItem("Editar", || editar()) MenuItem("Borrar", || borrar()).danger() }
+export struct Dropdown {
+  var abierto = nil
+  var texto = ""
+  var alinear = "start"
+
+  init(a, t) {
+    abierto = a
+    texto = t
+  }
+
+  fn align_end() { alinear = "end"; self }
+
+  view {
+    div(.t-dropdown) {
+      element("button", {
+        class: "t-btn t-btn-outline",
+        type: "button",
+        "aria-haspopup": "menu",
+        "aria-expanded": if abierto.get() { "true" } else { "false" },
+        on_click: || abierto.set(!abierto.get()),
+      }) {
+        span { texto }
+        span(.t-dd-chev, { "aria-hidden": "true" })
+      }
+      if abierto.get() {
+        div(.t-dd-layer, { on_click: || abierto.set(false) })
+        div({ class: "t-dd-menu t-dd-{alinear}", role: "menu", on_click: || abierto.set(false), on_keydown: |e| { if e.key == "Escape" { abierto.set(false) } } }) { children }
+      }
+    }
+  }
+}
+
+export struct MenuItem {
+  var texto = ""
+  var accion = nil
+  var icono = nil
+  var peligro = false
+
+  init(t, a = nil, i = nil) {
+    texto = t
+    accion = a
+    icono = i
+  }
+
+  fn danger() { peligro = true; self }
+
+  view {
+    element("button", { class: clases(["t-dd-item", si(peligro, "is-danger")]), type: "button", role: "menuitem", on_click: || { if accion != nil { accion() } } }) {
+      if icono != nil { span(.t-dd-icon, { "aria-hidden": "true" }) { icono } }
+      span { texto }
+    }
+  }
+}
+
+// ==================== 0.2: datos ====================
+
+// Stat("Ventas", "$12.480", "+12%")  el cambio se pinta verde si empieza con + y rojo si con -
+export struct Stat {
+  var titulo = ""
+  var valor = ""
+  var cambio = nil
+  var ayuda = nil
+
+  init(t, v, c = nil) {
+    titulo = t
+    valor = v
+    cambio = c
+  }
+
+  fn hint(h) { ayuda = h; self }
+
+  view {
+    div(.t-stat) {
+      span(.t-stat-label) { titulo }
+      strong(.t-stat-value) { valor }
+      if cambio != nil {
+        span({ class: clases(["t-stat-delta", si("{cambio}".starts_with("+"), "is-up"), si("{cambio}".starts_with("-"), "is-down")]) }) { cambio }
+      }
+      if ayuda != nil { span(.t-stat-hint) { ayuda } }
+    }
+  }
+}
+
+// Timeline([["Pedido creado", "Ana hizo el pedido", "09:12"], ...])
+export struct Timeline {
+  var items = []
+  init(i) { items = i }
+  view {
+    ol(.t-timeline) {
+      for it in items {
+        li(.t-tl-item) {
+          span(.t-tl-dot, { "aria-hidden": "true" })
+          div(.t-tl-body) {
+            div(.t-tl-head) {
+              strong { it[0] }
+              if it.len() > 2 { span(.t-tl-time) { it[2] } }
+            }
+            if it.len() > 1 { p { it[1] } }
+          }
+        }
+      }
+    }
+  }
+}
+
+// EmptyState("Sin proyectos", "Crea el primero para empezar") { Button("Crear proyecto", || crear()) }
+export struct EmptyState {
+  var titulo = ""
+  var texto = nil
+  var icono = "✦"
+
+  init(t, x = nil, i = "✦") {
+    titulo = t
+    texto = x
+    icono = i
+  }
+
+  view {
+    div(.t-empty) {
+      span(.t-empty-icon, { "aria-hidden": "true" }) { icono }
+      h3 { titulo }
+      if texto != nil { p { texto } }
+      div(.t-empty-actions) { children }
+    }
+  }
+}
+
+// Chip("Diseño")  Chip("React", || quitar("React"))  con botón para quitar
+export struct Chip {
+  var texto = ""
+  var al_quitar = nil
+  var activo = false
+
+  init(t, q = nil) {
+    texto = t
+    al_quitar = q
+  }
+
+  fn active(b = true) { activo = b; self }
+
+  view {
+    span({ class: clases(["t-chip", si(activo, "is-active")]) }) {
+      span { texto }
+      if al_quitar != nil {
+        element("button", { class: "t-chip-x", type: "button", "aria-label": "Quitar {texto}", on_click: || al_quitar() }) { "×" }
+      }
+    }
+  }
+}
+
+// List { ListItem("Ana Pérez", "Diseño").avatar("Ana Pérez").extra("Admin") }
+export struct List {
+  view { div(.t-list, { role: "list" }) { children } }
+}
+
+export struct ListItem {
+  var titulo = ""
+  var subtitulo = nil
+  var persona = nil
+  var lateral = nil
+  var accion = nil
+
+  init(t, s = nil) {
+    titulo = t
+    subtitulo = s
+  }
+
+  fn avatar(n) { persona = n; self }
+  fn extra(x) { lateral = x; self }
+  fn action(a) { accion = a; self }
+
+  view {
+    div({ class: clases(["t-list-item", si(accion != nil, "is-clickable")]), role: "listitem", tabindex: si(accion != nil, "0"), on_click: || { if accion != nil { accion() } } }) {
+      if persona != nil { Avatar(persona).size("sm") }
+      div(.t-list-text) {
+        strong { titulo }
+        if subtitulo != nil { span { subtitulo } }
+        children
+      }
+      if lateral != nil { span(.t-list-extra) { lateral } }
+    }
+  }
+}
+
+// Tooltip("Copiar al portapapeles") { IconButton("⧉", || copiar(), "Copiar") }
+export struct Tooltip {
+  var texto = ""
+  init(t) { texto = t }
+  view { span(.t-tooltip, { "data-tooltip": texto }) { children } }
 }
