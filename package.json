@@ -1,0 +1,20 @@
+{
+  "name": "tangerine-ui",
+  "version": "0.1.0",
+  "description": "Componentes para Tangerine: botones, formularios, modales, tablas y avisos. Accesibles, con modo oscuro y un CSS que funciona en cualquier HTML.",
+  "license": "MIT",
+  "type": "module",
+  "tangerine": "src/index.tng",
+  "style": "css/tangerine-ui.css",
+  "files": ["src", "css", "README.md", "LICENSE"],
+  "keywords": ["tangerine", "tangerine-lang", "ui", "components", "css", "design-system", "dark-mode", "accessibility"],
+  "homepage": "https://manuelosmadev.github.io/tangerine-ui/",
+  "repository": { "type": "git", "url": "git+https://github.com/ManuelOsmaDev/tangerine-ui.git" },
+  "bugs": { "url": "https://github.com/ManuelOsmaDev/tangerine-ui/issues" },
+  "peerDependencies": { "tangerine-lang": ">=5.2.0" },
+  "peerDependenciesMeta": { "tangerine-lang": { "optional": true } },
+  "scripts": {
+    "sitio": "node scripts/sitio.mjs",
+    "serve": "npm run sitio && node ../tangerine-lang/bin/tangerine.js serve sitio/dist -p 4322"
+  }
+}

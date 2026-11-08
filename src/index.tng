@@ -1,0 +1,580 @@
+// Tangerine UI: componentes listos para usar en Tangerine.
+//
+//   import { Button, Input, Card, Modal, toast, Toaster } from "tangerine-ui"
+//
+// Todos usan las clases de css/tangerine-ui.css. Los que reciben un bloque { }
+// (Card, Alert, Modal, Stack, Row, Grid) lo muestran como contenido.
+
+// ---------- Utilidades ----------
+
+fn clases(lista) { lista.filter(|c| c != nil && c != "").join(" ") }
+fn si(cond, valor) { if cond { valor } else { nil } }
+
+var siguiente_id = 0
+fn nuevo_id(prefijo) {
+  siguiente_id += 1
+  "{prefijo}-{siguiente_id}"
+}
+
+// ---------- Botón ----------
+
+// Button("Guardar", || guardar())                variante: .primary (por defecto), .secondary,
+// Button("Borrar", || borrar(), .danger)          .outline, .ghost, .danger, .link
+// Button("Enviar").size("lg").loading(true).full().icon("→")
+export struct Button {
+  var texto = ""
+  var accion = nil
+  var variante = "primary"
+  var tam = "md"
+  var desactivado = false
+  var cargando = false
+  var icono = nil
+  var ancho = false
+  var tipo = "button"
+
+  init(t, a = nil, v = "primary") {
+    texto = t
+    accion = a
+    variante = v
+  }
+
+  fn size(s) { tam = s; self }
+  fn disabled(b = true) { desactivado = b; self }
+  fn loading(b = true) { cargando = b; self }
+  fn icon(i) { icono = i; self }
+  fn full() { ancho = true; self }
+  fn submit() { tipo = "submit"; self }
+
+  fn pulsar() {
+    if accion != nil && !desactivado && !cargando { accion() }
+  }
+
+  view {
+    element("button", {
+      class: clases(["t-btn", "t-btn-{variante}", si(tam != "md", "t-btn-{tam}"), si(ancho, "t-btn-full"), si(cargando, "is-loading")]),
+      type: tipo,
+      disabled: desactivado,
+      "aria-busy": si(cargando, "true"),
+      on_click: || pulsar(),
+    }) {
+      if icono != nil { span(.t-btn-icon, { "aria-hidden": "true" }) { icono } }
+      span { texto }
+    }
+  }
+}
+
+// ---------- Campos de formulario ----------
+
+// Input("Correo", $correo, "email").placeholder("tu@correo.com").hint("No lo compartimos")
+// .error("Falta el @") lo marca en rojo. El segundo argumento siempre es un $campo.
+export struct Input {
+  var etiqueta = nil
+  var valor = nil
+  var tipo = "text"
+  var marcador = nil
+  var ayuda = nil
+  var fallo = nil
+  var desactivado = false
+  var id = ""
+
+  init(e, v, t = "text") {
+    etiqueta = e
+    valor = v
+    tipo = t
+    id = nuevo_id("t-input")
+  }
+
+  fn placeholder(p) { marcador = p; self }
+  fn hint(h) { ayuda = h; self }
+  fn error(e) { fallo = e; self }
+  fn disabled(b = true) { desactivado = b; self }
+
+  view {
+    div({ class: clases(["t-field", si(fallo != nil, "has-error")]) }) {
+      if etiqueta != nil { label(.t-label, { for: id }) { etiqueta } }
+      input(.t-input, valor, {
+        id: id,
+        type: tipo,
+        placeholder: marcador,
+        disabled: desactivado,
+        "aria-invalid": si(fallo != nil, "true"),
+        "aria-describedby": si(fallo != nil || ayuda != nil, "{id}-msg"),
+      })
+      if fallo != nil {
+        p(.t-field-error, { id: "{id}-msg" }) { fallo }
+      } else if ayuda != nil {
+        p(.t-field-hint, { id: "{id}-msg" }) { ayuda }
+      }
+    }
+  }
+}
+
+// Textarea("Mensaje", $mensaje).rows(5).placeholder("Escribe aquí")
+export struct Textarea {
+  var etiqueta = nil
+  var valor = nil
+  var filas = 4
+  var marcador = nil
+  var ayuda = nil
+  var fallo = nil
+  var id = ""
+
+  init(e, v) {
+    etiqueta = e
+    valor = v
+    id = nuevo_id("t-textarea")
+  }
+
+  fn rows(n) { filas = n; self }
+  fn placeholder(p) { marcador = p; self }
+  fn hint(h) { ayuda = h; self }
+  fn error(e) { fallo = e; self }
+
+  view {
+    div({ class: clases(["t-field", si(fallo != nil, "has-error")]) }) {
+      if etiqueta != nil { label(.t-label, { for: id }) { etiqueta } }
+      textarea(.t-textarea, valor, { id: id, rows: filas, placeholder: marcador, "aria-invalid": si(fallo != nil, "true") })
+      if fallo != nil {
+        p(.t-field-error) { fallo }
+      } else if ayuda != nil {
+        p(.t-field-hint) { ayuda }
+      }
+    }
+  }
+}
+
+// Select("País", $pais, ["Colombia", "México"])
+// Cada opción puede ser un texto o un par [valor, texto]: [["co", "Colombia"], ["mx", "México"]]
+export struct Select {
+  var etiqueta = nil
+  var valor = nil
+  var opciones = []
+  var ayuda = nil
+  var id = ""
+
+  init(e, v, o) {
+    etiqueta = e
+    valor = v
+    opciones = o
+    id = nuevo_id("t-select")
+  }
+
+  fn hint(h) { ayuda = h; self }
+
+  view {
+    div(.t-field) {
+      if etiqueta != nil { label(.t-label, { for: id }) { etiqueta } }
+      select(.t-select, valor, { id: id }) {
+        for o in opciones {
+          if type_of(o) == "List" {
+            option({ value: o[0] }) { o[1] }
+          } else {
+            option({ value: o }) { o }
+          }
+        }
+      }
+      if ayuda != nil { p(.t-field-hint) { ayuda } }
+    }
+  }
+}
+
+// Checkbox("Acepto los términos", $acepto)
+export struct Checkbox {
+  var texto = ""
+  var valor = nil
+  var desactivado = false
+
+  init(t, v) {
+    texto = t
+    valor = v
+  }
+
+  fn disabled(b = true) { desactivado = b; self }
+
+  view {
+    label({ class: clases(["t-check", si(desactivado, "is-disabled")]) }) {
+      input(valor, { type: "checkbox", class: "t-check-input", disabled: desactivado })
+      span(.t-check-box, { "aria-hidden": "true" })
+      span { texto }
+    }
+  }
+}
+
+// Switch("Notificaciones", $avisos)
+export struct Switch {
+  var texto = ""
+  var valor = nil
+  var desactivado = false
+
+  init(t, v) {
+    texto = t
+    valor = v
+  }
+
+  fn disabled(b = true) { desactivado = b; self }
+
+  view {
+    label({ class: clases(["t-switch", si(desactivado, "is-disabled")]) }) {
+      input(valor, { type: "checkbox", role: "switch", class: "t-switch-input", disabled: desactivado })
+      span(.t-switch-track, { "aria-hidden": "true" }) { span(.t-switch-thumb) }
+      span { texto }
+    }
+  }
+}
+
+// RadioGroup("Plan", $plan, [["free", "Gratis"], ["pro", "Pro"]])
+export struct RadioGroup {
+  var etiqueta = nil
+  var valor = nil
+  var opciones = []
+  var nombre = ""
+
+  init(e, v, o) {
+    etiqueta = e
+    valor = v
+    opciones = o
+    nombre = nuevo_id("t-radio")
+  }
+
+  view {
+    fieldset(.t-radio-group) {
+      if etiqueta != nil { legend(.t-label) { etiqueta } }
+      for o in opciones {
+        let clave = if type_of(o) == "List" { o[0] } else { o }
+        let texto = if type_of(o) == "List" { o[1] } else { o }
+        label(.t-radio) {
+          input({ type: "radio", class: "t-radio-input", name: nombre, value: clave, checked: valor.get() == clave, on_change: || valor.set(clave) })
+          span(.t-radio-dot, { "aria-hidden": "true" })
+          span { texto }
+        }
+      }
+    }
+  }
+}
+
+// ---------- Contenedores ----------
+
+// Card("Perfil", "Tus datos públicos") { ...contenido... }
+// .variant("elevated" | "outline" | "accent")  .interactive() la levanta al pasar el mouse
+export struct Card {
+  var titulo = nil
+  var subtitulo = nil
+  var variante = "default"
+  var interactiva = false
+
+  init(t = nil, s = nil) {
+    titulo = t
+    subtitulo = s
+  }
+
+  fn variant(v) { variante = v; self }
+  fn interactive() { interactiva = true; self }
+
+  view {
+    section({ class: clases(["t-card", si(variante != "default", "t-card-{variante}"), si(interactiva, "is-interactive")]) }) {
+      if titulo != nil {
+        header(.t-card-head) {
+          h3(.t-card-title) { titulo }
+          if subtitulo != nil { p(.t-card-sub) { subtitulo } }
+        }
+      }
+      div(.t-card-body) { children }
+    }
+  }
+}
+
+// Alert("Se guardaron los cambios", .success)   tipos: .info, .success, .warning, .danger
+// Alert("No se pudo conectar", .danger).title("Error")
+export struct Alert {
+  var texto = nil
+  var tipo = "info"
+  var titulo = nil
+
+  init(t = nil, k = "info") {
+    texto = t
+    tipo = k
+  }
+
+  fn title(t) { titulo = t; self }
+
+  view {
+    div({ class: "t-alert t-alert-{tipo}", role: if tipo == "danger" { "alert" } else { "status" } }) {
+      if titulo != nil { div(.t-alert-title) { titulo } }
+      div(.t-alert-body) {
+        if texto != nil { texto }
+        children
+      }
+    }
+  }
+}
+
+// Modal($abierto, "Título") { ...contenido... }   .size("sm" | "lg")
+// Se cierra con la X, con Escape o al hacer clic afuera.
+export struct Modal {
+  var abierto = nil
+  var titulo = nil
+  var tam = "md"
+
+  init(a, t = nil) {
+    abierto = a
+    titulo = t
+  }
+
+  fn size(s) { tam = s; self }
+  fn cerrar() { abierto.set(false) }
+
+  view {
+    if abierto.get() {
+      div({ class: clases(["t-modal", si(tam != "md", "t-modal-{tam}")]) }) {
+        div(.t-modal-backdrop, { on_click: || cerrar() })
+        div(.t-modal-panel, {
+          role: "dialog",
+          "aria-modal": "true",
+          "aria-label": titulo,
+          tabindex: "-1",
+          ref: |el| focus(el),
+          on_keydown: |e| { if e.key == "Escape" { cerrar() } },
+        }) {
+          div(.t-modal-head) {
+            if titulo != nil { h2(.t-modal-title) { titulo } }
+            element("button", { class: "t-modal-close", "aria-label": "Cerrar", on_click: || cerrar() }) { "×" }
+          }
+          div(.t-modal-body) { children }
+        }
+      }
+    }
+  }
+}
+
+// Tabs($pestana, ["Perfil", "Cuenta", "Avisos"])  $pestana guarda el índice: 0, 1, 2...
+// .line() las muestra subrayadas
+export struct Tabs {
+  var valor = nil
+  var pestanas = []
+  var estilo = "pill"
+
+  init(v, p) {
+    valor = v
+    pestanas = p
+  }
+
+  fn line() { estilo = "line"; self }
+
+  view {
+    div({ class: clases(["t-tabs", si(estilo == "line", "t-tabs-line")]), role: "tablist" }) {
+      for (i, p) in pestanas.enumerate() {
+        element("button", {
+          class: clases(["t-tab", si(valor.get() == i, "is-active")]),
+          role: "tab",
+          "aria-selected": if valor.get() == i { "true" } else { "false" },
+          on_click: || valor.set(i),
+        }) { p }
+      }
+    }
+  }
+}
+
+// Table([["nombre", "Nombre"], ["rol", "Rol"]], usuarios)
+// Cada columna es [clave, título] o solo la clave. Cada fila es un mapa.
+export struct Table {
+  var columnas = []
+  var filas = []
+  var vacio = "Sin datos"
+
+  init(c, f) {
+    columnas = c.map(|x| if type_of(x) == "List" { x } else { [x, x] })
+    filas = f
+  }
+
+  fn empty(t) { vacio = t; self }
+
+  view {
+    div(.t-table-wrap) {
+      table(.t-table) {
+        thead { tr { for c in columnas { th { c[1] } } } }
+        tbody {
+          if filas.len() == 0 {
+            tr { td(.t-table-empty, { colspan: columnas.len() }) { vacio } }
+          }
+          for f in filas {
+            tr { for c in columnas { td { f[c[0]] ?? "" } } }
+          }
+        }
+      }
+    }
+  }
+}
+
+// ---------- Pequeños ----------
+
+// Badge("Nuevo", .accent)   tipos: .neutral, .accent, .success, .warning, .danger, .info
+// .dot() le pone un punto; .live() lo hace latir
+export struct Badge {
+  var texto = ""
+  var tipo = "neutral"
+  var punto = false
+  var vivo = false
+
+  init(t, k = "neutral") {
+    texto = t
+    tipo = k
+  }
+
+  fn dot() { punto = true; self }
+  fn live() { punto = true; vivo = true; self }
+
+  view {
+    span({ class: clases(["t-badge", si(tipo != "neutral", "t-badge-{tipo}"), si(punto, "t-badge-dot"), si(vivo, "is-live")]) }) { texto }
+  }
+}
+
+// Avatar("Ana Pérez")  muestra AP;  Avatar("Ana", "foto.jpg") usa la imagen.  .size("sm" | "lg")
+export struct Avatar {
+  var nombre = ""
+  var imagen = nil
+  var tam = "md"
+
+  init(n, i = nil) {
+    nombre = n
+    imagen = i
+  }
+
+  fn size(s) { tam = s; self }
+
+  fn iniciales() {
+    nombre.words().take(2).map(|p| p.slice(0, 1).upper()).join("")
+  }
+
+  view {
+    span({ class: clases(["t-avatar", si(tam != "md", "t-avatar-{tam}")]), title: nombre, role: "img", "aria-label": nombre }) {
+      if imagen != nil { img({ src: imagen, alt: "" }) } else { iniciales() }
+    }
+  }
+}
+
+// Spinner()  Spinner("sm")  Spinner("lg")
+export struct Spinner {
+  var tam = "md"
+  init(t = "md") { tam = t }
+  view {
+    span({ class: clases(["t-spinner", si(tam != "md", "t-spinner-{tam}")]), role: "status", "aria-label": "Cargando" })
+  }
+}
+
+// Skeleton("100%", "14px")  .circle() para fotos de perfil
+export struct Skeleton {
+  var ancho = "100%"
+  var alto = "1em"
+  var circulo = false
+
+  init(a = "100%", h = "1em") {
+    ancho = a
+    alto = h
+  }
+
+  fn circle() { circulo = true; self }
+
+  view {
+    span({ class: clases(["t-skeleton", si(circulo, "t-skeleton-circle")]), style: "width: {ancho}; height: {alto}", "aria-hidden": "true" })
+  }
+}
+
+// Progress(60)  Progress(3, 10).label("Subiendo archivos")
+export struct Progress {
+  var valor = 0
+  var maximo = 100
+  var etiqueta = nil
+
+  init(v, m = 100) {
+    valor = v
+    maximo = m
+  }
+
+  fn label(t) { etiqueta = t; self }
+
+  view {
+    let pct = (valor / maximo * 100).clamp(0, 100).round(0)
+    div(.t-progress) {
+      if etiqueta != nil {
+        div(.t-progress-head) {
+          span { etiqueta }
+          span { "{pct}%" }
+        }
+      }
+      div(.t-progress-track, { role: "progressbar", "aria-valuenow": pct, "aria-valuemin": 0, "aria-valuemax": 100 }) {
+        div(.t-progress-bar, { style: "width: {pct}%" })
+      }
+    }
+  }
+}
+
+// Kbd("Ctrl")
+export struct Kbd {
+  var texto = ""
+  init(t) { texto = t }
+  view { element("kbd", { class: "t-kbd" }) { texto } }
+}
+
+// Divider()  Divider("o")
+export struct Divider {
+  var texto = nil
+  init(t = nil) { texto = t }
+  view {
+    div(.t-divider, { role: "separator" }) { if texto != nil { texto } }
+  }
+}
+
+// ---------- Layout ----------
+
+// Stack(12) { ... }  apila en columna con 12px entre cada cosa
+export struct Stack {
+  var espacio = 16
+  init(g = 16) { espacio = g }
+  view { div(.t-stack, { style: "--t-gap: {espacio}px" }) { children } }
+}
+
+// Row(8) { ... }  en fila, y salta de línea si no cabe
+export struct Row {
+  var espacio = 12
+  var alinear = "center"
+  init(g = 12, a = "center") {
+    espacio = g
+    alinear = a
+  }
+  view { div(.t-row, { style: "--t-gap: {espacio}px; --t-align: {alinear}" }) { children } }
+}
+
+// Grid(3, 16) { ... }  rejilla de 3 columnas; en el móvil, una sola
+export struct Grid {
+  var columnas = 3
+  var espacio = 16
+  init(c = 3, g = 16) {
+    columnas = c
+    espacio = g
+  }
+  view { div(.t-grid, { style: "--t-cols: {columnas}; --t-gap: {espacio}px" }) { children } }
+}
+
+// ---------- Avisos (toasts) ----------
+
+// Pon Toaster() una vez en tu app y llama a toast("Guardado", "success") desde donde quieras.
+let avisos = state([])
+var siguiente_aviso = 0
+
+export fn toast(texto, tipo = "neutral", ms = 3200) {
+  siguiente_aviso += 1
+  let id = siguiente_aviso
+  avisos.update(|l| l + [{ id, texto, tipo }])
+  after(ms, || avisos.update(|l| l.filter(|a| a.id != id)))
+  nil
+}
+
+export struct Toaster {
+  view {
+    div(.t-toaster, { "aria-live": "polite" }) {
+      for a in avisos.get() {
+        div({ key: a.id, class: clases(["t-toast", si(a.tipo != "neutral", "t-toast-{a.tipo}")]), role: "status" }) { a.texto }
+      }
+    }
+  }
+}

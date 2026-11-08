@@ -1,0 +1,3015 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Tangerine 5.2.0">
+<title>Tangerine UI · Componentes para Tangerine</title>
+<meta name="description" content="Componentes accesibles y con modo oscuro para Tangerine: botones, formularios, modales, tablas y avisos. Su CSS funciona en cualquier HTML."><meta name="color-scheme" content="light dark"><meta property="og:title" content="Tangerine UI"><meta property="og:description" content="Componentes jugosos para Tangerine."><link rel="icon" href="logo.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&family=JetBrains+Mono:wght@400..600&display=swap">
+<style>
+/*!
+ * Tangerine UI 0.1.0 · MIT
+ * Componentes para Tangerine y para cualquier HTML.
+ * Cambia el tema con variables: --t-accent, --t-radius, --t-font...
+ */
+
+/* ---------- Tema ---------- */
+:root,
+[data-theme="light"] {
+  --t-accent: #f2761d;
+  --t-accent-hover: #df6812;
+  --t-accent-press: #c95c0e;
+  --t-accent-contrast: #ffffff;
+  --t-accent-soft: color-mix(in srgb, var(--t-accent) 12%, transparent);
+  --t-accent-text: color-mix(in srgb, var(--t-accent) 82%, #3a1800);
+
+  --t-bg: #fbfaf8;
+  --t-surface: #ffffff;
+  --t-surface-2: #f4f2ee;
+  --t-surface-3: #ebe8e2;
+  --t-border: #e6e2db;
+  --t-border-strong: #d4cfc6;
+  --t-text: #1b1916;
+  --t-text-2: #5b5750;
+  --t-text-3: #8a857c;
+
+  --t-success: #15803d;
+  --t-warning: #b45309;
+  --t-danger: #dc2626;
+  --t-info: #2563eb;
+
+  --t-font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --t-mono: "JetBrains Mono", ui-monospace, "SF Mono", Consolas, monospace;
+  --t-radius: 10px;
+  --t-radius-sm: 7px;
+  --t-radius-lg: 16px;
+  --t-shadow-sm: 0 1px 2px rgb(27 25 22 / .06);
+  --t-shadow: 0 1px 2px rgb(27 25 22 / .05), 0 6px 18px -6px rgb(27 25 22 / .12);
+  --t-shadow-lg: 0 2px 6px rgb(27 25 22 / .06), 0 24px 60px -12px rgb(27 25 22 / .28);
+  --t-ring: 0 0 0 3px color-mix(in srgb, var(--t-accent) 32%, transparent);
+  --t-ease: cubic-bezier(.2, .8, .2, 1);
+  --t-ease-spring: cubic-bezier(.34, 1.4, .64, 1);
+  --t-fast: 120ms;
+  --t-med: 200ms;
+  --t-slow: 320ms;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --t-accent-hover: #f58a3c;
+    --t-accent-press: #f79a55;
+    --t-accent-text: color-mix(in srgb, var(--t-accent) 70%, #ffe2cc);
+    --t-bg: #121110;
+    --t-surface: #1a1917;
+    --t-surface-2: #23211e;
+    --t-surface-3: #2d2a26;
+    --t-border: #2f2c28;
+    --t-border-strong: #423e38;
+    --t-text: #f1eee9;
+    --t-text-2: #b3ada3;
+    --t-text-3: #827c73;
+    --t-success: #4ade80;
+    --t-warning: #fbbf24;
+    --t-danger: #f87171;
+    --t-info: #60a5fa;
+    --t-shadow-sm: 0 1px 2px rgb(0 0 0 / .4);
+    --t-shadow: 0 1px 2px rgb(0 0 0 / .35), 0 8px 24px -8px rgb(0 0 0 / .55);
+    --t-shadow-lg: 0 2px 8px rgb(0 0 0 / .4), 0 30px 70px -14px rgb(0 0 0 / .7);
+    color-scheme: dark;
+  }
+}
+[data-theme="dark"] {
+  --t-accent-hover: #f58a3c;
+  --t-accent-press: #f79a55;
+  --t-accent-text: color-mix(in srgb, var(--t-accent) 70%, #ffe2cc);
+  --t-bg: #121110;
+  --t-surface: #1a1917;
+  --t-surface-2: #23211e;
+  --t-surface-3: #2d2a26;
+  --t-border: #2f2c28;
+  --t-border-strong: #423e38;
+  --t-text: #f1eee9;
+  --t-text-2: #b3ada3;
+  --t-text-3: #827c73;
+  --t-success: #4ade80;
+  --t-warning: #fbbf24;
+  --t-danger: #f87171;
+  --t-info: #60a5fa;
+  --t-shadow-sm: 0 1px 2px rgb(0 0 0 / .4);
+  --t-shadow: 0 1px 2px rgb(0 0 0 / .35), 0 8px 24px -8px rgb(0 0 0 / .55);
+  --t-shadow-lg: 0 2px 8px rgb(0 0 0 / .4), 0 30px 70px -14px rgb(0 0 0 / .7);
+  color-scheme: dark;
+}
+
+/* ---------- Base opcional: <body class="t-app"> ---------- */
+.t-app {
+  margin: 0;
+  background: var(--t-bg);
+  color: var(--t-text);
+  font: 15px/1.55 var(--t-font);
+  -webkit-font-smoothing: antialiased;
+}
+.t-app *, .t-app *::before, .t-app *::after { box-sizing: border-box; }
+[class^="t-"], [class*=" t-"] { box-sizing: border-box; }
+
+/* ---------- Botón ---------- */
+.t-btn {
+  --_bg: var(--t-accent);
+  --_bg-hover: var(--t-accent-hover);
+  --_bg-press: var(--t-accent-press);
+  --_fg: var(--t-accent-contrast);
+  --_border: transparent;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--_border);
+  border-radius: var(--t-radius);
+  background: var(--_bg);
+  color: var(--_fg);
+  font: 560 14px/1 var(--t-font);
+  letter-spacing: -.005em;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--t-fast) var(--t-ease), border-color var(--t-fast) var(--t-ease),
+    color var(--t-fast) var(--t-ease), box-shadow var(--t-fast) var(--t-ease), transform var(--t-fast) var(--t-ease);
+}
+.t-btn:hover { background: var(--_bg-hover); }
+.t-btn:active { background: var(--_bg-press); transform: scale(.97); }
+.t-btn:focus-visible { outline: none; box-shadow: var(--t-ring); }
+.t-btn:disabled, .t-btn[aria-disabled="true"] { opacity: .5; cursor: not-allowed; transform: none; }
+.t-btn-primary { box-shadow: inset 0 1px 0 rgb(255 255 255 / .18), 0 1px 2px color-mix(in srgb, var(--t-accent) 40%, transparent); }
+.t-btn-secondary { --_bg: var(--t-surface-2); --_bg-hover: var(--t-surface-3); --_bg-press: var(--t-border); --_fg: var(--t-text); }
+.t-btn-outline { --_bg: transparent; --_bg-hover: var(--t-surface-2); --_bg-press: var(--t-surface-3); --_fg: var(--t-text); --_border: var(--t-border-strong); }
+.t-btn-ghost { --_bg: transparent; --_bg-hover: var(--t-surface-2); --_bg-press: var(--t-surface-3); --_fg: var(--t-text); }
+.t-btn-danger { --_bg: var(--t-danger); --_bg-hover: color-mix(in srgb, var(--t-danger) 88%, #000); --_bg-press: color-mix(in srgb, var(--t-danger) 78%, #000); --_fg: #fff; }
+.t-btn-link { --_bg: transparent; --_bg-hover: transparent; --_bg-press: transparent; --_fg: var(--t-accent-text); min-height: auto; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
+.t-btn-sm { min-height: 32px; padding: 0 12px; font-size: 13px; border-radius: var(--t-radius-sm); }
+.t-btn-lg { min-height: 48px; padding: 0 22px; font-size: 16px; }
+.t-btn-full { width: 100%; }
+.t-btn-icon { display: inline-flex; font-size: 1.1em; line-height: 1; }
+.t-btn.is-loading { color: transparent; pointer-events: none; }
+.t-btn.is-loading::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--_fg);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: t-spin .7s linear infinite;
+}
+
+/* ---------- Campos ---------- */
+.t-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.t-label { font: 560 13px/1.3 var(--t-font); color: var(--t-text); }
+.t-field-hint { margin: 0; font-size: 12.5px; color: var(--t-text-3); }
+.t-field-error { margin: 0; font-size: 12.5px; color: var(--t-danger); animation: t-fade-down var(--t-med) var(--t-ease); }
+.t-input, .t-textarea, .t-select {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--t-border-strong);
+  border-radius: var(--t-radius);
+  background: var(--t-surface);
+  color: var(--t-text);
+  font: 14px/1.4 var(--t-font);
+  box-shadow: var(--t-shadow-sm);
+  transition: border-color var(--t-fast) var(--t-ease), box-shadow var(--t-fast) var(--t-ease), background var(--t-fast);
+}
+.t-textarea { min-height: 96px; padding: 10px 12px; resize: vertical; line-height: 1.55; }
+.t-input::placeholder, .t-textarea::placeholder { color: var(--t-text-3); }
+.t-input:hover, .t-textarea:hover, .t-select:hover { border-color: var(--t-text-3); }
+.t-input:focus, .t-textarea:focus, .t-select:focus { outline: none; border-color: var(--t-accent); box-shadow: var(--t-ring); }
+.t-input:disabled, .t-textarea:disabled, .t-select:disabled { opacity: .55; cursor: not-allowed; background: var(--t-surface-2); }
+.t-field.has-error .t-input, .t-field.has-error .t-textarea, .t-field.has-error .t-select { border-color: var(--t-danger); }
+.t-field.has-error .t-input:focus { box-shadow: 0 0 0 3px color-mix(in srgb, var(--t-danger) 25%, transparent); }
+.t-select {
+  appearance: none;
+  padding-right: 36px;
+  cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--t-text-2) 50%), linear-gradient(135deg, var(--t-text-2) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 52%, calc(100% - 13px) 52%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+
+/* ---------- Checkbox, radio y switch ---------- */
+.t-check, .t-radio, .t-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--t-text);
+  cursor: pointer;
+  user-select: none;
+}
+.t-check.is-disabled, .t-radio.is-disabled, .t-switch.is-disabled { opacity: .5; cursor: not-allowed; }
+.t-check-input, .t-radio-input, .t-switch-input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+.t-check-box, .t-radio-dot {
+  position: relative;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--t-border-strong);
+  border-radius: 5px;
+  background: var(--t-surface);
+  transition: background var(--t-fast) var(--t-ease), border-color var(--t-fast) var(--t-ease), box-shadow var(--t-fast);
+}
+.t-radio-dot { border-radius: 50%; }
+.t-check-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--t-accent-contrast);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+  transform: scale(.4);
+  opacity: 0;
+  transition: transform var(--t-med) var(--t-ease-spring), opacity var(--t-fast);
+}
+.t-radio-dot::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--t-accent-contrast);
+  transform: scale(0);
+  transition: transform var(--t-med) var(--t-ease-spring);
+}
+.t-check-input:checked + .t-check-box, .t-radio-input:checked + .t-radio-dot { background: var(--t-accent); border-color: var(--t-accent); }
+.t-check-input:checked + .t-check-box::after { transform: scale(1); opacity: 1; }
+.t-radio-input:checked + .t-radio-dot::after { transform: scale(1); }
+.t-check-input:focus-visible + .t-check-box, .t-radio-input:focus-visible + .t-radio-dot, .t-switch-input:focus-visible + .t-switch-track { box-shadow: var(--t-ring); }
+.t-radio-group { display: flex; flex-direction: column; gap: 10px; border: 0; margin: 0; padding: 0; }
+.t-radio-group legend { margin-bottom: 4px; padding: 0; }
+.t-switch-track {
+  position: relative;
+  flex: none;
+  width: 38px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--t-surface-3);
+  border: 1px solid var(--t-border-strong);
+  transition: background var(--t-med) var(--t-ease), border-color var(--t-med) var(--t-ease), box-shadow var(--t-fast);
+}
+.t-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / .25);
+  transition: transform var(--t-slow) var(--t-ease-spring), width var(--t-fast) var(--t-ease);
+}
+.t-switch:active .t-switch-thumb { width: 20px; }
+.t-switch-input:checked + .t-switch-track { background: var(--t-accent); border-color: var(--t-accent); }
+.t-switch-input:checked + .t-switch-track .t-switch-thumb { transform: translateX(16px); }
+.t-switch:active .t-switch-input:checked + .t-switch-track .t-switch-thumb { transform: translateX(12px); }
+
+/* ---------- Tarjeta ---------- */
+.t-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-lg);
+  background: var(--t-surface);
+  box-shadow: var(--t-shadow-sm);
+  transition: transform var(--t-med) var(--t-ease), box-shadow var(--t-med) var(--t-ease), border-color var(--t-med);
+}
+.t-card-elevated { box-shadow: var(--t-shadow); border-color: transparent; }
+.t-card-outline { box-shadow: none; background: transparent; }
+.t-card-accent { border-color: color-mix(in srgb, var(--t-accent) 45%, var(--t-border)); background: linear-gradient(180deg, var(--t-accent-soft), transparent 55%), var(--t-surface); }
+.t-card.is-interactive { cursor: pointer; }
+.t-card.is-interactive:hover { transform: translateY(-3px); box-shadow: var(--t-shadow-lg); border-color: var(--t-border-strong); }
+.t-card-head { padding: 20px 22px 0; }
+.t-card-title { margin: 0; font: 640 16px/1.3 var(--t-font); letter-spacing: -.01em; color: var(--t-text); }
+.t-card-sub { margin: 4px 0 0; font-size: 13.5px; color: var(--t-text-2); }
+.t-card-body { display: flex; flex-direction: column; gap: 14px; padding: 18px 22px 22px; }
+
+/* ---------- Alerta ---------- */
+.t-alert {
+  --_c: var(--t-info);
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 2px 12px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--_c) 30%, var(--t-border));
+  border-radius: var(--t-radius);
+  background: color-mix(in srgb, var(--_c) 8%, var(--t-surface));
+  color: var(--t-text);
+  font-size: 14px;
+  animation: t-fade-down var(--t-slow) var(--t-ease);
+}
+.t-alert::before {
+  content: "";
+  grid-row: span 2;
+  width: 20px;
+  height: 20px;
+  background: var(--_c);
+  -webkit-mask: var(--_icon) center / contain no-repeat;
+  mask: var(--_icon) center / contain no-repeat;
+}
+.t-alert-info { --_c: var(--t-info); --_icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zm1 13H9V9h2v5.5zM10 7.6a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4z'/%3E%3C/svg%3E"); }
+.t-alert-success { --_c: var(--t-success); --_icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zm-1.2 12.3L5 10l1.4-1.4 2.4 2.4 4.8-4.8L15 7.6l-6.2 6.2z'/%3E%3C/svg%3E"); }
+.t-alert-warning { --_c: var(--t-warning); --_icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 1.8L.9 17.5h18.2L10 1.8zm1 13.4H9v-2h2v2zm0-3.6H9V7.4h2v4.2z'/%3E%3C/svg%3E"); }
+.t-alert-danger { --_c: var(--t-danger); --_icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zm3.5 10.6l-1.4 1.4L10 11.4l-2.1 2.1-1.4-1.4L8.6 10 6.5 7.9l1.4-1.4L10 8.6l2.1-2.1 1.4 1.4-2.1 2.1 2.1 2.1z'/%3E%3C/svg%3E"); }
+.t-alert-title { font-weight: 620; }
+.t-alert-body { color: var(--t-text-2); }
+.t-alert-body:only-of-type { color: var(--t-text); align-self: center; }
+
+/* ---------- Badge, avatar, kbd ---------- */
+.t-badge {
+  --_c: var(--t-text-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--_c) 13%, transparent);
+  color: color-mix(in srgb, var(--_c) 90%, var(--t-text));
+  font: 600 12px/1 var(--t-font);
+  white-space: nowrap;
+}
+.t-badge-accent { --_c: var(--t-accent); }
+.t-badge-success { --_c: var(--t-success); }
+.t-badge-warning { --_c: var(--t-warning); }
+.t-badge-danger { --_c: var(--t-danger); }
+.t-badge-info { --_c: var(--t-info); }
+.t-badge-dot::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--_c); }
+.t-badge-dot.is-live::before { animation: t-pulse 1.6s ease-in-out infinite; }
+.t-avatar {
+  --_s: 36px;
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: var(--_s);
+  height: var(--_s);
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--t-accent) 85%, #fff), var(--t-accent-press));
+  color: #fff;
+  font: 650 calc(var(--_s) * .38)/1 var(--t-font);
+  letter-spacing: .02em;
+  box-shadow: 0 0 0 2px var(--t-surface);
+}
+.t-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.t-avatar-sm { --_s: 28px; }
+.t-avatar-lg { --_s: 48px; }
+.t-avatar-group { display: inline-flex; }
+.t-avatar-group .t-avatar + .t-avatar { margin-left: -10px; }
+.t-kbd {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 6px;
+  border: 1px solid var(--t-border-strong);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  background: var(--t-surface);
+  color: var(--t-text-2);
+  font: 550 12px/1 var(--t-mono);
+}
+
+/* ---------- Carga ---------- */
+.t-spinner {
+  --_s: 20px;
+  display: inline-block;
+  width: var(--_s);
+  height: var(--_s);
+  border: 2px solid color-mix(in srgb, var(--t-accent) 22%, transparent);
+  border-top-color: var(--t-accent);
+  border-radius: 50%;
+  animation: t-spin .7s linear infinite;
+}
+.t-spinner-sm { --_s: 14px; }
+.t-spinner-lg { --_s: 32px; border-width: 3px; }
+.t-skeleton {
+  display: block;
+  border-radius: var(--t-radius-sm);
+  background: linear-gradient(90deg, var(--t-surface-2) 0%, var(--t-surface-3) 45%, var(--t-surface-2) 90%) 0 0 / 300% 100%;
+  animation: t-shimmer 1.4s ease-in-out infinite;
+}
+.t-skeleton-circle { border-radius: 50%; }
+.t-progress { display: flex; flex-direction: column; gap: 6px; }
+.t-progress-head { display: flex; justify-content: space-between; font-size: 13px; color: var(--t-text-2); }
+.t-progress-track { height: 8px; border-radius: 999px; background: var(--t-surface-3); overflow: hidden; }
+.t-progress-bar {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--t-accent), color-mix(in srgb, var(--t-accent) 70%, #ffd29e));
+  transition: width var(--t-slow) var(--t-ease);
+}
+
+/* ---------- Pestañas ---------- */
+.t-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--t-radius);
+  background: var(--t-surface-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.t-tab {
+  position: relative;
+  flex: none;
+  min-height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: calc(var(--t-radius) - 3px);
+  background: transparent;
+  color: var(--t-text-2);
+  font: 560 13.5px/1 var(--t-font);
+  cursor: pointer;
+  transition: color var(--t-fast) var(--t-ease), background var(--t-med) var(--t-ease), box-shadow var(--t-med) var(--t-ease);
+}
+.t-tab:hover { color: var(--t-text); }
+.t-tab:focus-visible { outline: none; box-shadow: var(--t-ring); }
+.t-tab.is-active { background: var(--t-surface); color: var(--t-text); box-shadow: var(--t-shadow-sm), 0 0 0 1px var(--t-border); }
+.t-tabs-line { padding: 0; gap: 18px; border-radius: 0; background: transparent; border-bottom: 1px solid var(--t-border); }
+.t-tabs-line .t-tab { padding: 0 2px; border-radius: 0; }
+.t-tabs-line .t-tab::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--t-accent);
+  transform: scaleX(0);
+  transition: transform var(--t-med) var(--t-ease);
+}
+.t-tabs-line .t-tab.is-active { background: transparent; box-shadow: none; }
+.t-tabs-line .t-tab.is-active::after { transform: scaleX(1); }
+
+/* ---------- Tabla ---------- */
+.t-table-wrap { overflow-x: auto; border: 1px solid var(--t-border); border-radius: var(--t-radius-lg); background: var(--t-surface); }
+.t-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.t-table th {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--t-border);
+  background: var(--t-surface-2);
+  color: var(--t-text-2);
+  font: 600 12px/1.2 var(--t-font);
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+.t-table td { padding: 12px 16px; border-bottom: 1px solid var(--t-border); color: var(--t-text); }
+.t-table tr:last-child td { border-bottom: 0; }
+.t-table tbody tr { transition: background var(--t-fast); }
+.t-table tbody tr:hover { background: color-mix(in srgb, var(--t-accent) 4%, transparent); }
+.t-table-empty { padding: 28px 16px !important; color: var(--t-text-3) !important; text-align: center; }
+
+/* ---------- Modal ---------- */
+.t-modal { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 16px; }
+.t-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(15 12 9 / .45);
+  backdrop-filter: blur(4px);
+  animation: t-fade var(--t-med) var(--t-ease);
+}
+.t-modal-panel {
+  position: relative;
+  width: min(480px, 100%);
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-lg);
+  background: var(--t-surface);
+  box-shadow: var(--t-shadow-lg);
+  animation: t-pop var(--t-slow) var(--t-ease-spring);
+  outline: none;
+}
+.t-modal-sm .t-modal-panel { width: min(380px, 100%); }
+.t-modal-lg .t-modal-panel { width: min(720px, 100%); }
+.t-modal-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px 0; }
+.t-modal-title { margin: 0; font: 650 17px/1.3 var(--t-font); letter-spacing: -.01em; }
+.t-modal-close {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin-right: -6px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--t-text-3);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.t-modal-close:hover { background: var(--t-surface-2); color: var(--t-text); }
+.t-modal-close:focus-visible { outline: none; box-shadow: var(--t-ring); }
+.t-modal-body { display: flex; flex-direction: column; gap: 14px; padding: 16px 20px 20px; color: var(--t-text-2); }
+
+/* ---------- Toasts ---------- */
+.t-toaster {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: none;
+}
+.t-toast {
+  --_c: var(--t-text-3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(380px, calc(100vw - 32px));
+  padding: 12px 16px;
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius);
+  background: var(--t-surface);
+  color: var(--t-text);
+  font-size: 14px;
+  box-shadow: var(--t-shadow-lg);
+  pointer-events: auto;
+  animation: t-toast-in var(--t-slow) var(--t-ease-spring);
+}
+.t-toast::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--_c); box-shadow: 0 0 0 4px color-mix(in srgb, var(--_c) 18%, transparent); }
+.t-toast-success { --_c: var(--t-success); }
+.t-toast-warning { --_c: var(--t-warning); }
+.t-toast-danger { --_c: var(--t-danger); }
+.t-toast-info { --_c: var(--t-info); }
+.t-toast-accent { --_c: var(--t-accent); }
+
+/* ---------- Layout ---------- */
+.t-stack { display: flex; flex-direction: column; gap: var(--t-gap, 16px); }
+.t-row { display: flex; flex-wrap: wrap; align-items: var(--t-align, center); gap: var(--t-gap, 12px); }
+.t-grid { display: grid; grid-template-columns: repeat(var(--t-cols, 3), minmax(0, 1fr)); gap: var(--t-gap, 16px); }
+@media (max-width: 640px) { .t-grid { grid-template-columns: 1fr; } }
+.t-divider { display: flex; align-items: center; gap: 12px; color: var(--t-text-3); font-size: 12.5px; }
+.t-divider::before, .t-divider::after { content: ""; flex: 1; height: 1px; background: var(--t-border); }
+.t-divider:empty { gap: 0; }
+
+/* ---------- Tooltip: <span data-tooltip="Hola"> ---------- */
+[data-tooltip] { position: relative; }
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  z-index: 10;
+  padding: 6px 9px;
+  border-radius: 7px;
+  background: var(--t-text);
+  color: var(--t-bg);
+  font: 500 12px/1.2 var(--t-font);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, 4px);
+  pointer-events: none;
+  transition: opacity var(--t-fast) var(--t-ease), transform var(--t-fast) var(--t-ease);
+}
+[data-tooltip]:hover::after, [data-tooltip]:focus-visible::after { opacity: 1; transform: translate(-50%, 0); transition-delay: 150ms; }
+
+/* ---------- Animaciones ---------- */
+@keyframes t-spin { to { transform: rotate(360deg); } }
+@keyframes t-fade { from { opacity: 0; } }
+@keyframes t-fade-down { from { opacity: 0; transform: translateY(-4px); } }
+@keyframes t-pop { from { opacity: 0; transform: translateY(8px) scale(.96); } }
+@keyframes t-toast-in { from { opacity: 0; transform: translateY(12px) scale(.96); } }
+@keyframes t-shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+@keyframes t-pulse { 50% { opacity: .35; } }
+
+@media (prefers-reduced-motion: reduce) {
+  [class^="t-"], [class*=" t-"], [class^="t-"]::before, [class*=" t-"]::before, [class^="t-"]::after, [class*=" t-"]::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+  .t-spinner, .t-btn.is-loading::after { animation-duration: 1.4s !important; animation-iteration-count: infinite !important; }
+}
+</style>
+<style>
+/* Web de Tangerine UI. Usa las variables de tangerine-ui.css. */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--t-bg);
+  color: var(--t-text);
+  font: 15px/1.6 var(--t-font);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: inherit; }
+img { display: block; }
+::selection { background: color-mix(in srgb, var(--t-accent) 28%, transparent); }
+:focus-visible { outline: 2px solid var(--t-accent); outline-offset: 2px; }
+.ancho { width: min(1200px, 100%); margin-inline: auto; padding-inline: 24px; }
+@media (max-width: 640px) { .ancho { padding-inline: 16px; } }
+
+/* ---------- Barra superior ---------- */
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--t-bg) 78%, transparent);
+  backdrop-filter: saturate(1.6) blur(14px);
+  -webkit-backdrop-filter: saturate(1.6) blur(14px);
+  border-bottom: 1px solid color-mix(in srgb, var(--t-border) 70%, transparent);
+}
+.top-in { display: flex; align-items: center; gap: 28px; height: 64px; width: min(1200px, 100%); margin-inline: auto; padding-inline: 24px; }
+.marca { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; transition: transform var(--t-med) var(--t-ease); }
+.marca:hover { transform: translateY(-1px); }
+.marca img { transition: transform var(--t-slow) var(--t-ease-spring); }
+.marca:hover img { transform: rotate(-12deg) scale(1.06); }
+.marca-t { font: 700 18px/1 var(--t-font); letter-spacing: -.03em; }
+.marca-ui {
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: var(--t-accent);
+  color: var(--t-accent-contrast);
+  font: 750 11px/1 var(--t-font);
+  letter-spacing: .04em;
+}
+.top-nav { display: flex; gap: 4px; }
+.top-nav a {
+  position: relative;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--t-text-2);
+  font-size: 14px;
+  font-weight: 520;
+  text-decoration: none;
+  transition: color var(--t-fast), background var(--t-fast);
+}
+.top-nav a:hover { color: var(--t-text); background: var(--t-surface-2); }
+.top-nav a.on { color: var(--t-text); }
+.top-nav a.on::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: -13px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--t-accent);
+  animation: crecer var(--t-slow) var(--t-ease);
+}
+.top-acc { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.buscar {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 38px;
+  min-width: 220px;
+  padding: 0 8px 0 12px;
+  border: 1px solid var(--t-border);
+  border-radius: 10px;
+  background: var(--t-surface);
+  color: var(--t-text-3);
+  font: 14px var(--t-font);
+  cursor: pointer;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast), color var(--t-fast);
+}
+.buscar:hover { border-color: var(--t-border-strong); color: var(--t-text-2); box-shadow: var(--t-shadow-sm); }
+.buscar-ico, .tema-ico, .icono.gh::before {
+  width: 16px;
+  height: 16px;
+  background: currentColor;
+  -webkit-mask: var(--m) center / contain no-repeat;
+  mask: var(--m) center / contain no-repeat;
+}
+.buscar-ico { --m: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E"); }
+.buscar-txt { flex: 1; text-align: left; }
+.buscar-kbd { display: inline-flex; gap: 3px; }
+.icono {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--t-text-2);
+  font-size: 18px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+.icono:hover { background: var(--t-surface-2); color: var(--t-text); }
+.icono.gh::before { content: ""; width: 18px; height: 18px; --m: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E"); }
+.tema-ico { width: 18px; height: 18px; transition: transform var(--t-slow) var(--t-ease-spring); }
+.tema-ico.light { --m: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z'/%3E%3C/svg%3E"); }
+.tema-ico.dark { --m: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='4.5' fill='black'/%3E%3Cpath d='M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4'/%3E%3C/svg%3E"); transform: rotate(90deg); }
+.icono:hover .tema-ico { transform: rotate(-20deg) scale(1.1); }
+.menu-btn { display: none; }
+
+/* ---------- Portada ---------- */
+.hero { position: relative; overflow: hidden; padding: 72px 0 96px; }
+.hero-fondo { position: absolute; inset: 0; pointer-events: none; }
+.orbe { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .55; animation: derivar 18s ease-in-out infinite alternate; }
+.orbe-a { width: 520px; height: 520px; top: -160px; right: -80px; background: radial-gradient(circle, color-mix(in srgb, var(--t-accent) 70%, transparent), transparent 70%); }
+.orbe-b { width: 420px; height: 420px; bottom: -180px; left: -120px; background: radial-gradient(circle, color-mix(in srgb, var(--t-accent) 35%, #ffd29e), transparent 70%); animation-duration: 24s; opacity: .35; }
+.rejilla {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--t-border) 1px, transparent 1px), linear-gradient(90deg, var(--t-border) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: .55;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent 75%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent 75%);
+}
+.hero-in { position: relative; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+.hero-texto > * { animation: subir .8s var(--t-ease) backwards; }
+.hero-texto > *:nth-child(2) { animation-delay: 80ms; }
+.hero-texto > *:nth-child(3) { animation-delay: 160ms; }
+.hero-texto > *:nth-child(4) { animation-delay: 240ms; }
+.hero-texto > *:nth-child(5) { animation-delay: 320ms; }
+.hero-aviso {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 26px;
+  padding: 6px 14px 6px 10px;
+  border: 1px solid var(--t-border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--t-surface) 80%, transparent);
+  color: var(--t-text-2);
+  font-size: 13px;
+  text-decoration: none;
+  box-shadow: var(--t-shadow-sm);
+  transition: border-color var(--t-fast), transform var(--t-med) var(--t-ease);
+}
+.hero-aviso:hover { border-color: color-mix(in srgb, var(--t-accent) 50%, var(--t-border)); transform: translateY(-1px); }
+.aviso-punto { width: 8px; height: 8px; border-radius: 50%; background: var(--t-accent); box-shadow: 0 0 0 4px var(--t-accent-soft); animation: latir 2s ease-in-out infinite; }
+.flecha { display: inline-block; transition: transform var(--t-med) var(--t-ease); }
+a:hover > .flecha, .t-btn:hover .flecha { transform: translateX(3px); }
+.hero-titulo { margin: 0; font: 760 clamp(42px, 6.2vw, 76px)/1.02 var(--t-font); letter-spacing: -.045em; }
+.grad {
+  background: linear-gradient(100deg, var(--t-accent) 10%, color-mix(in srgb, var(--t-accent) 55%, #ffcf6b) 45%, var(--t-accent) 90%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: brillo 6s ease-in-out infinite;
+}
+.hero-sub { max-width: 540px; margin: 22px 0 0; color: var(--t-text-2); font-size: 18px; line-height: 1.6; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.comando {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  padding: 6px 6px 6px 14px;
+  border: 1px solid var(--t-border);
+  border-radius: 12px;
+  background: var(--t-surface);
+  font: 13.5px var(--t-mono);
+  box-shadow: var(--t-shadow-sm);
+}
+.comando-prompt { color: var(--t-accent); font-weight: 700; }
+
+.vitrina { position: relative; min-height: 600px; animation: aparecer 1s .25s var(--t-ease) backwards; }
+.vitrina-pila { position: relative; height: 600px; }
+.flota { position: absolute; width: 330px; transition: transform .5s var(--t-ease); }
+.flota > .t-card { animation: flotar 7s ease-in-out infinite; }
+.flota-a { top: 0; left: 0; z-index: 2; transform: rotate(-2deg); }
+.flota-b { top: 70px; right: 0; z-index: 1; transform: rotate(2.5deg); }
+.flota-b > .t-card { animation-delay: -2.5s; }
+.flota-c { bottom: 6px; left: 54px; width: 270px; z-index: 3; transform: rotate(-1deg); }
+.flota-c > .t-card { animation-delay: -4.5s; }
+.flota:hover { z-index: 5; transform: rotate(0) scale(1.02); }
+.flota:hover > .t-card { animation-play-state: paused; }
+
+.seccion { padding: 72px 24px; }
+.seccion-cab { max-width: 640px; margin: 0 auto 40px; text-align: center; }
+.antetitulo { margin: 0 0 10px; color: var(--t-accent-text); font: 650 13px/1 var(--t-font); letter-spacing: .08em; text-transform: uppercase; }
+.seccion-cab h2, .cierre h2 { margin: 0; font: 720 clamp(30px, 4vw, 44px)/1.1 var(--t-font); letter-spacing: -.035em; }
+.seccion-cab p:last-child, .cierre p { margin: 14px 0 0; color: var(--t-text-2); font-size: 17px; }
+
+.rasgos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.rasgo { padding: 22px; border: 1px solid var(--t-border); border-radius: var(--t-radius-lg); background: var(--t-surface); }
+.rasgo-ico { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 11px; background: var(--t-accent-soft); color: var(--t-accent-text); font-size: 19px; }
+.rasgo h3 { margin: 16px 0 6px; font: 650 16px/1.3 var(--t-font); letter-spacing: -.01em; }
+.rasgo p { margin: 0; color: var(--t-text-2); font-size: 14px; }
+
+.galeria { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
+.pieza {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-lg);
+  background: var(--t-surface);
+  overflow: hidden;
+  text-decoration: none;
+}
+.pieza-vista {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 190px;
+  padding: 16px;
+  overflow: hidden;
+  background: radial-gradient(color-mix(in srgb, var(--t-text) 9%, transparent) 1px, transparent 1px) 0 0 / 14px 14px, var(--t-surface-2);
+  border-bottom: 1px solid var(--t-border);
+}
+.pieza-lienzo { width: 150%; transform: scale(.66); pointer-events: none; transition: transform var(--t-slow) var(--t-ease); }
+.pieza:hover .pieza-lienzo { transform: scale(.7); }
+.pieza-lienzo .t-toaster { display: none; }
+.pieza-pie { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 18px; }
+.pieza-nombre { font-weight: 650; letter-spacing: -.01em; }
+.pieza-grupo { color: var(--t-text-3); font-size: 13px; }
+
+.cierre {
+  padding: 56px 24px;
+  border: 1px solid color-mix(in srgb, var(--t-accent) 30%, var(--t-border));
+  border-radius: 28px;
+  background: radial-gradient(ellipse at top, var(--t-accent-soft), transparent 70%), var(--t-surface);
+  text-align: center;
+}
+.cierre .hero-cta { justify-content: center; }
+
+/* Aparecen al hacer scroll; al pasar el mouse se levantan */
+.revelar {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .7s var(--t-ease) var(--d, 0ms), transform .7s var(--t-ease) var(--d, 0ms), box-shadow var(--t-med) var(--t-ease), border-color var(--t-med);
+}
+.revelar.visible { opacity: 1; transform: none; }
+.rasgo.visible:hover, .pieza.visible:hover { transform: translateY(-4px); box-shadow: var(--t-shadow-lg); transition-delay: 0ms; }
+.pieza.visible:hover { border-color: color-mix(in srgb, var(--t-accent) 40%, var(--t-border)); }
+
+/* ---------- Documentación ---------- */
+.docs { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px; padding-top: 32px; padding-bottom: 80px; }
+.lateral { position: sticky; top: 88px; align-self: start; max-height: calc(100vh - 110px); overflow-y: auto; padding-right: 8px; scrollbar-width: thin; }
+.lat-grupo { margin: 22px 0 6px; padding-left: 12px; color: var(--t-text-3); font: 650 11.5px/1 var(--t-font); letter-spacing: .08em; text-transform: uppercase; }
+.lat-grupo:first-child { margin-top: 0; }
+.lat-link {
+  position: relative;
+  display: block;
+  padding: 7px 12px;
+  border-radius: 8px;
+  color: var(--t-text-2);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color var(--t-fast), background var(--t-fast), padding var(--t-med) var(--t-ease);
+}
+.lat-link:hover { color: var(--t-text); background: var(--t-surface-2); }
+.lat-link.on { color: var(--t-accent-text); background: var(--t-accent-soft); font-weight: 600; padding-left: 16px; }
+.lat-link.on::before { content: ""; position: absolute; left: 6px; top: 9px; bottom: 9px; width: 3px; border-radius: 3px; background: var(--t-accent); animation: crecer-v var(--t-slow) var(--t-ease); }
+
+.pagina { min-width: 0; max-width: 860px; animation: entrar .5s var(--t-ease) backwards; }
+.miga { margin: 0 0 8px; color: var(--t-accent-text); font: 600 13px/1 var(--t-font); }
+.pag-cab h1 { margin: 0; font: 740 clamp(32px, 4vw, 44px)/1.1 var(--t-font); letter-spacing: -.035em; }
+.pag-desc { margin: 14px 0 0; max-width: 640px; color: var(--t-text-2); font-size: 17px; }
+.pag-cab .t-btn { margin-top: 20px; }
+.pag-h2 { margin: 48px 0 14px; font: 680 21px/1.3 var(--t-font); letter-spacing: -.02em; }
+.pag-p { margin: 14px 0 10px; color: var(--t-text-2); }
+.pagina > .t-alert { margin-top: 18px; }
+
+/* ---------- Ejemplo vivo y código ---------- */
+.ej { border: 1px solid var(--t-border); border-radius: var(--t-radius-lg); overflow: hidden; background: var(--t-surface); box-shadow: var(--t-shadow-sm); }
+.ej-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 170px;
+  padding: 40px 28px;
+  background: radial-gradient(color-mix(in srgb, var(--t-text) 8%, transparent) 1px, transparent 1px) 0 0 / 16px 16px, var(--t-surface);
+}
+.ej-lienzo { width: 100%; max-width: 680px; animation: aparecer .45s var(--t-ease) backwards; }
+.demo-error { padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--t-danger) 10%, transparent); color: var(--t-danger); font: 13px/1.5 var(--t-mono); white-space: pre-wrap; }
+.ej-code, .codigo { background: #17140f; color: #ece6dc; }
+.codigo { margin: 10px 0; border-radius: var(--t-radius-lg); overflow: hidden; border: 1px solid #2a251e; }
+.ej-bar, .codigo-cab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px 8px 12px;
+  border-bottom: 1px solid #2a251e;
+}
+.codigo-len { color: #9d958a; font: 600 12px/1 var(--t-font); letter-spacing: .02em; }
+.ej-tabs { display: flex; gap: 2px; }
+.ej-tab, .ej-btn {
+  height: 30px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #9d958a;
+  font: 560 12.5px/1 var(--t-font);
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.ej-tab:hover, .ej-btn:hover { background: #26211a; color: #ece6dc; }
+.ej-tab.on { background: #2b251d; color: #fff; }
+.ej-btn.on { background: var(--t-accent); color: #fff; }
+.ej-acciones { display: flex; gap: 4px; }
+.comando .ej-btn { color: var(--t-text-2); }
+.comando .ej-btn:hover { background: var(--t-surface-2); color: var(--t-text); }
+.ej-pre, .ej-editor {
+  display: block;
+  width: 100%;
+  margin: 0;
+  max-height: 460px;
+  overflow: auto;
+  padding: 18px 20px;
+  border: 0;
+  background: transparent;
+  color: #ece6dc;
+  font: 13.2px/1.7 var(--t-mono);
+  tab-size: 2;
+  white-space: pre;
+}
+.ej-editor { min-height: 340px; resize: vertical; outline: none; caret-color: var(--t-accent); }
+.ej-editor:focus { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--t-accent) 50%, transparent); }
+.hl-k { color: #ff9a5c; }
+.hl-s { color: #b7e29a; }
+.hl-c { color: #7d756b; font-style: italic; }
+.hl-d { color: #f7c66b; }
+.hl-b { color: #7dd3fc; }
+.hl-e { color: #d6b4fc; }
+.hl-n { color: #f9a8d4; }
+.hl-t { color: #ffd29e; }
+.hl-f { color: #93c5fd; }
+
+.api { display: flex; flex-direction: column; border: 1px solid var(--t-border); border-radius: var(--t-radius-lg); overflow: hidden; }
+.api-fila { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; align-items: center; padding: 13px 18px; border-bottom: 1px solid var(--t-border); background: var(--t-surface); transition: background var(--t-fast); }
+.api-fila:last-child { border-bottom: 0; }
+.api-fila:hover { background: var(--t-surface-2); }
+.api-firma { justify-self: start; padding: 3px 8px; border-radius: 6px; background: var(--t-accent-soft); color: var(--t-accent-text); font: 550 13px/1.5 var(--t-mono); word-break: break-word; }
+.api-desc { margin: 0; color: var(--t-text-2); font-size: 14px; }
+
+.pag-nav { display: flex; justify-content: space-between; gap: 16px; margin-top: 56px; }
+.pag-ant, .pag-sig {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 200px;
+  padding: 14px 18px;
+  border: 1px solid var(--t-border);
+  border-radius: var(--t-radius-lg);
+  text-decoration: none;
+  transition: border-color var(--t-fast), transform var(--t-med) var(--t-ease), box-shadow var(--t-med);
+}
+.pag-sig { margin-left: auto; text-align: right; }
+.pag-ant span, .pag-sig span { color: var(--t-text-3); font-size: 12.5px; }
+.pag-ant:hover, .pag-sig:hover { border-color: color-mix(in srgb, var(--t-accent) 45%, var(--t-border)); transform: translateY(-2px); box-shadow: var(--t-shadow); }
+
+/* ---------- Temas ---------- */
+.colores { display: flex; flex-wrap: wrap; gap: 10px; }
+.color {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 40px;
+  padding: 0 14px 0 10px;
+  border: 1px solid var(--t-border);
+  border-radius: 999px;
+  background: var(--t-surface);
+  color: var(--t-text);
+  font: 540 14px var(--t-font);
+  cursor: pointer;
+  transition: border-color var(--t-fast), transform var(--t-med) var(--t-ease-spring), box-shadow var(--t-fast);
+}
+.color:hover { transform: translateY(-2px); }
+.color.on { border-color: var(--c); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 25%, transparent); }
+.color-punto { width: 18px; height: 18px; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgb(0 0 0 / .12); transition: transform var(--t-med) var(--t-ease-spring); }
+.color.on .color-punto { transform: scale(1.15); }
+.rango { width: min(360px, 100%); accent-color: var(--t-accent); }
+
+/* ---------- Búsqueda ---------- */
+.resultados { display: flex; flex-direction: column; gap: 2px; max-height: 50vh; overflow: auto; margin: 0 -8px; }
+.resultado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--t-text);
+  text-decoration: none;
+  animation: aparecer .3s var(--t-ease) backwards;
+  transition: background var(--t-fast);
+}
+.resultado:hover, .resultado:focus-visible { background: var(--t-accent-soft); outline: none; }
+.resultado-nombre { font-weight: 600; }
+.resultado-grupo { color: var(--t-text-3); font-size: 13px; }
+.resultado-vacio { margin: 8px 12px; color: var(--t-text-3); }
+
+/* ---------- Pie ---------- */
+.pie { display: flex; justify-content: space-between; gap: 16px; padding-block: 28px 40px; border-top: 1px solid var(--t-border); color: var(--t-text-3); font-size: 13.5px; }
+.pie a { color: var(--t-text-2); }
+
+/* ---------- Móvil ---------- */
+@media (max-width: 1000px) {
+  .hero-in { grid-template-columns: 1fr; }
+  .vitrina { min-height: 0; }
+  .vitrina-pila { height: auto; display: grid; gap: 16px; }
+  .flota { position: relative; inset: auto; width: auto; transform: none; }
+  .flota-b, .flota-c { display: none; }
+  .rasgos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .top-nav, .buscar-txt, .buscar-kbd { display: none; }
+  .buscar { min-width: 0; width: 38px; padding: 0; justify-content: center; }
+  .menu-btn { display: inline-grid; }
+  .docs { grid-template-columns: 1fr; gap: 0; }
+  .lateral {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    bottom: 0;
+    z-index: 40;
+    width: min(280px, 85vw);
+    max-height: none;
+    padding: 20px 16px;
+    background: var(--t-surface);
+    border-right: 1px solid var(--t-border);
+    box-shadow: var(--t-shadow-lg);
+    transform: translateX(-105%);
+    transition: transform var(--t-slow) var(--t-ease);
+  }
+  .lateral.abierto { transform: none; }
+}
+@media (max-width: 640px) {
+  .top-in { padding-inline: 16px; gap: 12px; }
+  .hero { padding: 40px 0 56px; }
+  .rasgos { grid-template-columns: 1fr; }
+  .api-fila { grid-template-columns: 1fr; gap: 6px; }
+  .pag-nav { flex-direction: column; }
+  .pag-ant, .pag-sig { min-width: 0; }
+  .comando { max-width: 100%; overflow-x: auto; }
+  .ej-preview { padding: 28px 16px; }
+}
+
+/* ---------- Animaciones ---------- */
+@keyframes subir { from { opacity: 0; transform: translateY(16px); } }
+@keyframes aparecer { from { opacity: 0; transform: translateY(10px) scale(.985); } }
+@keyframes entrar { from { opacity: 0; transform: translateY(12px); } }
+@keyframes flotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes derivar { to { transform: translate(-60px, 40px) scale(1.12); } }
+@keyframes brillo { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+@keyframes latir { 0%, 100% { box-shadow: 0 0 0 4px var(--t-accent-soft); } 50% { box-shadow: 0 0 0 7px transparent; } }
+@keyframes crecer { from { transform: scaleX(0); } }
+@keyframes crecer-v { from { transform: scaleY(0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+  .revelar { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script id="tangerine-runtime">
+/*! Tangerine 5.2.0 | MIT */
+(()=>{var M=class extends Error{constructor(i,a,l,c){super(i),this.name="TngError",this.line=a||null,this.col=l||null,this.file=c||null,this.incomplete=!1}},ne=class{constructor(i,a,l){this.value=i,this.line=a||null,this.file=l||null}},he=class{constructor(i){this.value=i}},ve=class{constructor(i){this.message=i}},Me={control:"break"},Te={control:"continue"};function Xe(n,i,a){if(!n)return a?`${a}: `:"";let l=`l\xEDnea ${n}${i?`, columna ${i}`:""}`;return a?`${a}, ${l}: `:l[0].toUpperCase()+l.slice(1)+": "}var De=new Set(["let","var","fn","return","if","else","while","loop","for","in","break","continue","match","class","struct","self","super","do","catch","throw","true","false","nil","import","export","async","await"]),mt=new Set(["..="]),yt=new Set(["==","!=","<=",">=","&&","||","=>","->","**","??","?.","..","+=","-=","*=","/="]),gt=new Set("+-*/%<>=!(){}[],;.:?|@$"),tt=n=>n==="n"?`
+`:n==="t"?"	":n==="r"?"\r":n==="0"?"\0":n,Ke=n=>n>="0"&&n<="9",wt=/[A-Za-zÀ-ɏ_]/,bt=/[A-Za-z0-9À-ɏ_]/;function We(n,i){let a=typeof i=="number"?{line:i}:i||{},l=a.file||null,c=[],g=n.length,u=0,T=a.line||1,y=-((a.col||1)-1),h=$=>$-y+1,P=($,E,D,v)=>{let W=new M($,E,D,l);return W.incomplete=!!v,W},w=$=>{T++,y=$+1};for(;u<g;){let $=n[u];if($===`
+`){w(u),u++;continue}if($===" "||$==="	"||$==="\r"){u++;continue}if($==="/"&&n[u+1]==="/"){for(;u<g&&n[u]!==`
+`;)u++;continue}if($==="/"&&n[u+1]==="*"){let v=T,W=h(u);for(u+=2;u<g&&!(n[u]==="*"&&n[u+1]==="/");)n[u]===`
+`&&w(u),u++;if(u>=g)throw P("Comentario sin cerrar: falta */",v,W,!0);u+=2;continue}if(Ke($)){let v=u,W=h(u);for(;u<g&&(Ke(n[u])||n[u]==="_");)u++;if(n[u]==="."&&Ke(n[u+1]||""))for(u++;u<g&&(Ke(n[u])||n[u]==="_");)u++;c.push({type:"num",value:Number(n.slice(v,u).replace(/_/g,"")),line:T,col:W});continue}if($==="'"){let v=T,W=h(u),B="";for(u++;u<g&&n[u]!=="'";){if(n[u]==="\\"&&u+1<g){B+=tt(n[u+1]),u+=2;continue}n[u]===`
+`&&w(u),B+=n[u++]}if(u>=g)throw P("String sin cerrar: falta la comilla ' final",v,W,!0);u++,c.push({type:"str",value:B,line:v,col:W});continue}if($==='"'){let v=T,W=h(u),B=[],X="",te=!1;for(u++;u<g&&n[u]!=='"';){let re=n[u];if(re==="\\"&&u+1<g){X+=tt(n[u+1]),u+=2;continue}if(re==="{"){te=!0,X&&B.push(X),X="";let le=T,ue=h(u);u++;let ae=T,$e=h(u),ie=1,o=u;for(;u<g;){let b=n[u];if(b==='"'||b==="'"){for(u++;u<g&&n[u]!==b;)n[u]==="\\"&&u++,u++;u<g&&u++;continue}if(b==="{")ie++;else if(b==="}"&&(ie--,ie===0))break;b===`
+`&&w(u),u++}if(u>=g)throw P("Falta '}' para cerrar la interpolaci\xF3n dentro del string",le,ue,!0);let p=n.slice(o,u);if(u++,!p.trim())throw P("Hay un {} vac\xEDo dentro del string. Usa \\{ para escribir una llave",le,ue);B.push({code:p,line:ae,col:$e});continue}re===`
+`&&w(u),X+=re,u++}if(u>=g)throw P('String sin cerrar: falta la comilla " final',v,W,!0);u++,te?(X&&B.push(X),c.push({type:"template",parts:B,line:v,col:W})):c.push({type:"str",value:X,line:v,col:W});continue}if(wt.test($)){let v=u,W=h(u);for(;u<g&&bt.test(n[u]);)u++;let B=n.slice(v,u);c.push({type:De.has(B)?B:"id",value:B,line:T,col:W});continue}let E=n.slice(u,u+3),D=n.slice(u,u+2);if(mt.has(E)){c.push({type:E,line:T,col:h(u)}),u+=3;continue}if(yt.has(D)){c.push({type:D,line:T,col:h(u)}),u+=2;continue}if(gt.has($)){c.push({type:$,line:T,col:h(u)}),u++;continue}throw P(`Car\xE1cter inesperado '${$}'`,T,h(u))}return c.push({type:"eof",line:T,col:h(u)}),c}function xe(n){return n.type==="eof"?"el final del programa":n.type==="num"?`el n\xFAmero ${n.value}`:n.type==="str"||n.type==="template"?"un string":n.value!==void 0?`'${n.value}'`:`'${n.type}'`}var $t=new Set(["=","+=","-=","*=","/="]),xt=new Set(["var","member","index"]),_t=new Set("div span p a button h1 h2 h3 h4 h5 h6 ul ol li img input textarea select option label form section header footer main nav article aside strong em small code pre table thead tbody tr td th br hr figure figcaption details summary video audio canvas i b fieldset legend dl dt dd blockquote mark time sup sub iframe picture source tfoot caption dialog".split(" ")),St=new Set(["State","Input","Output"]);function Ze(n,i){let a=typeof i=="string"?{mode:i}:i||{},l=a.file||null,c=0,g=0,u=0,T=0,y=f=>n[Math.min(c+(f||0),n.length-1)],h=f=>y().type===f,P=f=>y().type==="id"&&y().value===f,w=f=>h(f)?(c++,!0):!1,$=(f,m)=>{let S=m||y(),k=new M(f,S.line,S.col,l);return k.incomplete=S.type==="eof",k},E=(f,m)=>{if(!h(f))throw $(`Se esperaba ${m||"'"+f+"'"} pero se encontr\xF3 ${xe(y())}`);return n[c++]},D=()=>{w(";")},v=()=>c>0&&y().line===n[c-1].line;function W(){if(w("["))W(),E("]");else if(w("(")){for(;!h(")")&&!h("eof")&&(W(),!!w(",")););E(")")}else E("id","un nombre de tipo");if(w("<")){for(;!h(">")&&!h("eof")&&(W(),!!w(",")););E(">")}w("?")}function B(){let f=y();E("{","'{' para abrir un bloque"),g++;let m=T;T=0;let S=[];for(u>0&&(S.view=!0);!h("}");){if(h("eof"))throw $(`Falta '}' para cerrar el bloque abierto en la l\xEDnea ${f.line}`);S.push(b())}return E("}"),T=m,g--,S}function X(){let f=u;u=0;try{return B()}finally{u=f}}function te(){let f=u;u=0;try{return A()}finally{u=f}}function re(){T++;try{return A()}finally{T--}}function le(){let f=[];for(;w("@");){let m=E("id","el nombre del decorador");f.push({name:m.value,args:w("(")?je(")"):[],line:m.line})}return f}function ue(f){let m=[],S=[];for(;!h(f);){if(m.push(E("id","el nombre de un par\xE1metro").value),w(":")&&W(),w("="))S[m.length-1]=f==="|"?be():A();else if(S.length)throw $(`El par\xE1metro '${m[m.length-1]}' necesita un valor por defecto porque va despu\xE9s de otro que lo tiene`,n[c-1]);if(!w(","))break}return E(f,`'${f}' para cerrar los par\xE1metros`),m.defaults=S.length?S:null,m}function ae(f,m){E("(","'(' con los par\xE1metros");let S=ue(")");return w("->")&&W(),{type:"function",name:f,params:S,defaults:S.defaults,body:X(),line:m,file:l}}function $e(){if(w("(")){let f=[];for(;!h(")")&&(f.push(E("id","un nombre").value),!!w(",")););return E(")"),f}return E("id","un nombre").value}function ie(f){let m=y();if(m.type!=="str")throw $(`Se esperaba ${f} entre comillas pero se encontr\xF3 ${xe(m)}`);return c++,m.value}function o(f){if(g>0)throw $("import solo puede ir en el nivel superior del archivo, fuera de bloques y funciones");c++;let m=null,S=null;if(w("{")){for(m=[];!h("}");){if(h("eof"))throw $("Falta '}' para cerrar la lista del import");let C=E("id","un nombre para importar").value,K=C;if(P("as")&&(c++,K=E("id","el nombre local despu\xE9s de as").value),m.push([C,K]),!w(","))break}E("}","'}' para cerrar la lista del import")}else S=E("id","un nombre o '{' despu\xE9s de import").value;if(!P("from"))throw $(`Se esperaba 'from' despu\xE9s de import pero se encontr\xF3 ${xe(y())}`);c++;let k=ie("la ruta del m\xF3dulo");return D(),{type:"import",names:m,alias:S,path:k,line:f}}function p(f){if(g>0)throw $("export solo puede ir en el nivel superior del archivo");if(c++,!(h("let")||h("var")||h("fn")||h("class")||h("struct")||h("@")))throw $(`Despu\xE9s de export va let, var, fn, class o struct, pero se encontr\xF3 ${xe(y())}`);let m=b(),S=m.type==="class"?[m.name]:Array.isArray(m.target)?m.target:[m.target];return{type:"export",decl:m,names:S,line:f}}function b(){let f=y(),m=f.line;switch(f.type){case"import":return o(m);case"export":return p(m);case"@":{let k=le();if(h("export")&&(y(1).type==="struct"||y(1).type==="class")){let K=p(m);return K.decl.decorators=k,K}if(!h("struct")&&!h("class"))throw $(`Un decorador como @${k[0].name} va justo antes de un struct o una class`);let C=b();return C.decorators=k,C}case"let":case"var":{c++;let k=$e();w(":")&&W();let C=null;if(w("="))C=A();else if(f.type==="let")throw $(`let ${Array.isArray(k)?"(...)":k} necesita un valor. Usa var si lo vas a asignar despu\xE9s`,f);return D(),{type:"decl",constant:f.type==="let",target:k,value:C,line:m}}case"async":if(y(1).type==="fn"&&y(2).type==="id"){c+=2;let k=E("id").value,C=ae(k,m);return C.isAsync=!0,{type:"decl",constant:!0,target:k,value:C,line:m}}break;case"fn":if(y(1).type==="id"){c++;let k=E("id").value;return{type:"decl",constant:!0,target:k,value:ae(k,m),line:m}}break;case"class":case"struct":{c++;let k=E("id","el nombre de la clase").value,C=null;if(w(":")){let t=E("id","el nombre de la clase padre");C={type:"var",name:t.value,line:t.line}}E("{","'{' para abrir la clase"),g++;let K=[],e=[];for(;!h("}");){if(h("eof"))throw $(`Falta '}' para cerrar la clase ${k}`);let t=h("@")?le():null;if(t){for(let _ of t)if(!St.has(_.name))throw $(`@${_.name} no se puede usar en un campo. Usa @State, @Input o @Output`,n[c-1]);if(!h("let")&&!h("var"))throw $(`Despu\xE9s de @${t[0].name} va var y el nombre del campo`)}if(h("let")||h("var")){c++;let _=E("id","el nombre de un campo");w(":")&&W();let N=w("=")?A():{type:"lit",value:null,line:_.line};e.push({name:_.value,value:N,decor:t?t[0].name:null}),D();continue}if(P("view")&&y(1).type==="{"){let _=n[c++];u++;let N;try{N=B()}finally{u--}K.push({type:"function",name:"view",params:[],defaults:null,body:N,isView:!0,line:_.line,file:l});continue}let r=w("async");w("fn");let s=E("id","el nombre de un m\xE9todo"),d=ae(s.value,s.line);r&&(d.isAsync=!0),K.push(d),w(";")}return E("}"),g--,{type:"class",name:k,parent:C,methods:K,fields:e,line:m}}case"if":return{type:"exp",exp:x(),line:m};case"match":return{type:"exp",exp:I(),line:m};case"while":return c++,{type:"while",cond:re(),body:B(),line:m};case"loop":return c++,{type:"loop",body:B(),line:m};case"for":{c++;let k=$e();E("in","'in' despu\xE9s de la variable del for");let C=re();return{type:"for",target:k,iter:C,body:B(),line:m}}case"break":return c++,D(),{type:"break",line:m};case"continue":return c++,D(),{type:"continue",line:m};case"return":{c++;let k=null;return!h(";")&&!h("}")&&!h("eof")&&v()&&(k=A()),D(),{type:"return",value:k,line:m}}case"throw":{c++;let k=A();return D(),{type:"throw",value:k,line:m}}case"do":{c++;let k=B();E("catch","catch despu\xE9s del bloque do");let C="error";return w("(")?(C=E("id").value,E(")")):h("id")&&(C=E("id").value),{type:"try",body:k,name:C,handler:B(),line:m}}case"else":throw $("else debe ir justo despu\xE9s del bloque de un if",f)}let S=A();if($t.has(y().type)){let k=n[c++];if(!xt.has(S.type))throw $("No se puede asignar a esta expresi\xF3n",k);let C=A();return D(),{type:"assign",target:S,op:k.type,value:C,line:m}}return D(),{type:"exp",exp:S,line:m}}function x(){let f=y().line;E("if");let m=re(),S=B(),k=null;return w("else")&&(h("if")?(k=[{type:"exp",exp:x(),line:y().line}],u>0&&(k.view=!0)):k=B()),{type:"if",cond:m,then:S,otherwise:k,line:f}}function O(){let f=y();if(f.type==="id")return c++,f.value==="_"?{kind:"any"}:{kind:"bind",name:f.value};let m=()=>{let k=w("-"),C=y();if(C.type==="num")return c++,k?-C.value:C.value;if(k)throw $("Se esperaba un n\xFAmero despu\xE9s de '-' en el patr\xF3n",C);if(C.type==="str")return c++,C.value;if(C.type==="true")return c++,!0;if(C.type==="false")return c++,!1;if(C.type==="nil")return c++,null;throw $(`${xe(C)} no se puede usar como patr\xF3n`,C)},S=m();if(h("..")||h("..=")){let k=n[c++].type==="..=";return{kind:"range",from:S,to:m(),inclusive:k}}return{kind:"lit",value:S}}function I(){let f=y().line;E("match");let m=re();E("{","'{' para abrir el match");let S=[];for(;!h("}");){if(h("eof"))throw $("Falta '}' para cerrar el match");let k=[O()];for(;w("|");)k.push(O());let C=w("if")?A():null;E("=>","'=>' despu\xE9s del patr\xF3n");let K,e=!1;h("{")?(K=B(),e=!0):K=A(),S.push({pats:k,guard:C,body:K,isBlock:e}),w(",")}return E("}"),{type:"match",value:m,arms:S,line:f}}let A=()=>Be();function q(f,m){let S=new Set(m);return function(){let k=f();for(;S.has(y().type)&&!((y().type==="||"||y().type==="-")&&!v());){let C=y().line;k={type:"bin",op:n[c++].type,left:k,right:f(),line:C}}return k}}function Q(){let f=oe();if(h("**")){let m=y().line;return c++,{type:"bin",op:"**",left:f,right:Q(),line:m}}return f}function oe(){if(h("await")){let f=y().line;return c++,{type:"await",value:oe(),line:f}}if(h("-")||h("!")){let f=y().line;return{type:"unary",op:n[c++].type,value:oe(),line:f}}return Oe()}let ce=q(Q,["*","/","%"]),be=q(ce,["+","-"]);function Le(){let f=be();if(h("..")||h("..=")){let m=y().line,S=n[c++].type==="..=";return{type:"range",from:f,to:be(),inclusive:S,line:m}}return f}let He=q(Le,["<",">","<=",">="]),Ye=q(He,["==","!="]),ze=q(Ye,["&&"]),fe=q(ze,["||"]),Be=q(fe,["??"]);function Ae(){let f=y();if(typeof f.value=="string"&&/^[A-Za-zÀ-ɏ_]/.test(f.value))return c++,f.value;throw $(`Se esperaba el nombre de una propiedad despu\xE9s de '.' pero se encontr\xF3 ${xe(f)}`,f)}function je(f){let m=[];for(;!h(f);){if(h("eof"))throw $(`Falta '${f}'`);if(m.push(A()),!w(","))break}return E(f,`'${f}'`),m}function Re(f){for(;f&&(f.type==="call"||f.type==="member");)f=f.type==="call"?f.fn:f.obj;return f&&f.type==="comp"&&!f.content?f:null}function Oe(){let f=de();for(;;){let m=y().line;if(h("(")&&v())c++,f={type:"call",fn:f,args:je(")"),line:m};else if(h("[")&&v()){c++;let S=A();E("]","']'"),f={type:"index",obj:f,index:S,line:m}}else if(h("."))c++,f={type:"member",obj:f,name:Ae(),line:m};else if(h("?."))c++,f={type:"member",obj:f,name:Ae(),optional:!0,line:m};else if(u>0&&T===0&&h("{")&&v()&&Re(f))Re(f).content=B();else return f}}function Ne(f,m){return h("{")?{type:"function",name:"closure",params:f,defaults:f.defaults,body:X(),closure:!0,line:m,file:l}:{type:"function",name:"closure",params:f,defaults:f.defaults,body:te(),isExpr:!0,closure:!0,line:m,file:l}}let Ve=f=>typeof f.value=="string"&&/^[A-Za-z_À-ɏ][\wÀ-ɏ]*$/.test(f.value)&&(f.type==="id"||De.has(f.type));function j(){let f=n[c++],m=f.line,S=[],k={type:"lit",value:f.value,line:m};if(w("(")){for(f.value==="element"&&(k=te(),w(","));!h(")");){if(h("eof"))throw $("Falta ')' para cerrar el elemento");if(h(".")&&Ve(y(1))){c++;let e=n[c++],t=e.value;for(;h("-")&&Ve(y(1))&&y().line===e.line&&y().col===e.col+String(e.value).length&&y(1).col===y().col+1;)c++,e=n[c++],t+="-"+e.value;S.push({type:"cls",name:t,line:m})}else S.push(te());if(!w(","))break}E(")","')' para cerrar el elemento")}else if(f.value==="element")throw $('element necesita la etiqueta: element("mi-etiqueta")',f);let C=null,K=null;return h("{")&&v()&&(f.value==="button"?K={type:"function",name:"closure",params:[],defaults:null,body:X(),closure:!0,line:m,file:l}:C=B()),{type:"elem",tag:k,args:S,content:C,action:K,line:m}}function Qe(){let f=n[c++],m=f.line,S=[];if(w("(")){for(;!h(")");){if(h("eof"))throw $(`Falta ')' para cerrar ${f.value}(`);if(h(".")&&y(1).type==="id"?(c++,S.push({type:"cls",name:n[c++].value,line:m})):S.push(te()),!w(","))break}E(")",`')' para cerrar ${f.value}(`)}let k=h("{")&&v()?B():null;return{type:"comp",fn:{type:"var",name:f.value,line:m},args:S,content:k,line:m}}function de(){let f=y(),m=f.line;switch(f.type){case"num":case"str":return c++,{type:"lit",value:f.value,line:m};case"template":return c++,{type:"template",parts:f.parts.map(S=>typeof S=="string"?S:Ze(We(S.code,{line:S.line,col:S.col,file:l}),{mode:"expr",file:l})),line:m};case"true":return c++,{type:"lit",value:!0,line:m};case"false":return c++,{type:"lit",value:!1,line:m};case"nil":return c++,{type:"lit",value:null,line:m};case"self":return c++,{type:"self",line:m};case"super":return c++,E(".","'.' despu\xE9s de super"),{type:"super",name:Ae(),line:m};case"id":{let S=y(1),k=S.line===f.line&&(S.type==="("||S.type==="{");return u>0&&T===0&&k&&(_t.has(f.value)||f.value==="element")?j():u>0&&T===0&&k&&/^[A-Z]/.test(f.value)?Qe():(c++,{type:"var",name:f.value,line:m})}case"$":return c++,{type:"bindref",name:E("id","el nombre de la variable o campo que se une, por ejemplo $nombre").value,line:m};case"|":return c++,Ne(ue("|"),m);case"||":return c++,Ne([],m);case"if":return x();case"match":return I();case"(":{c++;let S=A();if(w(",")){let k=[S];for(;!h(")")&&(k.push(A()),!!w(",")););return E(")","')'"),{type:"list",items:k,line:m}}return E(")","')'"),S}case"[":return c++,{type:"list",items:je("]"),line:m};case"{":{c++;let S=[];for(;!h("}");){let k=y();if(k.type==="eof")throw $("Falta '}' para cerrar el mapa");let C;if(k.type==="num")C=String(k.value);else if(typeof k.value=="string")C=k.value;else throw $(`Se esperaba una clave pero se encontr\xF3 ${xe(k)}`,k);if(c++,w(":")?S.push([C,A()]):k.type==="id"?S.push([C,{type:"var",name:C,line:k.line}]):E(":","':' despu\xE9s de la clave"),!w(","))break}return E("}","'}' para cerrar el mapa"),{type:"map",pairs:S,line:m}}case"fn":{c++;let S=h("id")?E("id").value:"anonymous";return ae(S,m)}case"async":{c++;let S;if(w("fn"))S=ae(h("id")?E("id").value:"anonymous",m);else if(w("||"))S=Ne([],m);else if(w("|"))S=Ne(ue("|"),m);else throw $("Despu\xE9s de async va fn o un closure: async fn cargar() { } o async || { }");return S.isAsync=!0,S}}throw $(`No se esperaba ${xe(f)}`,f)}if(a.mode==="expr"){let f=A();if(!h("eof"))throw $("Texto inesperado dentro de {} en un string");return f}let Ue=[];for(;!h("eof");)Ue.push(b());return Ue}function qe(n,i){return Ze(We(n,{file:i}),{file:i})}function Ge(n){return n.filter(i=>i.type==="import").map(i=>i.path)}function U(n){if(n==null)return"nil";if(Array.isArray(n))return n.map(U).join(" ");if(typeof n=="string")return JSON.stringify(n);let i=a=>Array.isArray(a)?`(${a.join(" ")})`:a;switch(n.type){case"lit":return typeof n.value=="string"?JSON.stringify(n.value):n.value===null?"nil":String(n.value);case"var":return n.name;case"self":return"self";case"template":return`(str ${n.parts.map(U).join(" ")})`;case"list":return`[${n.items.map(U).join(" ")}]`;case"map":return`{${n.pairs.map(([a,l])=>` ${a}: ${U(l)}`).join("")} }`;case"bin":return`(${n.op} ${U(n.left)} ${U(n.right)})`;case"unary":return`(${n.op} ${U(n.value)})`;case"range":return`(${n.inclusive?"..=":".."} ${U(n.from)} ${U(n.to)})`;case"member":return`(${n.optional?"?.":"."} ${U(n.obj)} ${n.name})`;case"index":return`([] ${U(n.obj)} ${U(n.index)})`;case"call":return`(${U(n.fn)}${n.args.map(a=>" "+U(a)).join("")})`;case"function":return`(fn (${n.params.join(" ")}) ${U(n.body)})`;case"decl":return`(${n.constant?"let":"var"} ${i(n.target)} ${U(n.value)})`;case"assign":return`(${n.op} ${U(n.target)} ${U(n.value)})`;case"exp":return U(n.exp);case"return":return`(return ${U(n.value)})`;case"if":return`(if ${U(n.cond)} ${U(n.then)}${n.otherwise?" "+U(n.otherwise):""})`;case"match":return`(match ${U(n.value)} \u2026)`;case"while":return`(while ${U(n.cond)} ${U(n.body)})`;case"for":return`(for ${i(n.target)} ${U(n.iter)} ${U(n.body)})`;case"import":return`(import ${n.alias||"{"+n.names.map(a=>a[1]).join(" ")+"}"} ${JSON.stringify(n.path)})`;case"export":return`(export ${U(n.decl)})`;case"cls":return"."+n.name;case"bindref":return"$"+n.name;case"comp":return`(${n.fn.name}${n.args.map(a=>" "+U(a)).join("")}${n.content?" "+U(n.content):""})`;case"elem":{let a=n.tag.type==="lit"?n.tag.value:U(n.tag),l=n.args.map(u=>" "+U(u)).join(""),c=n.content?" "+U(n.content):"",g=n.action?` (click ${U(n.action.body)})`:"";return`(<${a}>${l}${c}${g})`}}return`(${n.type})`}function kt(n,i){if(n===i)return 0;let a=n.length,l=i.length;if(!a)return l;if(!l)return a;let c=null,g=Array.from({length:l+1},(u,T)=>T);for(let u=1;u<=a;u++){let T=[u];for(let y=1;y<=l;y++){let h=n[u-1]===i[y-1]?0:1;T[y]=Math.min(g[y]+1,T[y-1]+1,g[y-1]+h),c&&u>1&&y>1&&n[u-1]===i[y-2]&&n[u-2]===i[y-1]&&(T[y]=Math.min(T[y],c[y-2]+1))}c=g,g=T}return g[l]}var nt={length:"len",size:"len",count:"len",lenght:"len",toUpperCase:"upper",toLowerCase:"lower",uppercase:"upper",lowercase:"lower",includes:"contains",indexOf:"index_of",forEach:"for_each",toString:"to_string",startsWith:"starts_with",endsWith:"ends_with",padStart:"pad_start",padEnd:"pad_end",reverse:"reversed",sort:"sorted",append:"push",add:"push",strip:"trim",console:"log",println:"log",print:"log",print_line:"log",printf:"write",puts:"log",echo:"log",null:"nil",None:"nil",undefined:"nil",True:"true",False:"false",self_:"self",const:"let",def:"fn",function:"fn",func:"fn",elif:"else if",try:"do",except:"catch"};function At(n,i){let a=[...i],l=Object.prototype.hasOwnProperty.call(nt,n)?nt[n]:null;if(l&&(a.includes(l)||/\s/.test(l)||l==="nil"||l==="true"||l==="false"||l==="fn"||l==="let"||l==="do"||l==="catch"))return l;let c=Math.max(1,Math.floor(n.length/3)),g=null,u=1/0,T=n.toLowerCase();for(let y of a){if(y===n)continue;let h=y.toLowerCase()===T?.5:kt(T,y.toLowerCase());(h<u||h===u&&g&&y.length<g.length)&&(g=y,u=h)}return u<=c?g:null}function Pe(n,i){let a=At(n,i);return a?` \xBFQuisiste decir '${a}'?`:""}var V=class{constructor(i){this.vars=new Map,this.consts=null,this.parent=i||null}define(i,a,l){this.vars.set(i,a),l?(this.consts||(this.consts=new Set)).add(i):this.consts&&this.consts.delete(i)}has(i){for(let a=this;a;a=a.parent)if(a.vars.has(i)||a.inst&&(i in a.inst.fields||a.inst.cls.findMethod(i)))return!0;return!1}get(i,a){for(let l=this;l;l=l.parent){if(l.vars.has(i))return l.vars.get(i);if(l.inst){if(i in l.inst.fields)return l.inst.fields[i];let c=l.inst.cls.findMethod(i);if(c)return c.bind(l.inst)}}throw i==="self"?new M("self solo existe dentro de un m\xE9todo",a):i==="super"?new M("super solo existe dentro de una clase con padre",a):new M(`No existe '${i}' en este \xE1mbito.${Pe(i,this.names())}`.replace(/\.$/,""),a)}names(){let i=new Set;for(let a=this;a;a=a.parent){for(let l of a.vars.keys())i.add(l);if(a.inst){for(let l of Object.keys(a.inst.fields))i.add(l);for(let l=a.inst.cls;l;l=l.parent)for(let c of l.methods.keys())i.add(c)}}return i}set(i,a,l){for(let g=this;g;g=g.parent){if(g.vars.has(i)){if(g.consts&&g.consts.has(i))throw new M(`No se puede asignar dos veces a '${i}'. Decl\xE1rala con var para que pueda cambiar`,l);g.vars.set(i,a);return}if(g.inst&&i in g.inst.fields){g.inst.fields[i]=a;return}}let c=Pe(i,this.names());throw new M(c?`No existe '${i}' en este \xE1mbito.${c}`:`No existe '${i}' en este \xE1mbito. Decl\xE1rala primero con var`,l)}},_e=class n{constructor(i,a,l){this.decl=i,this.env=a,this.isInit=!!l}get name(){return this.decl.name}bind(i){let a=new V(this.env);return a.define("self",i,!0),a.inst=i,new n(this.decl,a,this.isInit)}},pe=class{constructor(i,a,l,c,g){this.name=i,this.parent=a,this.methods=l,this.fields=c,this.env=g}findMethod(i){return this.methods.has(i)?this.methods.get(i):this.parent?this.parent.findMethod(i):null}},G=class{constructor(i){this.cls=i,this.fields=Object.create(null)}},se=class{constructor(i){this.tag=i,this.classes=[],this.attrs=Object.create(null),this.on=Object.create(null),this.bind=null,this.children=[]}},rt=Symbol("tangerine.binding"),it=(n,i)=>({[rt]:!0,get:n,set:i}),Ie=n=>n!==null&&typeof n=="object"&&!!n[rt],Ce=Symbol("tangerine.state"),ge=n=>n!==null&&typeof n=="object"&&!!n[Ce],ee=n=>n!==null&&typeof n=="object"&&Object.getPrototypeOf(n)===null,we=n=>{let i=Object.create(null);for(let a in n)i[a]=n[a];return i},H=n=>n!=null&&n!==!1,J=n=>n===void 0?null:n;function Se(n,i){if(n=J(n),i=J(i),n===i)return!0;if(Array.isArray(n)&&Array.isArray(i))return n.length===i.length&&n.every((a,l)=>Se(a,i[l]));if(ee(n)&&ee(i)){let a=Object.keys(n),l=Object.keys(i);return a.length===l.length&&a.every(c=>c in i&&Se(n[c],i[c]))}return!1}function Y(n){return n=J(n),n===null?"Nil":typeof n=="number"?Number.isInteger(n)?"Int":"Float":typeof n=="string"?"String":typeof n=="boolean"?"Bool":Array.isArray(n)?"List":n instanceof _e||typeof n=="function"?"Fn":n instanceof pe?"Class":n instanceof G?n.cls.name:ge(n)?"State":n instanceof se?"View":Ie(n)?"Binding":ee(n)?"Map":n instanceof Promise?"Promise":"Element"}function L(n,i,a){if(a=a||0,ge(n))return L(n[Ce].read(),i,a);if(n instanceof se)return n.tag?`<${n.tag}>`:"<view>";if(n instanceof Promise)return"<promise>";if(Ie(n))return L(n.get(),i,a);if(n=J(n),n===null)return"nil";if(typeof n=="string")return i?JSON.stringify(n):n;if(typeof n=="number")return Number.isInteger(n)||!isFinite(n)?String(n):String(Math.round(n*1e10)/1e10);if(typeof n=="boolean")return String(n);if(a>5)return"\u2026";if(Array.isArray(n))return"["+n.map(c=>L(c,!0,a+1)).join(", ")+"]";if(n instanceof _e)return n.decl.closure?"<closure>":`<fn ${n.name}>`;if(n instanceof pe)return`<class ${n.name}>`;if(typeof n=="function")return`<fn ${n.tngName||"nativa"}>`;let l=c=>{let g=Object.keys(c);return g.length?"{ "+g.map(u=>`${u}: ${L(c[u],!0,a+1)}`).join(", ")+" }":"{}"};return n instanceof G?n.cls.name+" "+l(n.fields):ee(n)?l(n):typeof globalThis.Element<"u"&&n instanceof globalThis.Element?`<${n.tagName.toLowerCase()}>`:String(n)}function ye(n){if(n==null)return null;if(Array.isArray(n))return n.map(ye);if(typeof n=="object"&&Object.getPrototypeOf(n)===Object.prototype){let i=Object.create(null);for(let a of Object.keys(n))i[a]=ye(n[a]);return i}return n}function me(n){if(n=J(n),Array.isArray(n))return n.map(me);if(ee(n)){let i={};for(let a of Object.keys(n))i[a]=me(n[a]);return i}if(n instanceof G){let i={};for(let a of Object.keys(n.fields))i[a]=me(n.fields[a]);return i}return n}function ke(n,i){if(/^[a-z][a-z0-9+.-]*:\/\//i.test(n))return n;if(i&&/^[a-z][a-z0-9+.-]*:\/\//i.test(i)&&(n.startsWith("./")||n.startsWith("../")))return new URL(n,i).href;let a=n;(n.startsWith("./")||n.startsWith("../"))&&(a=[...i?i.split("/").slice(0,-1):[],...n.split("/")].join("/"));let l=[];for(let g of a.split("/"))if(!(g==="."||g==="")){if(g===".."){l.length&&l[l.length-1]!==".."?l.pop():l.push("..");continue}l.push(g)}let c=(a.startsWith("/")?"/":"")+l.join("/");return/\.[A-Za-z0-9]+$/.test(c)||(c+=".tng"),c}function ot(n){let i=n.output,a="",l=0,c=null,g=new Map,u=new V,T=n.hooks||{decorators:Object.create(null),onInstance:null},y=null,h=0;function P(){if(++l>h&&h>0)throw new ve(`El programa dio demasiados pasos (m\xE1s de ${h}). Revisa si hay un ciclo que nunca termina.`)}function w(){l=0,h=n.stepLimit||0}function $(e,t,r,s){switch(t=J(t),r=J(r),e){case"+":if(typeof t=="number"&&typeof r=="number")return t+r;if(typeof t=="string"||typeof r=="string")return L(t)+L(r);if(Array.isArray(t)&&Array.isArray(r))return t.concat(r);throw new M(`No se puede sumar ${Y(t)} con ${Y(r)}`,s);case"==":return Se(t,r);case"!=":return!Se(t,r);case"<":case">":case"<=":case">=":if(!(typeof t=="number"&&typeof r=="number"||typeof t=="string"&&typeof r=="string"))throw new M(`No se puede comparar ${Y(t)} con ${Y(r)}`,s);return e==="<"?t<r:e===">"?t>r:e==="<="?t<=r:t>=r}if(e==="*"&&typeof t=="string"&&typeof r=="number")return t.repeat(Math.max(0,Math.floor(r)));if(typeof t!="number"||typeof r!="number")throw new M(`El operador ${e} necesita n\xFAmeros, pero recibi\xF3 ${Y(t)} y ${Y(r)}`,s);switch(e){case"-":return t-r;case"*":return t*r;case"/":if(r===0)throw new M("Divisi\xF3n entre cero",s);return t/r;case"%":if(r===0)throw new M("Resto de una divisi\xF3n entre cero",s);return t%r;case"**":return t**r}throw new M(`Operador desconocido ${e}`,s)}function E(e,t,r,s){if(typeof e!="number"||typeof t!="number")throw new M(`Un rango necesita n\xFAmeros, pero recibi\xF3 ${Y(e)} y ${Y(t)}`,s);let d=r?t:t-1;if(d-e>1e6)throw new M("Un rango no puede tener m\xE1s de un mill\xF3n de n\xFAmeros",s);let _=[];for(let N=e;N<=d;N++)_.push(N);return _}let D=(e,t)=>(t.tngName=e,t),v=(e,t)=>de(e,t),W=(e,t)=>{if(typeof e!="number")throw new M(`${t} espera un n\xFAmero, pero recibi\xF3 ${Y(e)}`);return e},B=(e,t)=>{if(!(e instanceof _e||typeof e=="function"||e instanceof pe))throw new M(`${t} espera una funci\xF3n, pero recibi\xF3 ${Y(e)}`);return e},X=(e,t)=>e<t?-1:e>t?1:0,te={to_string:e=>L(e)},re={len:e=>e.length,is_empty:e=>e.length===0,push:(e,...t)=>(e.push(...t),e),pop:e=>e.length?e.pop():null,insert:(e,t,r)=>(e.splice(W(t,"insert"),0,r),e),remove:(e,t)=>(W(t,"remove"),t>=0&&t<e.length?e.splice(t,1)[0]:null),map:(e,t)=>(B(t,"map"),e.map((r,s)=>v(t,[r,s]))),filter:(e,t)=>(B(t,"filter"),e.filter((r,s)=>H(v(t,[r,s])))),fold:(e,t,r)=>(B(r,"fold"),e.reduce((s,d,_)=>v(r,[s,d,_]),t)),reduce:(e,t)=>{if(B(t,"reduce"),!e.length)return null;let r=e[0];for(let s=1;s<e.length;s++)r=v(t,[r,e[s],s]);return r},find:(e,t)=>{for(let r=0;r<e.length;r++)if(H(v(t,[e[r],r])))return e[r];return null},position:(e,t)=>{for(let r=0;r<e.length;r++)if(H(v(t,[e[r],r])))return r;return null},any:(e,t)=>e.some((r,s)=>H(v(t,[r,s]))),all:(e,t)=>e.every((r,s)=>H(v(t,[r,s]))),count:(e,t)=>t?e.filter((r,s)=>H(v(t,[r,s]))).length:e.length,for_each:(e,t)=>(e.forEach((r,s)=>v(t,[r,s])),null),contains:(e,t)=>e.some(r=>Se(t,r)),index_of:(e,t)=>{let r=e.findIndex(s=>Se(t,s));return r<0?null:r},join:(e,t)=>e.map(r=>L(r)).join(t??""),slice:(e,t,r)=>e.slice(t??0,r??void 0),take:(e,t)=>e.slice(0,Math.max(0,t)),skip:(e,t)=>e.slice(Math.max(0,t)),reversed:e=>[...e].reverse(),sorted:e=>[...e].sort(X),sorted_by:(e,t)=>[...e].sort((r,s)=>{let d=v(t,[r,s]);return typeof d=="number"?d:0}),sorted_by_key:(e,t)=>{let r=e.map(s=>[v(t,[s]),s]);return r.sort((s,d)=>X(s[0],d[0])),r.map(s=>s[1])},enumerate:e=>e.map((t,r)=>[r,t]),zip:(e,t)=>e.slice(0,Math.min(e.length,t.length)).map((r,s)=>[r,t[s]]),chunks:(e,t)=>{if(W(t,"chunks"),t<1)throw new M("chunks necesita un tama\xF1o de al menos 1");let r=[];for(let s=0;s<e.length;s+=t)r.push(e.slice(s,s+t));return r},unique:e=>{let t=new Set,r=[];for(let s of e)s!==null&&typeof s=="object"?r.some(d=>Se(s,d))||r.push(s):t.has(s)||(t.add(s),r.push(s));return r},flatten:e=>e.flat(),sum:e=>e.reduce((t,r)=>$("+",t,r),0),min:e=>e.length?Math.min(...e):null,max:e=>e.length?Math.max(...e):null,first:e=>e.length?e[0]:null,last:e=>e.length?e[e.length-1]:null},le={len:e=>Array.from(e).length,is_empty:e=>e.length===0,upper:e=>e.toUpperCase(),lower:e=>e.toLowerCase(),capitalize:e=>e.charAt(0).toUpperCase()+e.slice(1),trim:e=>e.trim(),split:(e,t)=>e.split(t??""),lines:e=>e.split(/\r?\n/),words:e=>e.trim().split(/\s+/).filter(Boolean),replace:(e,t,r)=>e.split(String(t)).join(L(r)),contains:(e,t)=>e.includes(t),starts_with:(e,t)=>e.startsWith(t),ends_with:(e,t)=>e.endsWith(t),slice:(e,t,r)=>Array.from(e).slice(t??0,r??void 0).join(""),index_of:(e,t)=>{let r=e.indexOf(t);return r<0?null:r},repeat:(e,t)=>e.repeat(Math.max(0,t)),pad_start:(e,t,r)=>e.padStart(t,r??" "),pad_end:(e,t,r)=>e.padEnd(t,r??" "),chars:e=>Array.from(e),reversed:e=>Array.from(e).reverse().join(""),parse:e=>{let t=e.trim().replace(/_/g,""),r=Number(t);return t===""||isNaN(r)?null:r}},ue={abs:e=>Math.abs(e),round:(e,t)=>{let r=10**(t||0);return Math.round(e*r)/r},floor:e=>Math.floor(e),ceil:e=>Math.ceil(e),sqrt:e=>Math.sqrt(e),pow:(e,t)=>e**W(t,"pow"),clamp:(e,t,r)=>Math.min(Math.max(e,t),r),is_even:e=>e%2===0,is_odd:e=>Math.abs(e%2)===1,to_int:e=>Math.trunc(e),times:(e,t)=>{B(t,"times");let r=[];for(let s=0;s<e;s++)r.push(v(t,[s]));return r}},ae={keys:e=>Object.keys(e),values:e=>Object.values(e),entries:e=>Object.keys(e).map(t=>[t,e[t]]),has:(e,t)=>L(t)in e,get:(e,t,r)=>L(t)in e?e[L(t)]:r===void 0?null:r,remove:(e,t)=>{let r=L(t),s=r in e?e[r]:null;return delete e[r],s},len:e=>Object.keys(e).length,is_empty:e=>Object.keys(e).length===0},$e=(e,t,r)=>e(t,...r);function ie(e,t,r){let s=e[r]||te[r];return s?D(r,(...d)=>s(t,...d)):null}function o(e,t,r,s){if(e=J(e),e===null){if(s)return null;throw new M(`No se puede leer '${t}' de nil. Usa ?. si el valor puede ser nil`,r)}let d=null;if(Ie(e)&&(t==="get"||t==="set"))return D(t,e[t]);if(e instanceof G){if(t in e.fields)return e.fields[t];let R=e.cls.findMethod(t);if(R)return R.bind(e);if(t==="to_string")return ie(te,e,t);let Z=new Set(Object.keys(e.fields));for(let F=e.cls;F;F=F.parent)for(let Ee of F.methods.keys())Z.add(Ee);throw new M(`${e.cls.name} no tiene un campo ni un m\xE9todo llamado '${t}'.${Pe(t,Z)}`.replace(/\.$/,""),r)}if(ee(e))return t in e?e[t]:(d=ie(ae,e,t),d||null);if(Array.isArray(e))d=ie(re,e,t);else if(typeof e=="string")d=ie(le,e,t);else if(typeof e=="number")d=ie(ue,e,t);else{if(e instanceof pe&&t==="name")return e.name;d=ie({},e,t)}if(d)return d;let _=Array.isArray(e)?re:typeof e=="string"?le:typeof e=="number"?ue:{},N=[...Object.keys(_),...Object.keys(te)];throw new M(`${Y(e)} no tiene un m\xE9todo llamado '${t}'.${Pe(t,N)}`.replace(/\.$/,""),r)}function p(e,t,r,s){if(e instanceof G){e.fields[t]=r;return}if(ee(e)){e[t]=r;return}throw new M(`No se puede asignar '${t}' en ${Y(e)}`,s)}function b(e,t,r){if(e=J(e),Array.isArray(e)||typeof e=="string"){let s=typeof e=="string"?Array.from(e):e;if(typeof t!="number"||!Number.isInteger(t))throw new M(`El \xEDndice debe ser un Int, pero es ${Y(t)}`,r);let d=t<0?s.length+t:t;return d>=0&&d<s.length?s[d]:null}if(ee(e)){let s=L(t);return s in e?e[s]:null}if(e instanceof G)return o(e,L(t),r);throw new M(`No se puede indexar ${Y(e)}`,r)}function x(e,t,r,s){if(Array.isArray(e)){if(typeof t!="number"||!Number.isInteger(t))throw new M("El \xEDndice debe ser un Int",s);let d=t<0?e.length+t:t;if(d<0||d>e.length)throw new M(`El \xEDndice ${t} est\xE1 fuera de una lista de largo ${e.length}`,s);e[d]=r;return}if(ee(e)){e[L(t)]=r;return}if(e instanceof G){e.fields[L(t)]=r;return}throw new M(`No se puede indexar ${Y(e)}`,s)}function O(e){if(e=J(e),!(e===null||y===null)){if(Array.isArray(e)){for(let t of e)O(t);return}if(e instanceof se){e.tag===null?y.push(...e.children):y.push(e);return}if(e instanceof G){let t=e.cls.findMethod("view");if(t){O(de(t.bind(e),[]));return}}typeof e!="boolean"&&y.push(L(e))}}function I(e,t){if(e=J(e),typeof e=="string")return Array.from(e);if(ee(e)){let r=e;return Object.keys(r).map(s=>[s,r[s]])}if(e instanceof G){let r=e.fields;return Object.keys(r).map(s=>[s,r[s]])}if(!Array.isArray(e))throw new M(`No se puede recorrer ${Y(e)} con for`,t);return e}let A="await va al inicio de una l\xEDnea dentro de una async fn: let x = await ..., x = await ..., await ... o return await ...",q=new WeakMap;function Q(e){if(!e||typeof e!="object")return!1;if(q.has(e))return q.get(e);let t=!1;if(Array.isArray(e))t=e.some(Q);else if(e.type==="await")t=!0;else if(e.type!=="function"){for(let r in e)if(r!=="line"&&e[r]&&typeof e[r]=="object"&&Q(e[r])){t=!0;break}}return q.set(e,t),t}function oe(e,t){return e instanceof ne||e instanceof M||e instanceof he||e===Me||e===Te||e instanceof ve?e:e instanceof Error?new ne(e.message,t):new ne(ye(e),t)}async function ce(e,t){if(e.type==="await"){let r=j(e.value,t);try{return J(await r)}catch(s){throw oe(s,e.line)}}if(Q(e))throw new M(A,e.line);return j(e,t)}async function be(e,t){let r=null;for(let s of e)r=Q(s)?await He(s,t):Oe(s,t);return r}async function Le(e,t){P();try{await be(e,t)}catch(r){if(r===Me)return!1;if(r===Te)return!0;throw r}return!0}async function He(e,t){switch(e.type){case"exp":{let r=e.exp;if(r.type==="if"){let s=await ce(r.cond,t);return H(s)?be(r.then,new V(t)):r.otherwise?be(r.otherwise,new V(t)):null}return ce(r,t)}case"decl":return Ae(t,e.target,e.value?await ce(e.value,t):null,e.constant,e.line),null;case"assign":return Ne(e,t,await ce(e.value,t)),null;case"return":throw new he(e.value?await ce(e.value,t):null);case"throw":throw new ne(await ce(e.value,t),e.line);case"while":for(;H(await ce(e.cond,t))&&await Le(e.body,new V(t)););return null;case"loop":for(;await Le(e.body,new V(t)););return null;case"for":{let r=I(await ce(e.iter,t),e.line);for(let s of r){let d=new V(t);if(Ae(d,e.target,s,!1,e.line),!await Le(e.body,d))break}return null}case"try":try{return await be(e.body,new V(t))}catch(r){let s=oe(r,e.line);if(!je(s))throw s;let d=new V(t);return d.define(e.name,Re(s)),be(e.handler,d)}}throw new M(A,e.line)}async function Ye(e,t,r){let s=e.decl,d=new V(e.env),_=s.params,N=s.defaults;for(let R=0;R<_.length;R++){let Z=t[R];Z===void 0&&N&&N[R]&&(Z=j(N[R],d)),d.define(_[R],Z===void 0?null:Z)}try{return s.isExpr?await ce(s.body,d):await be(s.body,d)}catch(R){if(R instanceof he)return R.value;throw oe(R,r)}finally{K()}}function ze(e,t){if(typeof fetch!="function")throw new M("fetch no est\xE1 disponible aqu\xED. Usa Node 18 o m\xE1s reciente, o un navegador");let r=t?me(t):{},s={method:String(r.method||"GET").toUpperCase(),headers:{...r.headers||{}}};return r.body!==void 0&&r.body!==null&&(typeof r.body=="string"?s.body=r.body:(s.body=JSON.stringify(r.body),Object.keys(s.headers).some(d=>d.toLowerCase()==="content-type")||(s.headers["Content-Type"]="application/json"))),fetch(String(e),s).then(d=>{if(!d.ok)throw new Error(`HTTP ${d.status} al pedir ${e}`);return d})}function fe(e,t){if(e.view){for(let s of e)s.type==="exp"?O(j(s.exp,t)):Oe(s,t);return null}let r=null;for(let s of e)r=Oe(s,t);return r}function Be(e,t){P();try{fe(e,t)}catch(r){if(r===Me)return!1;if(r===Te)return!0;throw r}return!0}function Ae(e,t,r,s,d){if(Array.isArray(t)){if(!Array.isArray(r))throw new M(`No se puede desarmar ${Y(r)} en (${t.join(", ")})`,d);t.forEach((_,N)=>e.define(_,r[N]===void 0?null:r[N],s))}else e.define(t,r,s)}let je=e=>e instanceof ne||e instanceof M||e instanceof RangeError;function Re(e){if(e instanceof ne){let t=J(e.value);return typeof t=="string"?we({message:t,line:e.line}):t}return e instanceof RangeError?we({message:"Desbordamiento de pila: una funci\xF3n se llam\xF3 a s\xED misma demasiadas veces",line:null}):we({message:e.message,line:e.line})}function Oe(e,t){switch(e.type){case"exp":return j(e.exp,t);case"decl":return Ae(t,e.target,e.value?j(e.value,t):null,e.constant,e.line),null;case"class":{let r=null;if(e.parent&&(r=j(e.parent,t),!(r instanceof pe)))throw new M(`${e.parent.name} no es una clase`,e.line);let s=t;r&&(s=new V(t),s.define("super",r,!0));let d=new Map;for(let N of e.methods)d.set(N.name,new _e(N,s,N.name==="init"));let _=new pe(e.name,r,d,e.fields,s);t.define(e.name,_,!0);for(let N of e.decorators||[]){let R=T.decorators[N.name];if(!R)throw new M(`No existe el decorador @${N.name}. Para un componente usa @Component("mi-etiqueta")`,N.line);R(_,N.args.map(Z=>j(Z,t)),N.line)}return null}case"assign":return Ne(e,t),null;case"while":for(;H(j(e.cond,t))&&Be(e.body,new V(t)););return null;case"loop":for(;Be(e.body,new V(t)););return null;case"for":{let r=I(j(e.iter,t),e.line);for(let s of r){let d=new V(t);if(Ae(d,e.target,s,!1,e.line),!Be(e.body,d))break}return null}case"break":throw Me;case"continue":throw Te;case"return":throw new he(e.value?j(e.value,t):null);case"throw":throw new ne(j(e.value,t),e.line);case"try":try{return fe(e.body,new V(t))}catch(r){if(!je(r))throw r;let s=new V(t);return s.define(e.name,Re(r)),fe(e.handler,s)}case"import":return f(e,t),null;case"export":{if(!t.exports)throw new M("export solo puede usarse en el nivel superior de un m\xF3dulo",e.line);Oe(e.decl,t);for(let r of e.names)t.exports.add(r);return null}}throw new M(`Instrucci\xF3n desconocida ${e.type}`,e.line)}function Ne(e,t,...r){let s=e.target,d=e.line,_=r.length?r[0]:j(e.value,t),N=R=>e.op==="="?_:$(e.op[0],R,_,d);if(s.type==="var")t.set(s.name,e.op==="="?_:N(t.get(s.name,d)),d);else if(s.type==="member"){let R=j(s.obj,t);p(R,s.name,e.op==="="?_:N(o(R,s.name,d)),d)}else{let R=j(s.obj,t),Z=j(s.index,t);x(R,Z,e.op==="="?_:N(b(R,Z,d)),d)}}function Ve(e,t,r){switch(e.kind){case"any":return!0;case"bind":return r.define(e.name,t),!0;case"lit":return Se(e.value,t);case"range":return typeof t=="number"&&t>=e.from&&(e.inclusive?t<=e.to:t<e.to)}return!1}function j(e,t){switch(e.type){case"lit":return e.value;case"template":{let r="";for(let s of e.parts)r+=typeof s=="string"?s:L(j(s,t));return r}case"var":return t.get(e.name,e.line);case"self":return t.get("self",e.line);case"super":{let r=t.get("super",e.line),s=t.get("self",e.line),d=r.findMethod(e.name);if(!d)throw new M(`La clase ${r.name} no tiene un m\xE9todo llamado '${e.name}'`,e.line);return d.bind(s)}case"list":return e.items.map(r=>j(r,t));case"map":{let r=Object.create(null);for(let[s,d]of e.pairs)r[s]=j(d,t);return r}case"function":return new _e(e,t);case"await":throw new M(A,e.line);case"bindref":{let r=e.name;return t.has(r)||t.get(r,e.line),it(()=>t.get(r,e.line),s=>t.set(r,s,e.line))}case"comp":{let r=j(e.fn,t),s=e.args.map(N=>N.type==="cls"?N.name:j(N,t)),d=null;if(e.content){d=new se(null);let N=y;y=d.children;try{fe(e.content,new V(t))}finally{y=N}}let _=de(r,s,e.line);return _ instanceof G&&(d||!("children"in _.fields))&&(_.fields.children=d),_}case"elem":{let r=new se(L(j(e.tag,t)));for(let s of e.args){if(s.type==="cls"){r.classes.push(s.name);continue}let d=J(j(s,t));if(!(d===null||d===!1))if(Ie(d))r.bind=d;else if(ee(d)&&!ge(d))for(let _ of Object.keys(d)){let N=J(d[_]);_==="class"?H(N)&&r.classes.push(L(N)):_.startsWith("on_")?N!==null&&(r.on[_.slice(3)]=N):r.attrs[_]=N}else d instanceof se?r.children.push(d):r.children.push(L(d))}if(e.action&&(r.on.click=j(e.action,t)),e.content){let s=y;y=r.children;try{fe(e.content,new V(t))}finally{y=s}}return r}case"range":return E(j(e.from,t),j(e.to,t),e.inclusive,e.line);case"unary":{let r=j(e.value,t);if(e.op==="!")return!H(r);if(typeof r!="number")throw new M(`No se puede negar ${Y(r)}`,e.line);return-r}case"bin":{if(e.op==="&&"){let r=j(e.left,t);return H(r)?j(e.right,t):r}if(e.op==="||"){let r=j(e.left,t);return H(r)?r:j(e.right,t)}if(e.op==="??"){let r=J(j(e.left,t));return r!==null?r:j(e.right,t)}return $(e.op,j(e.left,t),j(e.right,t),e.line)}case"if":return H(j(e.cond,t))?fe(e.then,new V(t)):e.otherwise?fe(e.otherwise,new V(t)):null;case"match":{let r=j(e.value,t);for(let s of e.arms)for(let d of s.pats){let _=new V(t);if(Ve(d,r,_)&&!(s.guard&&!H(j(s.guard,_))))return s.isBlock?fe(s.body,_):j(s.body,_)}throw new M(`Ning\xFAn caso del match acepta ${L(r,!0)}. Agrega un caso _ =>`,e.line)}case"member":return o(j(e.obj,t),e.name,e.line,e.optional);case"index":return b(j(e.obj,t),j(e.index,t),e.line);case"call":{if(e.fn.type==="member"){let r=j(e.fn.obj,t);if(e.fn.optional&&J(r)===null)return null;let s=Array.isArray(r)?re:typeof r=="string"?le:typeof r=="number"?ue:ee(r)&&!(e.fn.name in r)?ae:null,d=s&&(s[e.fn.name]||te[e.fn.name]);if(d){let N=e.args.map(R=>j(R,t));return de($e,[d,r,N],e.line)}let _=o(r,e.fn.name,e.line,e.fn.optional);return de(_,e.args.map(N=>j(N,t)),e.line)}return de(j(e.fn,t),e.args.map(r=>j(r,t)),e.line)}}throw new M(`No se puede evaluar ${e.type}`,e.line)}function Qe(e,t,r){let s=new G(e),d=[];for(let N=e;N;N=N.parent)d.unshift(N);for(let N of d){if(!N.fields.length)continue;let R=new V(N.env);R.define("self",s,!0),R.inst=s;for(let Z of N.fields)s.fields[Z.name]=j(Z.value,R)}T.onInstance&&T.onInstance(s);let _=e.findMethod("init");if(_)de(_.bind(s),t,r);else if(t.length)throw new M(`${e.name} no tiene un init que reciba argumentos`,r);return s}function de(e,t,r){if(typeof e=="function"){let s;try{s=e(...t)}catch(d){throw d instanceof M?(d.line||(d.line=r),d):d instanceof Error&&!(d instanceof RangeError)?new M(d.message,r):d}return s===void 0?null:s}if(e instanceof _e){if(P(),e.decl.isAsync){let F=Ye(e,t,r);return F.tngAsync=!0,F}let s=e.decl,d=new V(e.env),_=s.params,N=s.defaults,R=c;s.file&&(c=s.file);let Z;try{for(let F=0;F<_.length;F++){let Ee=t[F];Ee===void 0&&N&&N[F]&&(Ee=j(N[F],d)),d.define(_[F],Ee===void 0?null:Ee)}if(s.isView){let F=new se(null),Ee=y;y=F.children;try{fe(s.body,d)}finally{y=Ee}Z=F}else Z=s.isExpr?j(s.body,d):fe(s.body,d)}catch(F){if(F instanceof he)Z=F.value;else throw(F instanceof M||F instanceof ne)&&(!F.file&&s.file&&(F.file=s.file),F.trace||(F.trace=[]),F.trace.length<50&&F.trace.push({name:s.closure?"closure":s.name,line:r||null,file:R})),F===Me||F===Te?new M(`${F.control} solo se puede usar dentro de un ciclo`,r,null,s.file):F}finally{c=R}return e.isInit?d.get("self"):Z}if(e instanceof pe)return Qe(e,t,r);throw new M(`${L(e,!0)} no es una funci\xF3n`,r)}function Ue(e,t,r){let s=g.get(e);if(s){if(s.state==="loading")throw new M(`Importaci\xF3n circular: '${e}' se importa a s\xED mismo a trav\xE9s de otros m\xF3dulos`,t,null,r);return s.exports}let d=n.read(e);if(d==null)throw new M(`No se encontr\xF3 el m\xF3dulo '${e}'`,t,null,r);let _={state:"loading",exports:null};g.set(e,_);try{let N=m(String(d),e),R=Object.create(null);for(let Z of N.exports)R[Z]=N.vars.get(Z);return _.exports=R,_.state="ready",R}catch(N){throw g.delete(e),N}}function f(e,t){let r=t.file||null,s;try{s=n.resolve(e.path,r)}catch(_){throw _ instanceof M&&(_.line||(_.line=e.line),_.file||(_.file=r)),_}let d=Ue(s,e.line,r);if(e.alias){t.define(e.alias,d,!0);return}for(let[_,N]of e.names){if(!(_ in d))throw new M(`El m\xF3dulo '${e.path}' no exporta '${_}'`,e.line);t.define(N,d[_],!0)}}function m(e,t,r){let s=qe(e,t);r=r||new V(u),r.file=t,r.exports=new Set;let d=c;c=t;try{let _=null;for(let N of s)_=Oe(N,r);r.last=_}catch(_){if(_ instanceof he)return r.last=_.value,r;throw(_ instanceof M||_ instanceof ne)&&!_.file&&(_.file=t),_}finally{c=d}return r}function S(e){if(e instanceof M)return Xe(e.line,e.col,e.file)+e.message;if(e instanceof ne){let t=J(e.value),r;return ee(t)&&typeof t.message=="string"?r=t.message:t instanceof G&&typeof t.fields.message=="string"?r=t.fields.message:r=L(t),Xe(e.line,null,e.file)+"Error no atrapado: "+r}return e instanceof ve?e.message:e instanceof RangeError?"Desbordamiento de pila: una funci\xF3n se llam\xF3 a s\xED misma demasiadas veces.":e===Me||e===Te?`${e.control} solo se puede usar dentro de un ciclo.`:"Error interno: "+(e&&e.message)}function k(e){if(!e||!e.trace||!e.trace.length)return[];let t=e.trace.slice(0,12).map(r=>{let s=r.line?`${r.file?r.file+", ":""}l\xEDnea ${r.line}`:r.file||"";return`en ${r.name}()${s?", llamada en "+s:""}`});return e.trace.length>12&&t.push(`\u2026 y ${e.trace.length-12} llamadas m\xE1s`),t}let C={log:(...e)=>{i(a+e.map(t=>L(t)).join(" ")),a=""},write:(...e)=>{a+=e.map(t=>L(t)).join(" ")},sleep:e=>new Promise(t=>setTimeout(()=>t(null),Number(e)||0)),fetch_json:(e,t)=>ze(e,t).then(r=>r.text()).then(r=>r?ye(JSON.parse(r)):null),fetch_text:(e,t)=>ze(e,t).then(r=>r.text()),type_of:e=>Y(e),assert:(e,t)=>{if(!H(e))throw new ne(we({message:t==null?"La afirmaci\xF3n fall\xF3":L(t)}))},min:(...e)=>{let t=e.length===1&&Array.isArray(e[0])?e[0]:e;return t.length?Math.min(...t):null},max:(...e)=>{let t=e.length===1&&Array.isArray(e[0])?e[0]:e;return t.length?Math.max(...t):null},random:()=>Math.random(),random_int:(e,t)=>Math.floor(Math.random()*(W(t,"random_int")-W(e,"random_int")+1))+e,to_json:(e,t)=>JSON.stringify(me(e),null,t||void 0)??"null",from_json:e=>{try{return ye(JSON.parse(String(e)))}catch(t){throw new M("from_json recibi\xF3 un texto que no es JSON v\xE1lido: "+t.message)}},PI:Math.PI};for(let e in C)typeof C[e]=="function"&&(C[e].tngName=e);for(let e in C)u.define(e,C[e],!0);function K(){if(a){let e=a;a="",i(e)}}return{global:u,define(e,t){typeof t=="function"&&!t.tngName&&(t.tngName=e),u.define(e,t,!0)},run(e,t,r){w();try{return m(String(e),t||null,r).last}finally{K()}},invoke(e,t){w();try{let r=de(e,t||[]);return r&&r.tngAsync&&r.catch(s=>{s instanceof he||n.onError(S(oe(s)))}),r}catch(r){return r instanceof he?r.value:(n.onError(S(r)),null)}finally{K()}},call:(e,t)=>de(e,t||[]),message:S,trace:k,loadModule:e=>{w();try{return Ue(e,null,null)}finally{K()}},forget:e=>g.delete(e),newEnv:()=>new V(u),setOutput(e){i=e},get output(){return i},flush:K}}var Et=1e3;function st(){return{name:"reactivo",install(n){let i=(w,$)=>n._rt.call(w,$||[]),a=null,l=new Set,c=!1;function g(w){if(!w.muerto&&(l.add(w),!c)){c=!0;try{let $=0;for(;l.size;){if(++$>Et)throw new Error("Un effect cambia un estado que \xE9l mismo lee, y se repite sin fin.");let E=[...l];l.clear();for(let D of E)D.muerto||D.correr()}}finally{c=!1,l.clear()}}}function u(w){let $=J(w),E=new Set;return{read(){return a&&(E.add(a),a.deps.add(E)),$},peek:()=>$,write(D){if(D=J(D),D===$&&(D===null||typeof D!="object"))return D;$=D;for(let v of[...E])g(v);return D}}}function T(w){for(let $ of w.deps)$.delete(w);w.deps.clear();for(let $ of w.hijos)$.muerto=!0,T($);w.hijos=[]}function y(w){let $={deps:new Set,hijos:[],muerto:!1,correr(){T($);let E=a;a=$;try{w()}finally{a=E}}};return a&&a.hijos.push($),$.correr(),$}let h=(w,$)=>($.tngName=w,$);function P(w,$){let E=Object.create(null);return E.get=h("get",()=>w.read()),$||(E.set=h("set",D=>w.write(D)),E.update=h("update",D=>w.write(i(D,[w.peek()])))),Object.defineProperty(E,Ce,{value:w}),E}n.reactive={isState:ge,effect:y,signal:u,dispose(w){w&&(w.muerto=!0,T(w))},watch(w,$){ge(w)?y(()=>$(w[Ce].read())):$(w)},peek:w=>ge(w)?w[Ce].peek():w,set:(w,$)=>w[Ce].write($)},n.defineAll({state:w=>P(u(w),!1),computed:w=>{let $=u(null);return y(()=>$.write(i(w))),P($,!0)},effect:w=>(y(()=>i(w)),null),is_state:w=>ge(w)})}}}var at=Symbol("tangerine.listeners"),Ot=/^[a-z][a-z0-9]*(-[a-z0-9]+)+$/,Nt=new Set(["br","hr","img","input","meta","link","source","area","col","embed","wbr"]);function lt(n){let i=[];for(let l=n;l;l=l.parent)i.unshift(l);let a=[];for(let l of i)for(let c of l.fields)c.decor&&a.push(c);return a}var Fe=n=>String(n).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");function Je(n){if(typeof n=="string")return Fe(n);if(!(n instanceof se))return"";let i=n.children.map(Je).join("");if(n.tag===null)return i;let a="";n.classes.length&&(a+=` class="${Fe(n.classes.join(" "))}"`);for(let c of Object.keys(n.attrs)){if(c==="key"||c==="ref"||c==="raw")continue;let g=J(n.attrs[c]);g===null||g===!1||(a+=g===!0?` ${c}`:` ${c}="${Fe(L(g))}"`)}if(n.bind){let c=J(n.bind.get());n.attrs.type==="checkbox"?H(c)&&(a+=" checked"):n.tag!=="textarea"&&c!==null&&(a+=` value="${Fe(L(c))}"`)}if(Nt.has(n.tag))return`<${n.tag}${a}>`;let l=n.tag==="textarea"&&n.bind?Fe(L(J(n.bind.get())??"")):i;return`<${n.tag}${a}>${l}</${n.tag}>`}function ut(){return{name:"componentes",install(n){let i=(u,T)=>n._rt.call(u,T||[]),a=new Map,l=[];function c(u){let T=[],y=we([]);return y.emit=h=>{for(let P of T.slice())P(J(h));return null},y.emit.tngName="emit",y.listen=h=>(T.push(P=>i(h,[P])),null),y.listen.tngName="listen",Object.defineProperty(y,at,{value:T}),Object.defineProperty(y,"toString",{value:()=>`<output ${u}>`}),y}n.hooks.onInstance=u=>{let T=lt(u.cls);if(T.length)for(let y of T){if(y.decor==="Output"){u.fields[y.name]=c(y.name);continue}let h=n.reactive.signal(u.fields[y.name]);Object.defineProperty(u.fields,y.name,{get:()=>h.read(),set:P=>h.write(P),enumerable:!0,configurable:!0})}},n.hooks.decorators.Component=(u,T)=>{let y=T[0];if(typeof y!="string"||!Ot.test(y))throw new Error(`@Component necesita una etiqueta en min\xFAsculas con guion, por ejemplo @Component("mi-${u.name.toLowerCase()}")`);if(!u.findMethod("view"))throw new Error(`El componente ${u.name} necesita un view { } con lo que muestra`);let h=lt(u);u.component={tag:y,inputs:h.filter(P=>P.decor==="Input").map(P=>P.name),outputs:h.filter(P=>P.decor==="Output").map(P=>P.name)},a.set(y,u);for(let P of l)P(u)};function g(u){let T=u instanceof G&&u.cls.findMethod("view");if(!T)throw new Error(`${L(u)} no tiene un view { }`);return i(T.bind(u),[])}n.components={registry:a,renderView:g,onDefine:u=>l.push(u),toHTML:Je,LISTENERS:at,isBinding:Ie},n.defineAll({render_html:u=>u instanceof G?Je(g(u)):u instanceof se?Je(u):ee(u)?"":Je(String(L(u)))})}}}var Mt="5.2.0",ct=[],Tt=n=>!/^(\.{1,2}\/|\/|[a-z][a-z0-9+.-]*:\/\/)/i.test(n);function ft(n,i,a){if(a&&Tt(n)){if(Object.prototype.hasOwnProperty.call(a,n))return a[n];let l=null;for(let c of Object.keys(a))c.endsWith("/")&&n.startsWith(c)&&(!l||c.length>l.length)&&(l=c);if(l)return ke(a[l]+n.slice(l.length),null)}return ke(n,i)}var z=class n{constructor(i={}){this.options=i,this.imports={...i.imports||{}},this.modules=new Map(Object.entries(i.modules||{}).map(([l,c])=>[ke(l,null),c]));let a=this;if(this.hooks={decorators:Object.create(null),onInstance:null},this._rt=ot({output:i.output||(l=>console.log(l)),get stepLimit(){return a.stepLimit},resolve:i.resolve||((l,c)=>ft(l,c,a.imports)),read:l=>a.modules.has(l)?a.modules.get(l):i.read?i.read(l):null,onError:i.onError||(l=>console.error("Tangerine: "+l)),hooks:this.hooks}),this.stepLimit=i.stepLimit||0,this.plugins=[],this.use(st()),this.use(ut()),i.globalPlugins!==!1)for(let l of ct)this.use(l);for(let l of i.plugins||[])this.use(l);i.natives&&this.defineAll(i.natives)}define(i,a){return this._rt.define(i,a),this}defineAll(i){for(let a of Object.keys(i))this.define(a,i[a]);return this}use(i){let a=(typeof i=="function"||i)&&i.name;if(a&&this.plugins.includes(a))return this;if(typeof i=="function")i(this);else if(i&&typeof i.install=="function")i.install(this);else throw new TypeError("Un plugin debe ser una funci\xF3n o un objeto con install(tng)");return a&&this.plugins.push(a),this}addModule(i,a){return this.modules.set(this._key(i),String(a)),this}run(i,a={}){try{return this._rt.run(i,a.file?this._key(a.file):null)}catch(l){throw this._wrap(l)}}import(i){try{return this._rt.loadModule(this._key(i))}catch(a){throw this._wrap(a)}}forget(i){return this._rt.forget(this._key(i)),this}runModule(i){let a=this._key(i),l=this.modules.has(a)?this.modules.get(a):this.options.read?this.options.read(a):null;if(l==null)throw new M(`No se encontr\xF3 el m\xF3dulo '${a}'`);return this.run(l,{file:a})}runCode(i,a={}){let l=[],c=this._rt.output;this._rt.setOutput(g=>l.push(g));try{return this._rt.run(String(i),a.file||null),we({output:l,error:null,trace:[]})}catch(g){return we({output:l,error:this._rt.message(g),trace:this._rt.trace(g)})}finally{this._rt.setOutput(c)}}session(){let i=this._rt.newEnv();return{run:a=>{try{return this._rt.run(a,null,i)}catch(l){throw this._wrap(l)}},has:a=>i.has(a)}}invoke(i,a){return this._rt.invoke(i,a)}call(i,a){try{return this._rt.call(i,a)}catch(l){throw this._wrap(l)}}trace(i){return this._rt.trace(i&&i.original&&!i.trace?i.original:i)}message(i){return i instanceof M&&!i.original?this._rt.message(i):i&&i.tngMessage?i.tngMessage:this._rt.message(i&&i.original?i.original:i)}globals(){return[...this._rt.global.vars.keys()]}show(i,a){return L(i,a)}truthy(i){return H(i)}_key(i){return this.options.resolve?this.options.resolve(i,null):ke(i,null)}_wrap(i){let a=this._rt.message(i),l=i instanceof M?i:new M(a,i&&i.line,null,i&&i.file);return l.tngMessage=a,l!==i&&(l.original=i,i&&i.trace&&(l.trace=i.trace)),l}static registerPlugin(i){ct.push(i)}static runCode(i,a){let l=new n({stepLimit:4e5,...a}).runCode(i);return{output:l.output,error:l.error,trace:l.trace}}};z.VERSION=Mt;z.KEYWORDS=De;z.lexer=We;z.parser=Ze;z.parse=qe;z.sx=U;z.show=L;z.truthy=H;z.makeMap=we;z.isMap=ee;z.typeOf=Y;z.fromJS=ye;z.toJS=me;z.importsOf=Ge;z.resolvePath=ke;z.resolveWithMap=ft;z.TngError=M;z.Thrown=ne;var It=()=>!!(typeof matchMedia<"u"&&matchMedia("(prefers-reduced-motion: reduce)").matches);function et(){return{name:"dom",install(n){let i=o=>n.show(o),a=o=>n.truthy(o),l=(o,p)=>n.invoke(o,p),c=null,g=(o,p)=>n.reactive?n.reactive.watch(o,p):p(o),u=(o,p)=>n._rt.call(o,p||[]),T=o=>typeof Element<"u"&&o instanceof Element,y=o=>o.replace(/_/g,"-").replace(/([a-z0-9])([A-Z])/g,"$1-$2").toLowerCase(),h=o=>o.replace(/[-_]([a-z0-9])/g,(p,b)=>b.toUpperCase()),P=()=>n.components,w=o=>!!(P()&&P().registry.has(o));function $(o){let p=Object.create(null);return p.type=o.type,p.key=o.key===void 0?null:o.key,p.value=o.target&&"value"in o.target?o.target.value:null,p.detail=o.detail===void 0?null:ye(o.detail),p.target=o.target||null,p}function E(o,p){let b=o.__tngAttrs||Object.create(null),x=p.tag.includes("-");for(let I of Object.keys(b))I in p.attrs||(o.removeAttribute(I),x&&(o[h(I)]=void 0));for(let I of Object.keys(p.attrs)){if(I==="key"||I==="ref"||I==="raw")continue;let A=J(p.attrs[I]);if(ge(A)&&(A=A.get()),x&&A!==null&&typeof A!="string"){o[h(I)]=A;continue}if(I==="value"&&"value"in o){let q=A===null?"":i(A);o.value!==q&&(o.value=q);continue}if(I==="checked"&&"checked"in o){o.checked=a(A);continue}if(A===null||A===!1)o.removeAttribute(I);else{let q=A===!0?"":i(A);o.getAttribute(I)!==q&&o.setAttribute(I,q)}}o.__tngAttrs=p.attrs;let O=p.classes.join(" ");(o.getAttribute("class")||"")!==O&&(O?o.setAttribute("class",O):o.removeAttribute("class"))}function D(o,p){o.__tngOn=p.on;let b=o.__tngTypes||(o.__tngTypes=new Set);for(let x of Object.keys(p.on))b.has(x)||(b.add(x),o.addEventListener(x,O=>{let I=o.__tngOn&&o.__tngOn[x];I&&(x==="submit"&&O.preventDefault(),l(I,I.decl&&I.decl.params.length?[$(O)]:[]))}))}function v(o,p){if(o.__tngBind=p.bind,!p.bind)return;let b=o.type==="checkbox"||o.type==="radio",x=J(p.bind.get());if(b)o.checked=a(x);else{let I=x===null?"":i(x);o.value!==I&&(o.value=I)}if(o.__tngBound)return;o.__tngBound=!0;let O=o.type==="number"||o.type==="range";o.addEventListener(b||o.tagName==="SELECT"?"change":"input",()=>{let I=o.__tngBind;if(!I)return;let A=b?o.checked:O?o.value===""?null:Number(o.value):o.value;l(()=>I.set(A))})}function W(o,p){E(o,p),D(o,p),v(o,p)}function B(o){if(typeof o=="string")return document.createTextNode(o);let p=document.createElement(o.tag);if(o.tag==="button"&&!("type"in o.attrs)&&(p.type="button"),p.__tngKey=te(o),E(p,o),D(p,o),!w(o.tag))for(let x of o.children)p.appendChild(B(x));v(p,o);let b=J(o.attrs.ref);return b&&queueMicrotask(()=>l(b,[p])),p}let X=(o,p)=>typeof p=="string"?o.nodeType===3:o.nodeType===1&&o.tagName.toLowerCase()===p.tag.toLowerCase(),te=o=>typeof o=="string"||o.attrs.key===void 0||o.attrs.key===null?null:i(o.attrs.key);function re(o,p){let b=new Map;for(let O of Array.from(o.childNodes))O.__tngKey!=null&&b.set(O.__tngKey,O);let x=0;for(let O of p){let I=te(O),A;I!==null?(A=b.get(I),b.delete(I),A&&!X(A,O)&&(A=null)):(A=o.childNodes[x],A&&(A.__tngKey!=null||!X(A,O))&&(A=null)),A?typeof O=="string"?A.data!==O&&(A.data=O):(W(A,O),!w(O.tag)&&!a(O.attrs.raw)&&le(A,O.children)):A=B(O);let q=o.childNodes[x];q!==A&&o.insertBefore(A,q||null),x++}for(;o.childNodes.length>p.length;)o.lastChild.remove()}function le(o,p){if(p.some(x=>te(x)!==null))return re(o,p);let b=0;for(let x of p){let O=o.childNodes[b];O?X(O,x)?typeof x=="string"?O.data!==x&&(O.data=x):(W(O,x),!w(x.tag)&&!a(x.attrs.raw)&&le(O,x.children)):o.replaceChild(B(x),O):o.appendChild(B(x)),b++}for(;o.childNodes.length>p.length;)o.lastChild.remove()}function ue(o,p){return n.reactive.effect(()=>{let b=P().renderView(p);le(o,b instanceof se?b.tag===null?b.children:[b]:[])})}function ae(o,p){let b=o instanceof G&&o.cls.findMethod(p);b&&l(b.bind(o))}let $e=(o,p)=>{if(typeof p=="number"){let b=Number(o);return Number.isNaN(b)?p:b}return typeof p=="boolean"?o!=="false"&&o!==null:o};function ie(o){if(typeof customElements>"u")return;let p=o.component;if(customElements.get(p.tag))return;let b=P().LISTENERS,x=Object.create(null);class O extends HTMLElement{static get observedAttributes(){return p.inputs.map(y)}constructor(){super(),this._tng=null,this._fx=null,this._pending=Object.create(null)}_set(A,q){l(()=>{this._tng.fields[A]=q})}connectedCallback(){if(!this._tng){let A=l(o);if(!(A instanceof G))return;this._tng=A;for(let q of p.inputs){q in x||(x[q]=J(A.fields[q]));let Q=this.getAttribute(y(q));Q!==null&&(A.fields[q]=$e(Q,x[q])),q in this._pending&&(A.fields[q]=this._pending[q])}for(let q of p.outputs){let Q=A.fields[q];Q&&Q[b]&&Q[b].push(oe=>this.dispatchEvent(new CustomEvent(q,{detail:me(oe),bubbles:!0,composed:!0})))}}if(!this._fx){let A=this;l(()=>{A._fx=ue(A,A._tng)}),this._fx&&ae(this._tng,"on_mount")}}disconnectedCallback(){this._fx&&(n.reactive.dispose(this._fx),this._fx=null,ae(this._tng,"on_destroy"))}attributeChangedCallback(A,q,Q){let oe=p.inputs.find(ce=>y(ce)===A);!oe||!this._tng||this._set(oe,Q===null?x[oe]:$e(Q,x[oe]))}}for(let I of p.inputs){let A={get(){return this._tng?me(this._tng.fields[I]):this._pending[I]},set(q){let Q=q instanceof Node?q:ye(q);this._tng?this._set(I,Q):this._pending[I]=Q},configurable:!0};Object.defineProperty(O.prototype,I,A),h(I)!==I&&Object.defineProperty(O.prototype,h(I),A)}customElements.define(p.tag,O)}if(n.components){for(let o of n.components.registry.values())ie(o);n.components.onDefine(ie)}n.defineAll({mount:(o,p)=>{let b=typeof o=="string"?document.querySelector(o):o;if(!b)throw new Error(`mount no encontr\xF3 '${o}' en la p\xE1gina`);let x=p instanceof pe?n._rt.call(p,[]):p;if(!(x instanceof G))throw new Error('mount necesita un struct con view { }, por ejemplo mount("#app", App)');return ue(b,x),ae(x,"on_mount"),x},query:o=>document.querySelector(o),focus:o=>(o&&o.focus&&o.focus({preventScroll:!0}),o),query_all:o=>Array.from(document.querySelectorAll(o)),el:(o,p,b)=>{let x=document.createElement(o);return g(p,O=>{x.className=O?i(O):""}),o==="button"&&(x.type="button"),g(b,O=>{O!=null&&(x.textContent=i(O))}),x},append:(o,p)=>(o.appendChild(p),p),remove:o=>(o&&o.remove(),null),add_text:(o,p)=>(o.appendChild(document.createTextNode(i(p))),o),set_text:(o,p)=>(g(p,b=>{o.textContent=i(b)}),o),attr:(o,p,b)=>(g(b,x=>{x==null||x===!1?o.removeAttribute(p):o.setAttribute(p,x===!0?"":i(x))}),o),get_attr:(o,p)=>o.getAttribute(p),toggle_class:(o,p,b)=>(b===void 0?o.classList.toggle(p):g(b,x=>o.classList.toggle(p,a(x))),o),set_style:(o,p,b)=>(g(b,x=>o.style.setProperty(p,x==null?"":i(x))),o),clear:o=>(o.replaceChildren(),o),set_visible:(o,p)=>(g(p,b=>{o.hidden=!a(b)}),o),value:o=>o.value,set_value:(o,p)=>(g(p,b=>{o.value=b==null?"":i(b)}),o),bind:(o,p)=>{if(!n.reactive||!n.reactive.isState(p))throw new Error('bind necesita un state: bind(campo, state(""))');let b=o.type==="checkbox"||o.type==="radio",x=o.type==="number"||o.type==="range";return g(p,O=>{if(b)o.checked=a(O);else{let I=O==null?"":i(O);o.value!==I&&(o.value=I)}}),o.addEventListener(b||o.tagName==="SELECT"?"change":"input",()=>{let O=b?o.checked:x?o.value===""?null:Number(o.value):o.value;l(()=>n.reactive.set(p,O))}),o},render:(o,p)=>{let b=()=>{o.replaceChildren();let x=u(p,p&&p.decl&&p.decl.params.length?[o]:[]);for(let O of Array.isArray(x)?x:[x])T(O)&&O.parentNode!==o&&o.appendChild(O)};return n.reactive?n.reactive.effect(b):b(),o},on:(o,p,b)=>{let x=!!(b&&b.decl&&b.decl.params.length);return o.addEventListener(p,O=>{if(!x)return l(b);let I=Object.create(null);I.type=O.type,I.key=O.key===void 0?null:O.key,I.value=O.target&&"value"in O.target?O.target.value:null,I.target=O.target||null,l(b,[I])}),o},on_shortcut:(o,p)=>(o.addEventListener("keydown",b=>{b.key==="Enter"&&(b.ctrlKey||b.metaKey)&&(b.preventDefault(),l(p))}),o),now:()=>performance.now(),after:(o,p)=>(setTimeout(()=>l(p),o),null),copy:(o,p)=>{let b=p?p.textContent:"",x=O=>{p&&(p.textContent=O,setTimeout(()=>p.textContent=b,1800))};try{navigator.clipboard.writeText(i(o)).then(()=>x("Copiado"),()=>x("Selecciona y copia a mano"))}catch{x("Selecciona y copia a mano")}return null},save:(o,p)=>{try{localStorage.setItem(o,i(p))}catch{}return null},load:o=>{try{return localStorage.getItem(o)}catch{return null}},on_route:o=>(c=()=>l(o,[decodeURIComponent(location.hash.slice(1))]),window.addEventListener("hashchange",c),c(),null),go:o=>(location.hash.slice(1)===o?c&&c():location.hash=o,null),scroll_top:()=>(window.scrollTo(0,0),null),scroll_to:o=>(o&&requestAnimationFrame(()=>o.scrollIntoView({behavior:It()?"auto":"smooth",block:"start"})),null),when_visible:(o,p)=>(typeof IntersectionObserver>"u"||new IntersectionObserver(b=>{b.some(x=>x.isIntersecting)&&l(p)},{rootMargin:"-90px 0px -70% 0px"}).observe(o),null)})}}}z.registerPlugin(et());z.dom=et;globalThis.Tangerine=z;async function ht(n,i,a){let l=ke(i,null);if(a.has(l)||n.modules.has(l))return l;a.add(l);let c=await fetch(l);if(!c.ok)throw new Error(`No se pudo descargar '${l}' (HTTP ${c.status})`);let g=await c.text();n.addModule(l,g);let u=[];try{u=Ge(qe(g,l))}catch{}return await Promise.all(u.map(T=>ht(n,ke(T,l),a))),l}z.prototype.load=async function(n){let i=await ht(this,n,new Set);return this.runModule(i)};function pt(n){console.error("Tangerine: "+n);let i=document.getElementById("app")||document.body;if(!i)return;let a=document.createElement("pre");a.className="tangerine-fallo",a.style.cssText="white-space:pre-wrap;font:14px/1.5 ui-monospace,monospace;color:#b42318;background:#fff4f2;border:1px solid #f3c6bf;border-radius:8px;padding:12px 16px;margin:16px",a.textContent=`Tangerine no pudo ejecutar el programa.
+`+n,i.appendChild(a)}z.start=async function(n={}){let i=document.getElementById("tangerine-imports"),a=n.imports;if(i&&!a)try{a=JSON.parse(i.textContent)}catch{pt("El mapa de paquetes (tangerine-imports) no es JSON v\xE1lido")}let l=new z({...n,imports:a}),c=Array.from(document.querySelectorAll('script[type="text/tangerine"]'));for(let g of c)g.dataset.module&&l.addModule(g.dataset.module,g.textContent);for(let g of c)if(!(g.dataset.module&&!("main"in g.dataset)))try{g.dataset.module?l.runModule(g.dataset.module):g.src||g.getAttribute("src")?await l.load(g.getAttribute("src")):l.run(g.textContent,{file:g.id?g.id+".tng":void 0})}catch(u){pt(l.message(u))}return l};var dt=typeof document<"u"?document.currentScript:null;if(typeof document<"u"&&!(dt&&dt.hasAttribute("data-manual"))){let n=()=>{z.instance=z.start()};document.readyState==="loading"?document.addEventListener("DOMContentLoaded",n):n()}var cn=z;})();
+</script>
+<script>
+// Lo que la web de Tangerine UI necesita de JavaScript: resaltar código,
+// ejecutar los ejemplos en vivo, temas y animaciones al hacer scroll.
+(function () {
+  "use strict";
+  const T = window.Tangerine;
+  const guardar = (k, v) => { try { localStorage.setItem(k, v); } catch { /* sin almacenamiento */ } };
+  const leer = (k) => { try { return localStorage.getItem(k); } catch { return null; } };
+  const raiz = document.documentElement;
+
+  function aplicarRadio(px) {
+    const n = Number(px);
+    raiz.style.setProperty("--t-radius", n + "px");
+    raiz.style.setProperty("--t-radius-sm", Math.max(2, Math.round(n * 0.7)) + "px");
+    raiz.style.setProperty("--t-radius-lg", Math.round(n * 1.6) + "px");
+  }
+
+  // Tema guardado, antes de dibujar nada (evita el destello)
+  const temaGuardado = leer("tui-tema");
+  if (temaGuardado) raiz.dataset.theme = temaGuardado;
+  const acento = leer("tui-acento");
+  if (acento) raiz.style.setProperty("--t-accent", acento);
+  const radio = leer("tui-radio");
+  if (radio) aplicarRadio(radio);
+
+  // ---------- Resaltado ----------
+  const KW = new Set("let var fn return if else while loop for in break continue match class struct self super do catch throw true false nil import export async await from as view".split(" "));
+  const TNG = /(\/\/[^\n]*)|("(?:\\.|[^"\\])*")|(@[A-Za-z]+)|(\$[A-Za-z_]\w*)|(\.[a-z][\w-]*(?=[,)\s]))|(\b\d[\d_.]*\b)|([A-Za-z_\u00C0-\u024F][\w\u00C0-\u024F]*)/g;
+  function tng(src) {
+    const out = [];
+    let last = 0, m;
+    TNG.lastIndex = 0;
+    while ((m = TNG.exec(src))) {
+      if (m.index > last) out.push([null, src.slice(last, m.index)]);
+      const t = m[0];
+      if (m[1]) out.push(["c", t]);
+      else if (m[2]) out.push(["s", t]);
+      else if (m[3]) out.push(["d", t]);
+      else if (m[4]) out.push(["b", t]);
+      else if (m[5]) out.push(["e", t]);
+      else if (m[6]) out.push(["n", t]);
+      else if (KW.has(t)) out.push(["k", t]);
+      else if (/^[A-Z]/.test(t)) out.push(["t", t]);
+      else if (src[TNG.lastIndex] === "(") out.push(["f", t]);
+      else out.push([null, t]);
+      last = TNG.lastIndex;
+    }
+    if (last < src.length) out.push([null, src.slice(last)]);
+    return out;
+  }
+  const HTML = /(<!--[\s\S]*?-->)|(<\/?[a-zA-Z][\w-]*)|([\w\-:@[\]()]+)(?==)|("[^"]*")|(\/?>)/g;
+  function html(src) {
+    const out = [];
+    let last = 0, m;
+    HTML.lastIndex = 0;
+    while ((m = HTML.exec(src))) {
+      if (m.index > last) out.push([null, src.slice(last, m.index)]);
+      out.push([m[1] ? "c" : m[2] ? "k" : m[3] ? "f" : m[4] ? "s" : "k", m[0]]);
+      last = HTML.lastIndex;
+    }
+    if (last < src.length) out.push([null, src.slice(last)]);
+    return out;
+  }
+  const BASH = /(#[^\n]*)|("[^"]*")|(^|\n)(\s*)([\w-]+)/g;
+  function bash(src) {
+    const out = [];
+    let last = 0, m;
+    BASH.lastIndex = 0;
+    while ((m = BASH.exec(src))) {
+      if (m.index > last) out.push([null, src.slice(last, m.index)]);
+      if (m[1]) out.push(["c", m[1]]);
+      else if (m[2]) out.push(["s", m[2]]);
+      else { out.push([null, m[3] + m[4]]); out.push(["f", m[5]]); }
+      last = BASH.lastIndex;
+    }
+    if (last < src.length) out.push([null, src.slice(last)]);
+    return out;
+  }
+  const CSS = /(\/\*[\s\S]*?\*\/)|(--[\w-]+)|(#[0-9a-fA-F]{3,8}\b|\d+(?:px|%|ms)?)|([.:][\w-]+)/g;
+  function css(src) {
+    const out = [];
+    let last = 0, m;
+    CSS.lastIndex = 0;
+    while ((m = CSS.exec(src))) {
+      if (m.index > last) out.push([null, src.slice(last, m.index)]);
+      out.push([m[1] ? "c" : m[2] ? "b" : m[3] ? "n" : "k", m[0]]);
+      last = CSS.lastIndex;
+    }
+    if (last < src.length) out.push([null, src.slice(last)]);
+    return out;
+  }
+  function pintar(el, src, lenguaje) {
+    const partes = (lenguaje === "html" ? html : lenguaje === "bash" ? bash : lenguaje === "css" ? css : tng)(String(src));
+    const frag = document.createDocumentFragment();
+    for (const [c, t] of partes) {
+      if (!c) { frag.appendChild(document.createTextNode(t)); continue; }
+      const s = document.createElement("span");
+      s.className = "hl-" + c;
+      s.textContent = t;
+      frag.appendChild(s);
+    }
+    el.replaceChildren(frag);
+  }
+
+  // ---------- Ejemplos en vivo ----------
+  let fuenteUI = null;
+  function ui() {
+    if (fuenteUI === null) {
+      const s = document.querySelector('script[type="text/tangerine"][data-module$="ui.tng"]');
+      fuenteUI = s ? s.textContent : "";
+    }
+    return fuenteUI;
+  }
+  function instancia(errores) {
+    return new T({
+      output: () => {},
+      onError: (m) => errores.push(m),
+      modules: { "tangerine-ui.tng": ui() },
+      imports: { "tangerine-ui": "tangerine-ui.tng" },
+    });
+  }
+  function mostrarError(el, msg) {
+    const d = document.createElement("div");
+    d.className = "demo-error";
+    d.textContent = msg;
+    el.replaceChildren(d);
+  }
+  function correrDemo(el, codigo) {
+    el.replaceChildren();
+    const errores = [];
+    const t = instancia(errores);
+    t.define("__destino", el);
+    try { t.run(String(codigo) + "\nmount(__destino, Demo)"); }
+    catch (x) { mostrarError(el, x.message || String(x)); return; }
+    if (errores.length) mostrarError(el, errores[0]);
+  }
+
+  // Ordena el HTML con sangría para que se lea bien
+  function ordenar(plano) {
+    const tokens = plano.replace(/>\s*</g, ">\n<").split("\n");
+    let nivel = 0;
+    const lineas = [];
+    const vacio = /^<(br|hr|img|input|meta|link)\b/;
+    for (const t of tokens) {
+      const cierra = /^<\//.test(t);
+      if (cierra) nivel = Math.max(0, nivel - 1);
+      lineas.push("  ".repeat(nivel) + t);
+      const abre = /^<[a-z]/i.test(t) && !cierra && !vacio.test(t) && !/<\/[\w-]+>$/.test(t);
+      if (abre) nivel++;
+    }
+    return lineas.join("\n");
+  }
+
+  const vistos = new IntersectionObserver((entradas) => {
+    for (const e of entradas) {
+      if (!e.isIntersecting) continue;
+      vistos.unobserve(e.target);
+      e.target.classList.add("visible");
+      if (e.target.__alVer) { const f = e.target.__alVer; e.target.__alVer = null; f(); }
+    }
+  }, { rootMargin: "0px 0px -6% 0px" });
+
+  T.registerPlugin({
+    name: "sitio-ui",
+    install(tng) {
+      const invoke = (f, a) => tng.invoke(f, a || []);
+      tng.defineAll({
+        resaltar: (el, src, lenguaje) => { pintar(el, src, lenguaje); return el; },
+        // Ejecuta el ejemplo y lo monta en el elemento
+        demo: (el, codigo) => { correrDemo(el, codigo); return null; },
+        // Igual, pero cuando el elemento aparece en pantalla
+        demo_al_ver: (el, codigo) => { el.__alVer = () => correrDemo(el, codigo); vistos.observe(el); return null; },
+        demo_html: (codigo) => {
+          try { return ordenar(instancia([]).run(String(codigo) + "\nrender_html(Demo())")); }
+          catch (x) { return "<!-- " + (x.message || x) + " -->"; }
+        },
+        revelar: (el) => { vistos.observe(el); return el; },
+        tema_actual: () => raiz.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"),
+        poner_tema: (t) => { raiz.dataset.theme = t; guardar("tui-tema", t); return null; },
+        poner_acento: (hex) => { raiz.style.setProperty("--t-accent", hex); guardar("tui-acento", hex); return null; },
+        acento_actual: () => leer("tui-acento") || "#f2761d",
+        poner_radio: (px) => { aplicarRadio(px); guardar("tui-radio", String(px)); return null; },
+        radio_actual: () => Number(leer("tui-radio") || 10),
+        atajo_buscar: (f) => {
+          document.addEventListener("keydown", (e) => {
+            const enCampo = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement && document.activeElement.tagName);
+            if ((e.key === "k" && (e.ctrlKey || e.metaKey)) || (e.key === "/" && !enCampo)) {
+              e.preventDefault();
+              invoke(f);
+            }
+          });
+          return null;
+        },
+        enfocar: (sel) => {
+          setTimeout(() => { const e = document.querySelector(sel); if (e) e.focus(); }, 40);
+          return null;
+        },
+      });
+    },
+  });
+})();
+</script>
+<script type="text/tangerine" data-module="src/docs.tng">
+// Documentación de cada componente. El código de cada ejemplo es real:
+// la web lo ejecuta para dibujar la vista previa y lo convierte en HTML.
+
+export let grupos = ["Formularios", "Contenedores", "Feedback", "Datos", "Layout"]
+
+export let docs = [
+  {
+    id: "button",
+    nombre: "Button",
+    grupo: "Formularios",
+    desc: "Un botón con variantes, tamaños, ícono y estado de carga. La acción va como segundo argumento.",
+    ejemplos: [
+      {
+        titulo: "Variantes",
+        codigo: 'import { Button, Row } from "tangerine-ui"
+
+struct Demo {
+  view {
+    Row(8) {
+      Button("Primario", || nil)
+      Button("Secundario", || nil, .secondary)
+      Button("Contorno", || nil, .outline)
+      Button("Fantasma", || nil, .ghost)
+      Button("Peligro", || nil, .danger)
+      Button("Enlace", || nil, .link)
+    }
+  }
+}',
+      },
+      {
+        titulo: "Carga, tamaños e íconos",
+        codigo: 'import { Button, Row, toast, Toaster } from "tangerine-ui"
+
+struct Demo {
+  @State var guardando = false
+
+  async fn guardar() {
+    guardando = true
+    await sleep(1200)
+    guardando = false
+    toast("Cambios guardados", "success")
+  }
+
+  view {
+    Row(8) {
+      Button("Guardar", || guardar()).loading(guardando).icon("✓")
+      Button("Pequeño", || nil, .secondary).size("sm")
+      Button("Grande", || nil, .outline).size("lg")
+      Button("Desactivado", || nil).disabled()
+    }
+    Toaster()
+  }
+}',
+      },
+    ],
+    api: [
+      ['Button(texto, accion?, variante?)', 'variante: .primary (por defecto), .secondary, .outline, .ghost, .danger, .link'],
+      ['.size("sm" | "lg")', 'Más pequeño o más grande.'],
+      ['.loading(bool)', 'Muestra un spinner y evita doble clic.'],
+      ['.icon(texto)', 'Un ícono o emoji antes del texto.'],
+      ['.disabled(bool)', 'Lo desactiva.'],
+      ['.full()', 'Ocupa todo el ancho.'],
+      ['.submit()', 'Lo vuelve type="submit" dentro de un form.'],
+    ],
+  },
+  {
+    id: "input",
+    nombre: "Input",
+    grupo: "Formularios",
+    desc: "Campo de texto con etiqueta, ayuda y error. Se une a un @State con $campo.",
+    ejemplos: [
+      {
+        titulo: "Con validación en vivo",
+        codigo: 'import { Input, Stack } from "tangerine-ui"
+
+struct Demo {
+  @State var correo = ""
+  @State var clave = ""
+
+  fn error_correo() {
+    if correo != "" && !correo.contains("@") { "Le falta el @" } else { nil }
+  }
+
+  view {
+    Stack(14) {
+      Input("Correo", $correo, "email")
+        .placeholder("tu@correo.com")
+        .hint("Nunca lo compartimos")
+        .error(error_correo())
+      Input("Contraseña", $clave, "password").placeholder("Mínimo 8 caracteres")
+      p { "Escribiste: {correo}" }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Input(etiqueta, $campo, tipo?)', 'tipo: "text" (por defecto), "email", "password", "number", "search", "tel", "url", "date"...'],
+      ['.placeholder(texto)', 'Texto de ejemplo dentro del campo.'],
+      ['.hint(texto)', 'Ayuda debajo del campo.'],
+      ['.error(texto)', 'Lo marca en rojo con el mensaje. Con nil se quita.'],
+      ['.disabled(bool)', 'Lo desactiva.'],
+    ],
+  },
+  {
+    id: "textarea",
+    nombre: "Textarea",
+    grupo: "Formularios",
+    desc: "Texto de varias líneas. Crece hacia abajo si el usuario lo estira.",
+    ejemplos: [
+      {
+        titulo: "Con contador",
+        codigo: 'import { Textarea } from "tangerine-ui"
+
+struct Demo {
+  @State var bio = ""
+
+  view {
+    Textarea("Sobre ti", $bio)
+      .rows(4)
+      .placeholder("Cuéntanos algo...")
+      .hint("{bio.len()} / 160 caracteres")
+      .error(if bio.len() > 160 { "Es demasiado largo" } else { nil })
+  }
+}',
+      },
+    ],
+    api: [
+      ['Textarea(etiqueta, $campo)', 'Se une a un @State de texto.'],
+      ['.rows(n)', 'Alto inicial en líneas.'],
+      ['.placeholder(texto)', 'Texto de ejemplo.'],
+      ['.hint(texto)  .error(texto)', 'Ayuda o error debajo.'],
+    ],
+  },
+  {
+    id: "select",
+    nombre: "Select",
+    grupo: "Formularios",
+    desc: "Lista desplegable. Cada opción es un texto o un par [valor, texto].",
+    ejemplos: [
+      {
+        titulo: "Básico",
+        codigo: 'import { Select, Stack } from "tangerine-ui"
+
+struct Demo {
+  @State var pais = "co"
+
+  view {
+    Stack(12) {
+      Select("País", $pais, [["co", "Colombia"], ["mx", "México"], ["es", "España"], ["ar", "Argentina"]])
+        .hint("Elegiste: {pais}")
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Select(etiqueta, $campo, opciones)', 'opciones: ["A", "B"] o [["a", "A"], ["b", "B"]]'],
+      ['.hint(texto)', 'Ayuda debajo.'],
+    ],
+  },
+  {
+    id: "checkbox",
+    nombre: "Checkbox",
+    grupo: "Formularios",
+    desc: "Casilla de verificación animada, unida a un @State de verdadero o falso.",
+    ejemplos: [
+      {
+        titulo: "Básico",
+        codigo: 'import { Checkbox, Stack } from "tangerine-ui"
+
+struct Demo {
+  @State var terminos = false
+  @State var boletin = true
+
+  view {
+    Stack(10) {
+      Checkbox("Acepto los términos", $terminos)
+      Checkbox("Quiero recibir novedades", $boletin)
+      Checkbox("No disponible", $boletin).disabled()
+      p { if terminos { "Gracias por aceptar" } else { "Falta aceptar los términos" } }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Checkbox(texto, $campo)', 'El campo guarda true o false.'],
+      ['.disabled(bool)', 'Lo desactiva.'],
+    ],
+  },
+  {
+    id: "switch",
+    nombre: "Switch",
+    grupo: "Formularios",
+    desc: "Interruptor para activar o desactivar algo al instante.",
+    ejemplos: [
+      {
+        titulo: "Ajustes",
+        codigo: 'import { Switch, Stack, Badge } from "tangerine-ui"
+
+struct Demo {
+  @State var avisos = true
+  @State var oscuro = false
+
+  view {
+    Stack(12) {
+      Switch("Notificaciones", $avisos)
+      Switch("Modo oscuro", $oscuro)
+      Badge(if avisos { "Avisos activos" } else { "Sin avisos" }, if avisos { "success" } else { "neutral" }).dot()
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Switch(texto, $campo)', 'El campo guarda true o false. Tiene role="switch" para lectores de pantalla.'],
+      ['.disabled(bool)', 'Lo desactiva.'],
+    ],
+  },
+  {
+    id: "radio",
+    nombre: "RadioGroup",
+    grupo: "Formularios",
+    desc: "Elegir una opción entre varias.",
+    ejemplos: [
+      {
+        titulo: "Planes",
+        codigo: 'import { RadioGroup, Stack } from "tangerine-ui"
+
+struct Demo {
+  @State var plan = "pro"
+
+  view {
+    Stack(12) {
+      RadioGroup("Plan", $plan, [["free", "Gratis"], ["pro", "Pro · $9 al mes"], ["team", "Equipo · $29 al mes"]])
+      p { "Plan elegido: {plan}" }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['RadioGroup(etiqueta, $campo, opciones)', 'opciones: ["A", "B"] o [["a", "A"], ["b", "B"]]. El campo guarda el valor.'],
+    ],
+  },
+  {
+    id: "card",
+    nombre: "Card",
+    grupo: "Contenedores",
+    desc: 'Agrupa contenido con título opcional. Lo que pongas en su bloque { } va adentro.',
+    ejemplos: [
+      {
+        titulo: "Variantes",
+        codigo: 'import { Card, Grid, Button, Badge } from "tangerine-ui"
+
+struct Demo {
+  view {
+    Grid(3, 14) {
+      Card("Básica", "Borde suave") {
+        p { "Para la mayoría de los casos." }
+      }
+      Card("Elevada", "Con sombra").variant("elevated") {
+        Badge("Popular", .accent).dot()
+      }
+      Card("Destacada", "Pasa el mouse").variant("accent").interactive() {
+        Button("Elegir", || nil).full()
+      }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Card(titulo?, subtitulo?) { ... }', 'El bloque es el contenido.'],
+      ['.variant("elevated" | "outline" | "accent")', 'Cambia el estilo.'],
+      ['.interactive()', 'Se levanta al pasar el mouse.'],
+    ],
+  },
+  {
+    id: "modal",
+    nombre: "Modal",
+    grupo: "Contenedores",
+    desc: "Ventana sobre la página. Se abre y cierra con un @State. Se cierra con la X, con Escape o al hacer clic afuera.",
+    ejemplos: [
+      {
+        titulo: "Confirmar una acción",
+        codigo: 'import { Modal, Button, Row, toast, Toaster } from "tangerine-ui"
+
+struct Demo {
+  @State var abierto = false
+
+  fn borrar() {
+    abierto = false
+    toast("Proyecto borrado", "danger")
+  }
+
+  view {
+    Button("Borrar proyecto", || { abierto = true }, .danger)
+    Modal($abierto, "¿Borrar el proyecto?").size("sm") {
+      p { "Esta acción no se puede deshacer." }
+      Row(8) {
+        Button("Cancelar", || { abierto = false }, .secondary)
+        Button("Sí, borrar", || borrar(), .danger)
+      }
+    }
+    Toaster()
+  }
+}',
+      },
+    ],
+    api: [
+      ['Modal($abierto, titulo?) { ... }', 'Se muestra cuando el campo es true.'],
+      ['.size("sm" | "lg")', 'Ancho de la ventana.'],
+    ],
+  },
+  {
+    id: "tabs",
+    nombre: "Tabs",
+    grupo: "Contenedores",
+    desc: "Pestañas. El @State guarda el índice de la pestaña elegida; tú decides qué mostrar.",
+    ejemplos: [
+      {
+        titulo: "Dos estilos",
+        codigo: 'import { Tabs, Stack, Card } from "tangerine-ui"
+
+struct Demo {
+  @State var tab = 0
+  @State var vista = 1
+
+  view {
+    Stack(16) {
+      Tabs($tab, ["Perfil", "Cuenta", "Avisos"])
+      Card {
+        p { match tab { 0 => "Tu nombre y tu foto.", 1 => "Correo y contraseña.", _ => "Qué te avisamos y cuándo." } }
+      }
+      Tabs($vista, ["Resumen", "Actividad", "Ajustes"]).line()
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Tabs($indice, pestañas)', 'pestañas: lista de textos. El campo guarda 0, 1, 2...'],
+      ['.line()', 'Estilo subrayado.'],
+    ],
+  },
+  {
+    id: "alert",
+    nombre: "Alert",
+    grupo: "Feedback",
+    desc: "Mensaje destacado con ícono según el tipo.",
+    ejemplos: [
+      {
+        titulo: "Tipos",
+        codigo: 'import { Alert, Stack } from "tangerine-ui"
+
+struct Demo {
+  view {
+    Stack(10) {
+      Alert("Hay una versión nueva disponible.", .info)
+      Alert("Tus cambios se guardaron.", .success).title("Listo")
+      Alert("Tu plan vence en 3 días.", .warning)
+      Alert("No se pudo conectar con el servidor.", .danger).title("Error")
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Alert(texto?, tipo?) { ... }', 'tipo: .info (por defecto), .success, .warning, .danger. El bloque se agrega al texto.'],
+      ['.title(texto)', 'Título en negrita arriba.'],
+    ],
+  },
+  {
+    id: "toast",
+    nombre: "Toast",
+    grupo: "Feedback",
+    desc: "Avisos que aparecen un momento en la esquina. Pon Toaster() una vez y llama a toast() desde donde quieras.",
+    ejemplos: [
+      {
+        titulo: "Avisos",
+        codigo: 'import { Button, Row, toast, Toaster } from "tangerine-ui"
+
+struct Demo {
+  view {
+    Row(8) {
+      Button("Neutral", || toast("Copiado al portapapeles"), .secondary)
+      Button("Éxito", || toast("Guardado", "success"), .secondary)
+      Button("Error", || toast("Algo salió mal", "danger"), .secondary)
+      Button("Naranja", || toast("¡Hecho con Tangerine!", "accent"), .secondary)
+    }
+    Toaster()
+  }
+}',
+      },
+    ],
+    api: [
+      ['toast(texto, tipo?, ms?)', 'tipo: "neutral", "success", "warning", "danger", "info", "accent". ms: cuánto dura (3200).'],
+      ['Toaster()', 'Dónde aparecen los avisos. Ponlo una sola vez.'],
+    ],
+  },
+  {
+    id: "progress",
+    nombre: "Progress",
+    grupo: "Feedback",
+    desc: "Barra de progreso animada.",
+    ejemplos: [
+      {
+        titulo: "Subiendo archivos",
+        codigo: 'import { Progress, Button, Stack } from "tangerine-ui"
+
+struct Demo {
+  @State var hecho = 3
+
+  view {
+    Stack(14) {
+      Progress(hecho, 10).label("Subiendo archivos")
+      Button("Subir uno más", || { hecho = (hecho + 1).clamp(0, 10) }, .secondary).size("sm")
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Progress(valor, maximo?)', 'maximo es 100 si no lo pones.'],
+      ['.label(texto)', 'Texto y porcentaje arriba de la barra.'],
+    ],
+  },
+  {
+    id: "loading",
+    nombre: "Spinner y Skeleton",
+    grupo: "Feedback",
+    desc: "Para mostrar que algo está cargando. Skeleton dibuja la forma del contenido que viene.",
+    ejemplos: [
+      {
+        titulo: "Cargando un perfil",
+        codigo: 'import { Spinner, Skeleton, Row, Stack } from "tangerine-ui"
+
+struct Demo {
+  view {
+    Stack(18) {
+      Row(14) {
+        Spinner("sm")
+        Spinner()
+        Spinner("lg")
+      }
+      Row(12) {
+        Skeleton("44px", "44px").circle()
+        Stack(8) {
+          Skeleton("180px", "12px")
+          Skeleton("120px", "12px")
+        }
+      }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Spinner(tam?)', 'tam: "sm", "md" (por defecto) o "lg".'],
+      ['Skeleton(ancho?, alto?)', 'Medidas CSS: "100%", "12px"...'],
+      ['.circle()', 'Redondo, para fotos.'],
+    ],
+  },
+  {
+    id: "table",
+    nombre: "Table",
+    grupo: "Datos",
+    desc: "Tabla a partir de una lista de mapas. Cada columna es [clave, título].",
+    ejemplos: [
+      {
+        titulo: "Equipo con buscador",
+        codigo: 'import { Table, Input, Stack } from "tangerine-ui"
+
+let equipo = [
+  { nombre: "Ana Pérez", rol: "Diseño", ciudad: "Bogotá" },
+  { nombre: "Luis Gómez", rol: "Backend", ciudad: "CDMX" },
+  { nombre: "Sara Ruiz", rol: "Frontend", ciudad: "Madrid" },
+]
+
+struct Demo {
+  @State var buscar = ""
+
+  view {
+    Stack(12) {
+      Input(nil, $buscar, "search").placeholder("Buscar por nombre...")
+      Table([["nombre", "Nombre"], ["rol", "Rol"], ["ciudad", "Ciudad"]],
+        equipo.filter(|p| p.nombre.lower().contains(buscar.lower())))
+        .empty("Nadie se llama así")
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Table(columnas, filas)', 'columnas: [["clave", "Título"], ...] o ["clave", ...]. filas: lista de mapas.'],
+      ['.empty(texto)', 'Lo que se ve si no hay filas.'],
+    ],
+  },
+  {
+    id: "badge",
+    nombre: "Badge y Avatar",
+    grupo: "Datos",
+    desc: "Etiquetas pequeñas de estado e iniciales o fotos de personas.",
+    ejemplos: [
+      {
+        titulo: "Estados y personas",
+        codigo: 'import { Badge, Avatar, Row, Stack, Kbd } from "tangerine-ui"
+
+struct Demo {
+  view {
+    Stack(16) {
+      Row(8) {
+        Badge("Borrador")
+        Badge("Nuevo", .accent)
+        Badge("Activo", .success).dot()
+        Badge("En vivo", .danger).live()
+        Badge("Beta", .info)
+      }
+      Row(10) {
+        Avatar("Ana Pérez").size("sm")
+        Avatar("Luis Gómez")
+        Avatar("Sara Ruiz").size("lg")
+      }
+      Row(6) {
+        Kbd("Ctrl")
+        Kbd("K")
+        span { "para buscar" }
+      }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Badge(texto, tipo?)', 'tipo: .neutral, .accent, .success, .warning, .danger, .info'],
+      ['.dot()  .live()', 'Un punto de color; live lo hace latir.'],
+      ['Avatar(nombre, imagen?)', 'Sin imagen muestra las iniciales.'],
+      ['Avatar(...).size("sm" | "lg")', 'Tamaño.'],
+      ['Kbd(tecla)', 'Una tecla del teclado.'],
+    ],
+  },
+  {
+    id: "layout",
+    nombre: "Stack, Row y Grid",
+    grupo: "Layout",
+    desc: "Acomodan lo que pongas adentro: en columna, en fila o en rejilla. En el móvil, Grid usa una sola columna.",
+    ejemplos: [
+      {
+        titulo: "Un tablero",
+        codigo: 'import { Grid, Card, Stack, Row, Divider, Badge } from "tangerine-ui"
+
+struct Demo {
+  view {
+    Stack(14) {
+      Grid(3, 12) {
+        Card("Ventas") { strong { "$12.480" } }
+        Card("Pedidos") { strong { "318" } }
+        Card("Clientes") { strong { "1.204" } }
+      }
+      Divider("o")
+      Row(8) {
+        Badge("Hoy", .accent)
+        Badge("Esta semana")
+        Badge("Este mes")
+      }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Stack(espacio?) { ... }', 'Columna. espacio en px (16).'],
+      ['Row(espacio?, alinear?) { ... }', 'Fila que salta de línea. alinear: "center", "start", "end".'],
+      ['Grid(columnas?, espacio?) { ... }', 'Rejilla (3 columnas, 16px).'],
+      ['Divider(texto?)', 'Línea separadora, con texto en medio si quieres.'],
+    ],
+  },
+]
+</script>
+<script type="text/tangerine" data-module="src/ui.tng">
+// Tangerine UI: componentes listos para usar en Tangerine.
+//
+//   import { Button, Input, Card, Modal, toast, Toaster } from "tangerine-ui"
+//
+// Todos usan las clases de css/tangerine-ui.css. Los que reciben un bloque { }
+// (Card, Alert, Modal, Stack, Row, Grid) lo muestran como contenido.
+
+// ---------- Utilidades ----------
+
+fn clases(lista) { lista.filter(|c| c != nil && c != "").join(" ") }
+fn si(cond, valor) { if cond { valor } else { nil } }
+
+var siguiente_id = 0
+fn nuevo_id(prefijo) {
+  siguiente_id += 1
+  "{prefijo}-{siguiente_id}"
+}
+
+// ---------- Botón ----------
+
+// Button("Guardar", || guardar())                variante: .primary (por defecto), .secondary,
+// Button("Borrar", || borrar(), .danger)          .outline, .ghost, .danger, .link
+// Button("Enviar").size("lg").loading(true).full().icon("→")
+export struct Button {
+  var texto = ""
+  var accion = nil
+  var variante = "primary"
+  var tam = "md"
+  var desactivado = false
+  var cargando = false
+  var icono = nil
+  var ancho = false
+  var tipo = "button"
+
+  init(t, a = nil, v = "primary") {
+    texto = t
+    accion = a
+    variante = v
+  }
+
+  fn size(s) { tam = s; self }
+  fn disabled(b = true) { desactivado = b; self }
+  fn loading(b = true) { cargando = b; self }
+  fn icon(i) { icono = i; self }
+  fn full() { ancho = true; self }
+  fn submit() { tipo = "submit"; self }
+
+  fn pulsar() {
+    if accion != nil && !desactivado && !cargando { accion() }
+  }
+
+  view {
+    element("button", {
+      class: clases(["t-btn", "t-btn-{variante}", si(tam != "md", "t-btn-{tam}"), si(ancho, "t-btn-full"), si(cargando, "is-loading")]),
+      type: tipo,
+      disabled: desactivado,
+      "aria-busy": si(cargando, "true"),
+      on_click: || pulsar(),
+    }) {
+      if icono != nil { span(.t-btn-icon, { "aria-hidden": "true" }) { icono } }
+      span { texto }
+    }
+  }
+}
+
+// ---------- Campos de formulario ----------
+
+// Input("Correo", $correo, "email").placeholder("tu@correo.com").hint("No lo compartimos")
+// .error("Falta el @") lo marca en rojo. El segundo argumento siempre es un $campo.
+export struct Input {
+  var etiqueta = nil
+  var valor = nil
+  var tipo = "text"
+  var marcador = nil
+  var ayuda = nil
+  var fallo = nil
+  var desactivado = false
+  var id = ""
+
+  init(e, v, t = "text") {
+    etiqueta = e
+    valor = v
+    tipo = t
+    id = nuevo_id("t-input")
+  }
+
+  fn placeholder(p) { marcador = p; self }
+  fn hint(h) { ayuda = h; self }
+  fn error(e) { fallo = e; self }
+  fn disabled(b = true) { desactivado = b; self }
+
+  view {
+    div({ class: clases(["t-field", si(fallo != nil, "has-error")]) }) {
+      if etiqueta != nil { label(.t-label, { for: id }) { etiqueta } }
+      input(.t-input, valor, {
+        id: id,
+        type: tipo,
+        placeholder: marcador,
+        disabled: desactivado,
+        "aria-invalid": si(fallo != nil, "true"),
+        "aria-describedby": si(fallo != nil || ayuda != nil, "{id}-msg"),
+      })
+      if fallo != nil {
+        p(.t-field-error, { id: "{id}-msg" }) { fallo }
+      } else if ayuda != nil {
+        p(.t-field-hint, { id: "{id}-msg" }) { ayuda }
+      }
+    }
+  }
+}
+
+// Textarea("Mensaje", $mensaje).rows(5).placeholder("Escribe aquí")
+export struct Textarea {
+  var etiqueta = nil
+  var valor = nil
+  var filas = 4
+  var marcador = nil
+  var ayuda = nil
+  var fallo = nil
+  var id = ""
+
+  init(e, v) {
+    etiqueta = e
+    valor = v
+    id = nuevo_id("t-textarea")
+  }
+
+  fn rows(n) { filas = n; self }
+  fn placeholder(p) { marcador = p; self }
+  fn hint(h) { ayuda = h; self }
+  fn error(e) { fallo = e; self }
+
+  view {
+    div({ class: clases(["t-field", si(fallo != nil, "has-error")]) }) {
+      if etiqueta != nil { label(.t-label, { for: id }) { etiqueta } }
+      textarea(.t-textarea, valor, { id: id, rows: filas, placeholder: marcador, "aria-invalid": si(fallo != nil, "true") })
+      if fallo != nil {
+        p(.t-field-error) { fallo }
+      } else if ayuda != nil {
+        p(.t-field-hint) { ayuda }
+      }
+    }
+  }
+}
+
+// Select("País", $pais, ["Colombia", "México"])
+// Cada opción puede ser un texto o un par [valor, texto]: [["co", "Colombia"], ["mx", "México"]]
+export struct Select {
+  var etiqueta = nil
+  var valor = nil
+  var opciones = []
+  var ayuda = nil
+  var id = ""
+
+  init(e, v, o) {
+    etiqueta = e
+    valor = v
+    opciones = o
+    id = nuevo_id("t-select")
+  }
+
+  fn hint(h) { ayuda = h; self }
+
+  view {
+    div(.t-field) {
+      if etiqueta != nil { label(.t-label, { for: id }) { etiqueta } }
+      select(.t-select, valor, { id: id }) {
+        for o in opciones {
+          if type_of(o) == "List" {
+            option({ value: o[0] }) { o[1] }
+          } else {
+            option({ value: o }) { o }
+          }
+        }
+      }
+      if ayuda != nil { p(.t-field-hint) { ayuda } }
+    }
+  }
+}
+
+// Checkbox("Acepto los términos", $acepto)
+export struct Checkbox {
+  var texto = ""
+  var valor = nil
+  var desactivado = false
+
+  init(t, v) {
+    texto = t
+    valor = v
+  }
+
+  fn disabled(b = true) { desactivado = b; self }
+
+  view {
+    label({ class: clases(["t-check", si(desactivado, "is-disabled")]) }) {
+      input(valor, { type: "checkbox", class: "t-check-input", disabled: desactivado })
+      span(.t-check-box, { "aria-hidden": "true" })
+      span { texto }
+    }
+  }
+}
+
+// Switch("Notificaciones", $avisos)
+export struct Switch {
+  var texto = ""
+  var valor = nil
+  var desactivado = false
+
+  init(t, v) {
+    texto = t
+    valor = v
+  }
+
+  fn disabled(b = true) { desactivado = b; self }
+
+  view {
+    label({ class: clases(["t-switch", si(desactivado, "is-disabled")]) }) {
+      input(valor, { type: "checkbox", role: "switch", class: "t-switch-input", disabled: desactivado })
+      span(.t-switch-track, { "aria-hidden": "true" }) { span(.t-switch-thumb) }
+      span { texto }
+    }
+  }
+}
+
+// RadioGroup("Plan", $plan, [["free", "Gratis"], ["pro", "Pro"]])
+export struct RadioGroup {
+  var etiqueta = nil
+  var valor = nil
+  var opciones = []
+  var nombre = ""
+
+  init(e, v, o) {
+    etiqueta = e
+    valor = v
+    opciones = o
+    nombre = nuevo_id("t-radio")
+  }
+
+  view {
+    fieldset(.t-radio-group) {
+      if etiqueta != nil { legend(.t-label) { etiqueta } }
+      for o in opciones {
+        let clave = if type_of(o) == "List" { o[0] } else { o }
+        let texto = if type_of(o) == "List" { o[1] } else { o }
+        label(.t-radio) {
+          input({ type: "radio", class: "t-radio-input", name: nombre, value: clave, checked: valor.get() == clave, on_change: || valor.set(clave) })
+          span(.t-radio-dot, { "aria-hidden": "true" })
+          span { texto }
+        }
+      }
+    }
+  }
+}
+
+// ---------- Contenedores ----------
+
+// Card("Perfil", "Tus datos públicos") { ...contenido... }
+// .variant("elevated" | "outline" | "accent")  .interactive() la levanta al pasar el mouse
+export struct Card {
+  var titulo = nil
+  var subtitulo = nil
+  var variante = "default"
+  var interactiva = false
+
+  init(t = nil, s = nil) {
+    titulo = t
+    subtitulo = s
+  }
+
+  fn variant(v) { variante = v; self }
+  fn interactive() { interactiva = true; self }
+
+  view {
+    section({ class: clases(["t-card", si(variante != "default", "t-card-{variante}"), si(interactiva, "is-interactive")]) }) {
+      if titulo != nil {
+        header(.t-card-head) {
+          h3(.t-card-title) { titulo }
+          if subtitulo != nil { p(.t-card-sub) { subtitulo } }
+        }
+      }
+      div(.t-card-body) { children }
+    }
+  }
+}
+
+// Alert("Se guardaron los cambios", .success)   tipos: .info, .success, .warning, .danger
+// Alert("No se pudo conectar", .danger).title("Error")
+export struct Alert {
+  var texto = nil
+  var tipo = "info"
+  var titulo = nil
+
+  init(t = nil, k = "info") {
+    texto = t
+    tipo = k
+  }
+
+  fn title(t) { titulo = t; self }
+
+  view {
+    div({ class: "t-alert t-alert-{tipo}", role: if tipo == "danger" { "alert" } else { "status" } }) {
+      if titulo != nil { div(.t-alert-title) { titulo } }
+      div(.t-alert-body) {
+        if texto != nil { texto }
+        children
+      }
+    }
+  }
+}
+
+// Modal($abierto, "Título") { ...contenido... }   .size("sm" | "lg")
+// Se cierra con la X, con Escape o al hacer clic afuera.
+export struct Modal {
+  var abierto = nil
+  var titulo = nil
+  var tam = "md"
+
+  init(a, t = nil) {
+    abierto = a
+    titulo = t
+  }
+
+  fn size(s) { tam = s; self }
+  fn cerrar() { abierto.set(false) }
+
+  view {
+    if abierto.get() {
+      div({ class: clases(["t-modal", si(tam != "md", "t-modal-{tam}")]) }) {
+        div(.t-modal-backdrop, { on_click: || cerrar() })
+        div(.t-modal-panel, {
+          role: "dialog",
+          "aria-modal": "true",
+          "aria-label": titulo,
+          tabindex: "-1",
+          ref: |el| focus(el),
+          on_keydown: |e| { if e.key == "Escape" { cerrar() } },
+        }) {
+          div(.t-modal-head) {
+            if titulo != nil { h2(.t-modal-title) { titulo } }
+            element("button", { class: "t-modal-close", "aria-label": "Cerrar", on_click: || cerrar() }) { "×" }
+          }
+          div(.t-modal-body) { children }
+        }
+      }
+    }
+  }
+}
+
+// Tabs($pestana, ["Perfil", "Cuenta", "Avisos"])  $pestana guarda el índice: 0, 1, 2...
+// .line() las muestra subrayadas
+export struct Tabs {
+  var valor = nil
+  var pestanas = []
+  var estilo = "pill"
+
+  init(v, p) {
+    valor = v
+    pestanas = p
+  }
+
+  fn line() { estilo = "line"; self }
+
+  view {
+    div({ class: clases(["t-tabs", si(estilo == "line", "t-tabs-line")]), role: "tablist" }) {
+      for (i, p) in pestanas.enumerate() {
+        element("button", {
+          class: clases(["t-tab", si(valor.get() == i, "is-active")]),
+          role: "tab",
+          "aria-selected": if valor.get() == i { "true" } else { "false" },
+          on_click: || valor.set(i),
+        }) { p }
+      }
+    }
+  }
+}
+
+// Table([["nombre", "Nombre"], ["rol", "Rol"]], usuarios)
+// Cada columna es [clave, título] o solo la clave. Cada fila es un mapa.
+export struct Table {
+  var columnas = []
+  var filas = []
+  var vacio = "Sin datos"
+
+  init(c, f) {
+    columnas = c.map(|x| if type_of(x) == "List" { x } else { [x, x] })
+    filas = f
+  }
+
+  fn empty(t) { vacio = t; self }
+
+  view {
+    div(.t-table-wrap) {
+      table(.t-table) {
+        thead { tr { for c in columnas { th { c[1] } } } }
+        tbody {
+          if filas.len() == 0 {
+            tr { td(.t-table-empty, { colspan: columnas.len() }) { vacio } }
+          }
+          for f in filas {
+            tr { for c in columnas { td { f[c[0]] ?? "" } } }
+          }
+        }
+      }
+    }
+  }
+}
+
+// ---------- Pequeños ----------
+
+// Badge("Nuevo", .accent)   tipos: .neutral, .accent, .success, .warning, .danger, .info
+// .dot() le pone un punto; .live() lo hace latir
+export struct Badge {
+  var texto = ""
+  var tipo = "neutral"
+  var punto = false
+  var vivo = false
+
+  init(t, k = "neutral") {
+    texto = t
+    tipo = k
+  }
+
+  fn dot() { punto = true; self }
+  fn live() { punto = true; vivo = true; self }
+
+  view {
+    span({ class: clases(["t-badge", si(tipo != "neutral", "t-badge-{tipo}"), si(punto, "t-badge-dot"), si(vivo, "is-live")]) }) { texto }
+  }
+}
+
+// Avatar("Ana Pérez")  muestra AP;  Avatar("Ana", "foto.jpg") usa la imagen.  .size("sm" | "lg")
+export struct Avatar {
+  var nombre = ""
+  var imagen = nil
+  var tam = "md"
+
+  init(n, i = nil) {
+    nombre = n
+    imagen = i
+  }
+
+  fn size(s) { tam = s; self }
+
+  fn iniciales() {
+    nombre.words().take(2).map(|p| p.slice(0, 1).upper()).join("")
+  }
+
+  view {
+    span({ class: clases(["t-avatar", si(tam != "md", "t-avatar-{tam}")]), title: nombre, role: "img", "aria-label": nombre }) {
+      if imagen != nil { img({ src: imagen, alt: "" }) } else { iniciales() }
+    }
+  }
+}
+
+// Spinner()  Spinner("sm")  Spinner("lg")
+export struct Spinner {
+  var tam = "md"
+  init(t = "md") { tam = t }
+  view {
+    span({ class: clases(["t-spinner", si(tam != "md", "t-spinner-{tam}")]), role: "status", "aria-label": "Cargando" })
+  }
+}
+
+// Skeleton("100%", "14px")  .circle() para fotos de perfil
+export struct Skeleton {
+  var ancho = "100%"
+  var alto = "1em"
+  var circulo = false
+
+  init(a = "100%", h = "1em") {
+    ancho = a
+    alto = h
+  }
+
+  fn circle() { circulo = true; self }
+
+  view {
+    span({ class: clases(["t-skeleton", si(circulo, "t-skeleton-circle")]), style: "width: {ancho}; height: {alto}", "aria-hidden": "true" })
+  }
+}
+
+// Progress(60)  Progress(3, 10).label("Subiendo archivos")
+export struct Progress {
+  var valor = 0
+  var maximo = 100
+  var etiqueta = nil
+
+  init(v, m = 100) {
+    valor = v
+    maximo = m
+  }
+
+  fn label(t) { etiqueta = t; self }
+
+  view {
+    let pct = (valor / maximo * 100).clamp(0, 100).round(0)
+    div(.t-progress) {
+      if etiqueta != nil {
+        div(.t-progress-head) {
+          span { etiqueta }
+          span { "{pct}%" }
+        }
+      }
+      div(.t-progress-track, { role: "progressbar", "aria-valuenow": pct, "aria-valuemin": 0, "aria-valuemax": 100 }) {
+        div(.t-progress-bar, { style: "width: {pct}%" })
+      }
+    }
+  }
+}
+
+// Kbd("Ctrl")
+export struct Kbd {
+  var texto = ""
+  init(t) { texto = t }
+  view { element("kbd", { class: "t-kbd" }) { texto } }
+}
+
+// Divider()  Divider("o")
+export struct Divider {
+  var texto = nil
+  init(t = nil) { texto = t }
+  view {
+    div(.t-divider, { role: "separator" }) { if texto != nil { texto } }
+  }
+}
+
+// ---------- Layout ----------
+
+// Stack(12) { ... }  apila en columna con 12px entre cada cosa
+export struct Stack {
+  var espacio = 16
+  init(g = 16) { espacio = g }
+  view { div(.t-stack, { style: "--t-gap: {espacio}px" }) { children } }
+}
+
+// Row(8) { ... }  en fila, y salta de línea si no cabe
+export struct Row {
+  var espacio = 12
+  var alinear = "center"
+  init(g = 12, a = "center") {
+    espacio = g
+    alinear = a
+  }
+  view { div(.t-row, { style: "--t-gap: {espacio}px; --t-align: {alinear}" }) { children } }
+}
+
+// Grid(3, 16) { ... }  rejilla de 3 columnas; en el móvil, una sola
+export struct Grid {
+  var columnas = 3
+  var espacio = 16
+  init(c = 3, g = 16) {
+    columnas = c
+    espacio = g
+  }
+  view { div(.t-grid, { style: "--t-cols: {columnas}; --t-gap: {espacio}px" }) { children } }
+}
+
+// ---------- Avisos (toasts) ----------
+
+// Pon Toaster() una vez en tu app y llama a toast("Guardado", "success") desde donde quieras.
+let avisos = state([])
+var siguiente_aviso = 0
+
+export fn toast(texto, tipo = "neutral", ms = 3200) {
+  siguiente_aviso += 1
+  let id = siguiente_aviso
+  avisos.update(|l| l + [{ id, texto, tipo }])
+  after(ms, || avisos.update(|l| l.filter(|a| a.id != id)))
+  nil
+}
+
+export struct Toaster {
+  view {
+    div(.t-toaster, { "aria-live": "polite" }) {
+      for a in avisos.get() {
+        div({ key: a.id, class: clases(["t-toast", si(a.tipo != "neutral", "t-toast-{a.tipo}")]), role: "status" }) { a.texto }
+      }
+    }
+  }
+}
+</script>
+<script type="text/tangerine" data-module="src/main.tng" data-main>
+// Web de Tangerine UI: hecha con Tangerine y con sus propios componentes.
+import { docs, grupos } from "./docs.tng"
+import { Button, Badge, Card, Modal, Input, Switch, Checkbox, Progress, Alert, Avatar, Tabs, Grid, Row, Stack, Kbd, Toaster, toast } from "./ui.tng"
+
+fn clases(lista) { lista.filter(|c| c != nil && c != "").join(" ") }
+fn si(cond, valor) { if cond { valor } else { nil } }
+
+let REPO = "https://github.com/ManuelOsmaDev/tangerine-ui"
+
+// ---------- Bloque de código con botón Copiar ----------
+
+struct Codigo {
+  var texto = ""
+  var lenguaje = "tng"
+  var titulo = nil
+
+  init(t, l = "tng", ti = nil) {
+    texto = t
+    lenguaje = l
+    titulo = ti
+  }
+
+  fn nombre() {
+    titulo ?? match lenguaje { "tng" => "Tangerine", "html" => "HTML", "css" => "CSS", "bash" => "Terminal", _ => lenguaje }
+  }
+
+  view {
+    div(.codigo) {
+      div(.codigo-cab) {
+        span(.codigo-len) { nombre() }
+        element("button", { class: "ej-btn", on_click: |e| copy(texto, e.target) }) { "Copiar" }
+      }
+      pre(.ej-pre, { key: texto, raw: true, ref: |el| resaltar(el, texto, lenguaje) })
+    }
+  }
+}
+
+// ---------- Ejemplo vivo: vista previa + código editable ----------
+
+@Component("ui-ejemplo")
+struct Ejemplo {
+  @Input var codigo = ""
+  @State var vista = 0
+  @State var editando = false
+  @State var borrador = nil
+  @State var version = 0
+  var pendiente = 0
+
+  fn actual() { borrador ?? codigo }
+  fn visible() { if vista == 0 { actual() } else { demo_html(actual()) } }
+
+  fn editar() {
+    if !editando {
+      borrador = actual()
+      vista = 0
+    }
+    editando = !editando
+  }
+
+  fn restablecer() {
+    borrador = nil
+    editando = false
+    version += 1
+  }
+
+  // Vuelve a ejecutar el ejemplo cuando dejas de escribir
+  fn programar() {
+    pendiente += 1
+    let mio = pendiente
+    after(420, || { if mio == pendiente { version += 1 } })
+  }
+
+  view {
+    div(.ej) {
+      div(.ej-preview) {
+        div(.ej-lienzo, { key: "v{version}", raw: true, ref: |el| demo_al_ver(el, actual()) })
+      }
+      div(.ej-code) {
+        div(.ej-bar) {
+          div(.ej-tabs, { role: "tablist" }) {
+            for (i, n) in ["Tangerine", "HTML"].enumerate() {
+              element("button", { class: clases(["ej-tab", si(vista == i, "on")]), role: "tab", "aria-selected": if vista == i { "true" } else { "false" }, on_click: || { vista = i; editando = false } }) { n }
+            }
+          }
+          div(.ej-acciones) {
+            if borrador != nil && borrador != codigo {
+              element("button", { class: "ej-btn", on_click: || restablecer() }) { "Restablecer" }
+            }
+            element("button", { class: clases(["ej-btn", si(editando, "on")]), on_click: || editar() }) { if editando { "Listo" } else { "Editar" } }
+            element("button", { class: "ej-btn", on_click: |e| copy(visible(), e.target) }) { "Copiar" }
+          }
+        }
+        if editando {
+          textarea(.ej-editor, $borrador, { spellcheck: "false", "aria-label": "Código del ejemplo", on_input: || programar() })
+        } else {
+          pre(.ej-pre, { key: "{vista}-{version}", raw: true, ref: |el| resaltar(el, visible(), if vista == 0 { "tng" } else { "html" }) })
+        }
+      }
+    }
+  }
+}
+
+// ---------- Vitrina de la portada ----------
+
+@Component("ui-vitrina")
+struct Vitrina {
+  @State var nombre = "Ana Pérez"
+  @State var correo = ""
+  @State var acepto = true
+  @State var creando = false
+  @State var avisos = true
+  @State var compacto = false
+  @State var subida = 64
+  @State var tab = 0
+
+  fn error_correo() { if correo != "" && !correo.contains("@") { "Le falta el @" } else { nil } }
+
+  async fn crear() {
+    if correo == "" || error_correo() != nil {
+      toast("Escribe un correo válido", "danger")
+      return nil
+    }
+    creando = true
+    await sleep(1100)
+    creando = false
+    toast("Cuenta creada para {nombre}", "success")
+  }
+
+  fn subir() {
+    subida = if subida >= 100 { 8 } else { (subida + 18).clamp(0, 100) }
+  }
+
+  view {
+    div(.vitrina-pila) {
+      div(.flota, .flota-a) {
+        Card("Crear cuenta", "Tarda un minuto").variant("elevated") {
+          Input("Nombre", $nombre)
+          Input("Correo", $correo, "email").placeholder("ana@correo.com").error(error_correo())
+          Checkbox("Acepto los términos", $acepto)
+          Button("Crear cuenta", || crear()).full().loading(creando).disabled(!acepto)
+        }
+      }
+      div(.flota, .flota-b) {
+        Card("Ajustes").variant("elevated") {
+          Tabs($tab, ["General", "Avisos"])
+          Switch("Notificaciones", $avisos)
+          Switch("Modo compacto", $compacto)
+          Progress(subida).label("Subiendo fotos")
+          Button("Subir más", || subir(), .secondary).size("sm")
+        }
+      }
+      div(.flota, .flota-c) {
+        Card().variant("elevated") {
+          Row(10) {
+            Avatar(nombre)
+            Stack(2) {
+              strong { nombre }
+              Badge(if avisos { "En línea" } else { "Ocupada" }, if avisos { "success" } else { "warning" }).live()
+            }
+          }
+        }
+      }
+    }
+    Toaster()
+  }
+}
+
+// ---------- Portada ----------
+
+let EJEMPLO_PORTADA = 'import { Card, Input, Switch, Button, toast, Toaster } from "tangerine-ui"
+
+struct Demo {
+  @State var nombre = ""
+  @State var avisos = true
+
+  view {
+    Card("Tu perfil", "Así te verán los demás") {
+      Input("Nombre", $nombre).placeholder("Ana Pérez")
+      Switch("Recibir avisos", $avisos)
+      Button("Guardar", || toast("Hola, {nombre}", "success")).disabled(nombre == "")
+    }
+    Toaster()
+  }
+}'
+
+struct Inicio {
+  view {
+    section(.hero) {
+      div(.hero-fondo, { "aria-hidden": "true" }) {
+        div(.orbe, .orbe-a)
+        div(.orbe, .orbe-b)
+        div(.rejilla)
+      }
+      div(.hero-in, .ancho) {
+        div(.hero-texto) {
+          a(.hero-aviso, { href: "#c/modal" }) {
+            span(.aviso-punto)
+            span { "Nuevo: 23 componentes para Tangerine 5.2" }
+            span(.flecha) { "→" }
+          }
+          h1(.hero-titulo) {
+            "Componentes "
+            span(.grad) { "jugosos" }
+            " para Tangerine."
+          }
+          p(.hero-sub) { "Botones, formularios, modales, tablas y avisos. Accesibles, con modo oscuro y un tema que cambias con una variable. Se escriben como en SwiftUI y su CSS funciona en cualquier HTML." }
+          div(.hero-cta) {
+            a({ href: "#c/button", class: "t-btn t-btn-primary t-btn-lg" }) { "Ver componentes"; span(.flecha) { "→" } }
+            a({ href: "#instalar", class: "t-btn t-btn-outline t-btn-lg" }) { "Instalar" }
+          }
+          div(.comando) {
+            span(.comando-prompt) { "$" }
+            code { "tangerine add tangerine-ui" }
+            element("button", { class: "ej-btn", on_click: |e| copy("tangerine add tangerine-ui", e.target) }) { "Copiar" }
+          }
+        }
+        div(.vitrina) { element("ui-vitrina") }
+      }
+    }
+
+    section(.seccion, .ancho) {
+      div(.rasgos) {
+        for (i, r) in [
+          ["◎", "Accesibles", "Foco visible, teclado, roles ARIA y respeto a reducir movimiento."],
+          ["◐", "Claro y oscuro", "Siguen el tema del sistema o el que elijas, sin código extra."],
+          ["✦", "Tu marca", "Cambia --t-accent y --t-radius y todo se adapta."],
+          ["⌘", "En cualquier HTML", "El CSS funciona igual en Angular, React, Vue o una página simple."],
+        ].enumerate() {
+          div({ class: "rasgo revelar", style: "--d: {i * 70}ms", ref: |el| revelar(el) }) {
+            span(.rasgo-ico) { r[0] }
+            h3 { r[1] }
+            p { r[2] }
+          }
+        }
+      }
+    }
+
+    section(.seccion, .ancho) {
+      div(.seccion-cab) {
+        p(.antetitulo) { "Así se escribe" }
+        h2 { "Como en SwiftUI, con el estado de Tangerine" }
+        p { 'Cada componente es un struct. Su bloque { } es el contenido y $campo lo une a tu estado. Edita el código: la vista previa se actualiza sola.' }
+      }
+      element("ui-ejemplo", { codigo: EJEMPLO_PORTADA })
+    }
+
+    section(.seccion, .ancho) {
+      div(.seccion-cab) {
+        p(.antetitulo) { "Componentes" }
+        h2 { "Todo lo que necesita una app" }
+        p { "Elige uno para ver sus ejemplos, su código y su API." }
+      }
+      div(.galeria) {
+        for (i, d) in docs.enumerate() {
+          a({ href: "#c/{d.id}", class: "pieza revelar", style: "--d: {(i % 3) * 60}ms", ref: |el| revelar(el) }) {
+            div(.pieza-vista) {
+              div(.pieza-lienzo, { key: d.id, raw: true, ref: |el| demo_al_ver(el, d.ejemplos[0].codigo) })
+            }
+            div(.pieza-pie) {
+              span(.pieza-nombre) { d.nombre }
+              span(.pieza-grupo) { d.grupo }
+            }
+          }
+        }
+      }
+    }
+
+    section(.seccion, .ancho) {
+      div(.cierre) {
+        h2 { "Empieza en un minuto" }
+        p { "Instálalo en tu proyecto de Tangerine o enlaza solo el CSS." }
+        div(.hero-cta) {
+          a({ href: "#instalar", class: "t-btn t-btn-primary t-btn-lg" }) { "Instalar" }
+          a({ href: REPO, class: "t-btn t-btn-outline t-btn-lg" }) { "Ver en GitHub" }
+        }
+      }
+    }
+  }
+}
+
+// ---------- Instalar ----------
+
+struct Instalar {
+  view {
+    div(.pag-cab) {
+      p(.miga) { "Empezar" }
+      h1 { "Instalación" }
+      p(.pag-desc) { "Tangerine UI es un paquete de npm con dos partes: los componentes en Tangerine y una hoja de estilos que funciona sola." }
+    }
+    h2(.pag-h2) { "1. En un proyecto de Tangerine" }
+    p(.pag-p) { "Agrega el paquete:" }
+    Codigo("tangerine add tangerine-ui", "bash")
+    p(.pag-p) { "Agrega el CSS a styles en tangerine.json:" }
+    Codigo('{
+  "entry": "src/main.tng",
+  "styles": ["node_modules/tangerine-ui/css/tangerine-ui.css", "src/estilos.css"]
+}', "css", "tangerine.json")
+    p(.pag-p) { "E impórtalos donde los uses:" }
+    Codigo('import { Button, Card, Input, Toaster, toast } from "tangerine-ui"
+
+struct App {
+  @State var correo = ""
+
+  view {
+    Card("Suscríbete") {
+      Input("Correo", $correo, "email")
+      Button("Enviar", || toast("¡Gracias!", "success"))
+    }
+    Toaster()
+  }
+}
+
+mount("#app", App)')
+    Alert('Necesitas Tangerine 5.2 o más reciente: los componentes reciben su contenido en un bloque { }.', .info)
+
+    h2(.pag-h2) { "2. En cualquier HTML, Angular o React" }
+    p(.pag-p) { "Si no usas Tangerine, enlaza solo el CSS y usa las clases. La pestaña HTML de cada ejemplo te da el código listo." }
+    Codigo('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tangerine-ui/css/tangerine-ui.css">
+
+<button class="t-btn t-btn-primary">Guardar</button>
+<div class="t-field">
+  <label class="t-label" for="correo">Correo</label>
+  <input class="t-input" id="correo" type="email">
+</div>', "html")
+    p(.pag-p) { 'En Angular agrégalo a "styles" en angular.json. En React o Vue, impórtalo en main.js: import "tangerine-ui/css/tangerine-ui.css".' }
+
+    h2(.pag-h2) { "3. Modo oscuro" }
+    p(.pag-p) { "Sigue al sistema solo. Para forzarlo, pon data-theme en la etiqueta html:" }
+    Codigo('<html data-theme="dark">   <!-- o "light" -->', "html")
+  }
+}
+
+// ---------- Temas ----------
+
+let COLORES = [
+  ["Mandarina", "#f2761d"], ["Fresa", "#e5484d"], ["Frambuesa", "#d6409f"], ["Uva", "#8e4ec6"],
+  ["Arándano", "#3e63dd"], ["Menta", "#0894b3"], ["Lima", "#30a46c"], ["Grafito", "#52525b"],
+]
+
+fn css_tema(acento, radio) {
+  ':root {' + "\n  --t-accent: {acento};\n  --t-radius: {radio}px;\n" + '}'
+}
+
+// ---------- App ----------
+
+struct App {
+  @State var ruta = ""
+  @State var tema = "light"
+  @State var acento = "#f2761d"
+  @State var radio = 10
+  @State var buscando = false
+  @State var consulta = ""
+  @State var menu = false
+  @State var muestra = "Ana"
+  @State var muestra_on = true
+
+  fn on_mount() {
+    tema = tema_actual()
+    acento = acento_actual()
+    radio = radio_actual()
+    on_route(|h| {
+      ruta = h
+      menu = false
+      buscando = false
+      scroll_top()
+    })
+    atajo_buscar(|| abrir_busqueda())
+  }
+
+  fn abrir_busqueda() {
+    consulta = ""
+    buscando = true
+    enfocar(".t-modal input")
+  }
+
+  fn alternar_tema() {
+    tema = if tema == "dark" { "light" } else { "dark" }
+    poner_tema(tema)
+  }
+
+  fn elegir_color(hex) {
+    acento = hex
+    poner_acento(hex)
+  }
+
+  fn cambiar_radio(v) {
+    radio = v
+    poner_radio(v)
+  }
+
+  fn doc_actual() { docs.find(|d| "c/{d.id}" == ruta) }
+
+  fn resultados() {
+    let q = consulta.lower().trim()
+    if q == "" { docs } else { docs.filter(|d| d.nombre.lower().contains(q) || d.grupo.lower().contains(q) || d.desc.lower().contains(q)) }
+  }
+
+  view {
+    header(.top) {
+      div(.top-in) {
+        if ruta != "" {
+          element("button", { class: "icono menu-btn", "aria-label": "Menú", "aria-expanded": if menu { "true" } else { "false" }, on_click: || { menu = !menu } }) { "☰" }
+        }
+        a(.marca, { href: "#" }) {
+          img({ src: "logo.svg", alt: "", width: 28, height: 28 })
+          span(.marca-t) { "Tangerine" }
+          span(.marca-ui) { "UI" }
+        }
+        nav(.top-nav, { "aria-label": "Secciones" }) {
+          a({ href: "#c/button", class: si(ruta.starts_with("c/"), "on") }) { "Componentes" }
+          a({ href: "#temas", class: si(ruta == "temas", "on") }) { "Temas" }
+          a({ href: "#instalar", class: si(ruta == "instalar", "on") }) { "Instalar" }
+        }
+        div(.top-acc) {
+          element("button", { class: "buscar", on_click: || abrir_busqueda() }) {
+            span(.buscar-ico, { "aria-hidden": "true" })
+            span(.buscar-txt) { "Buscar" }
+            span(.buscar-kbd) { Kbd("Ctrl"); Kbd("K") }
+          }
+          element("button", { class: "icono", "aria-label": "Cambiar a modo claro u oscuro", on_click: || alternar_tema() }) {
+            span({ class: "tema-ico {tema}", "aria-hidden": "true" })
+          }
+          a({ href: REPO, class: "icono gh", "aria-label": "Tangerine UI en GitHub" })
+        }
+      }
+    }
+
+    if ruta == "" {
+      main(.portada, { key: "inicio" }) { Inicio() }
+    } else {
+      div(.docs, .ancho) {
+        aside({ class: clases(["lateral", si(menu, "abierto")]) }) {
+          p(.lat-grupo) { "Empezar" }
+          a({ href: "#instalar", class: clases(["lat-link", si(ruta == "instalar", "on")]) }) { "Instalación" }
+          a({ href: "#temas", class: clases(["lat-link", si(ruta == "temas", "on")]) }) { "Temas" }
+          for g in grupos {
+            p(.lat-grupo) { g }
+            for d in docs.filter(|d| d.grupo == g) {
+              a({ href: "#c/{d.id}", class: clases(["lat-link", si(ruta == "c/{d.id}", "on")]) }) { d.nombre }
+            }
+          }
+        }
+        main(.pagina, { key: ruta }) {
+          if ruta == "instalar" {
+            Instalar()
+          } else if ruta == "temas" {
+            div(.pag-cab) {
+              p(.miga) { "Empezar" }
+              h1 { "Temas" }
+              p(.pag-desc) { "Todo sale de variables CSS. Elige un color y un radio: la web entera cambia, y abajo tienes el CSS para copiar." }
+            }
+            h2(.pag-h2) { "Color principal" }
+            div(.colores) {
+              for c in COLORES {
+                element("button", {
+                  class: clases(["color", si(acento == c[1], "on")]),
+                  style: "--c: {c[1]}",
+                  "aria-pressed": if acento == c[1] { "true" } else { "false" },
+                  on_click: || elegir_color(c[1]),
+                }) { span(.color-punto); span { c[0] } }
+              }
+            }
+            h2(.pag-h2) { "Esquinas: {radio}px" }
+            input(.rango, { type: "range", min: 0, max: 20, value: radio, "aria-label": "Radio de las esquinas", on_input: |e| cambiar_radio(e.value.parse()) })
+            h2(.pag-h2) { "Vista previa" }
+            Grid(2, 14) {
+              Card("Formulario") {
+                Input("Nombre", $muestra)
+                Switch("Activado", $muestra_on)
+                Row(8) {
+                  Button("Guardar", || toast("Guardado", "accent"))
+                  Button("Cancelar", || nil, .outline)
+                }
+              }
+              Card("Estado") {
+                Row(8) { Badge("Nuevo", .accent); Badge("Activo", .success).dot(); Badge("Beta", .info) }
+                Progress(62).label("Progreso")
+                Alert("Así se ven las alertas.", .info)
+              }
+            }
+            h2(.pag-h2) { "Tu CSS" }
+            Codigo(css_tema(acento, radio), "css", "Pégalo después de tangerine-ui.css")
+          } else if doc_actual() != nil {
+            let d = doc_actual()
+            let i = docs.position(|x| x.id == d.id)
+            div(.pag-cab) {
+              p(.miga) { "Componentes · {d.grupo}" }
+              h1 { d.nombre }
+              p(.pag-desc) { d.desc }
+            }
+            for (n, e) in d.ejemplos.enumerate() {
+              h2(.pag-h2) { e.titulo }
+              element("ui-ejemplo", { key: "{d.id}-{n}", codigo: e.codigo })
+            }
+            h2(.pag-h2) { "API" }
+            div(.api) {
+              for fila in d.api {
+                div(.api-fila) {
+                  code(.api-firma) { fila[0] }
+                  p(.api-desc) { fila[1] }
+                }
+              }
+            }
+            nav(.pag-nav) {
+              if i > 0 {
+                a({ href: "#c/{docs[i - 1].id}", class: "pag-ant" }) { span { "Anterior" }; strong { "← {docs[i - 1].nombre}" } }
+              } else {
+                span({ class: "hueco" })
+              }
+              if i < docs.len() - 1 {
+                a({ href: "#c/{docs[i + 1].id}", class: "pag-sig" }) { span { "Siguiente" }; strong { "{docs[i + 1].nombre} →" } }
+              }
+            }
+          } else {
+            div(.pag-cab) {
+              h1 { "No encontramos esa página" }
+              p(.pag-desc) { "Puede que el enlace esté mal escrito." }
+              a({ href: "#", class: "t-btn t-btn-primary" }) { "Volver al inicio" }
+            }
+          }
+        }
+      }
+    }
+
+    footer(.pie, .ancho) {
+      span { "Tangerine UI · MIT" }
+      span {
+        "Hecho con "
+        a({ href: "https://manuelosmadev.github.io/tangerine-lang/" }) { "Tangerine" }
+      }
+    }
+
+    Modal($buscando, "Buscar componentes") {
+      Input(nil, $consulta, "search").placeholder("Button, Modal, tabla...")
+      div(.resultados) {
+        for d in resultados() {
+          a({ href: "#c/{d.id}", class: "resultado", key: d.id }) {
+            span(.resultado-nombre) { d.nombre }
+            span(.resultado-grupo) { d.grupo }
+          }
+        }
+        if resultados().len() == 0 { p(.resultado-vacio) { "Nada con “{consulta}”" } }
+      }
+    }
+    Toaster()
+  }
+}
+
+mount("#app", App)
+</script>
+
+</body>
+</html>

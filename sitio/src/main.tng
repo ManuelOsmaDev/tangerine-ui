@@ -1,0 +1,549 @@
+// Web de Tangerine UI: hecha con Tangerine y con sus propios componentes.
+import { docs, grupos } from "./docs.tng"
+import { Button, Badge, Card, Modal, Input, Switch, Checkbox, Progress, Alert, Avatar, Tabs, Grid, Row, Stack, Kbd, Toaster, toast } from "./ui.tng"
+
+fn clases(lista) { lista.filter(|c| c != nil && c != "").join(" ") }
+fn si(cond, valor) { if cond { valor } else { nil } }
+
+let REPO = "https://github.com/ManuelOsmaDev/tangerine-ui"
+
+// ---------- Bloque de código con botón Copiar ----------
+
+struct Codigo {
+  var texto = ""
+  var lenguaje = "tng"
+  var titulo = nil
+
+  init(t, l = "tng", ti = nil) {
+    texto = t
+    lenguaje = l
+    titulo = ti
+  }
+
+  fn nombre() {
+    titulo ?? match lenguaje { "tng" => "Tangerine", "html" => "HTML", "css" => "CSS", "bash" => "Terminal", _ => lenguaje }
+  }
+
+  view {
+    div(.codigo) {
+      div(.codigo-cab) {
+        span(.codigo-len) { nombre() }
+        element("button", { class: "ej-btn", on_click: |e| copy(texto, e.target) }) { "Copiar" }
+      }
+      pre(.ej-pre, { key: texto, raw: true, ref: |el| resaltar(el, texto, lenguaje) })
+    }
+  }
+}
+
+// ---------- Ejemplo vivo: vista previa + código editable ----------
+
+@Component("ui-ejemplo")
+struct Ejemplo {
+  @Input var codigo = ""
+  @State var vista = 0
+  @State var editando = false
+  @State var borrador = nil
+  @State var version = 0
+  var pendiente = 0
+
+  fn actual() { borrador ?? codigo }
+  fn visible() { if vista == 0 { actual() } else { demo_html(actual()) } }
+
+  fn editar() {
+    if !editando {
+      borrador = actual()
+      vista = 0
+    }
+    editando = !editando
+  }
+
+  fn restablecer() {
+    borrador = nil
+    editando = false
+    version += 1
+  }
+
+  // Vuelve a ejecutar el ejemplo cuando dejas de escribir
+  fn programar() {
+    pendiente += 1
+    let mio = pendiente
+    after(420, || { if mio == pendiente { version += 1 } })
+  }
+
+  view {
+    div(.ej) {
+      div(.ej-preview) {
+        div(.ej-lienzo, { key: "v{version}", raw: true, ref: |el| demo_al_ver(el, actual()) })
+      }
+      div(.ej-code) {
+        div(.ej-bar) {
+          div(.ej-tabs, { role: "tablist" }) {
+            for (i, n) in ["Tangerine", "HTML"].enumerate() {
+              element("button", { class: clases(["ej-tab", si(vista == i, "on")]), role: "tab", "aria-selected": if vista == i { "true" } else { "false" }, on_click: || { vista = i; editando = false } }) { n }
+            }
+          }
+          div(.ej-acciones) {
+            if borrador != nil && borrador != codigo {
+              element("button", { class: "ej-btn", on_click: || restablecer() }) { "Restablecer" }
+            }
+            element("button", { class: clases(["ej-btn", si(editando, "on")]), on_click: || editar() }) { if editando { "Listo" } else { "Editar" } }
+            element("button", { class: "ej-btn", on_click: |e| copy(visible(), e.target) }) { "Copiar" }
+          }
+        }
+        if editando {
+          textarea(.ej-editor, $borrador, { spellcheck: "false", "aria-label": "Código del ejemplo", on_input: || programar() })
+        } else {
+          pre(.ej-pre, { key: "{vista}-{version}", raw: true, ref: |el| resaltar(el, visible(), if vista == 0 { "tng" } else { "html" }) })
+        }
+      }
+    }
+  }
+}
+
+// ---------- Vitrina de la portada ----------
+
+@Component("ui-vitrina")
+struct Vitrina {
+  @State var nombre = "Ana Pérez"
+  @State var correo = ""
+  @State var acepto = true
+  @State var creando = false
+  @State var avisos = true
+  @State var compacto = false
+  @State var subida = 64
+  @State var tab = 0
+
+  fn error_correo() { if correo != "" && !correo.contains("@") { "Le falta el @" } else { nil } }
+
+  async fn crear() {
+    if correo == "" || error_correo() != nil {
+      toast("Escribe un correo válido", "danger")
+      return nil
+    }
+    creando = true
+    await sleep(1100)
+    creando = false
+    toast("Cuenta creada para {nombre}", "success")
+  }
+
+  fn subir() {
+    subida = if subida >= 100 { 8 } else { (subida + 18).clamp(0, 100) }
+  }
+
+  view {
+    div(.vitrina-pila) {
+      div(.flota, .flota-a) {
+        Card("Crear cuenta", "Tarda un minuto").variant("elevated") {
+          Input("Nombre", $nombre)
+          Input("Correo", $correo, "email").placeholder("ana@correo.com").error(error_correo())
+          Checkbox("Acepto los términos", $acepto)
+          Button("Crear cuenta", || crear()).full().loading(creando).disabled(!acepto)
+        }
+      }
+      div(.flota, .flota-b) {
+        Card("Ajustes").variant("elevated") {
+          Tabs($tab, ["General", "Avisos"])
+          Switch("Notificaciones", $avisos)
+          Switch("Modo compacto", $compacto)
+          Progress(subida).label("Subiendo fotos")
+          Button("Subir más", || subir(), .secondary).size("sm")
+        }
+      }
+      div(.flota, .flota-c) {
+        Card().variant("elevated") {
+          Row(10) {
+            Avatar(nombre)
+            Stack(2) {
+              strong { nombre }
+              Badge(if avisos { "En línea" } else { "Ocupada" }, if avisos { "success" } else { "warning" }).live()
+            }
+          }
+        }
+      }
+    }
+    Toaster()
+  }
+}
+
+// ---------- Portada ----------
+
+let EJEMPLO_PORTADA = 'import { Card, Input, Switch, Button, toast, Toaster } from "tangerine-ui"
+
+struct Demo {
+  @State var nombre = ""
+  @State var avisos = true
+
+  view {
+    Card("Tu perfil", "Así te verán los demás") {
+      Input("Nombre", $nombre).placeholder("Ana Pérez")
+      Switch("Recibir avisos", $avisos)
+      Button("Guardar", || toast("Hola, {nombre}", "success")).disabled(nombre == "")
+    }
+    Toaster()
+  }
+}'
+
+struct Inicio {
+  view {
+    section(.hero) {
+      div(.hero-fondo, { "aria-hidden": "true" }) {
+        div(.orbe, .orbe-a)
+        div(.orbe, .orbe-b)
+        div(.rejilla)
+      }
+      div(.hero-in, .ancho) {
+        div(.hero-texto) {
+          a(.hero-aviso, { href: "#c/modal" }) {
+            span(.aviso-punto)
+            span { "Nuevo: 23 componentes para Tangerine 5.2" }
+            span(.flecha) { "→" }
+          }
+          h1(.hero-titulo) {
+            "Componentes "
+            span(.grad) { "jugosos" }
+            " para Tangerine."
+          }
+          p(.hero-sub) { "Botones, formularios, modales, tablas y avisos. Accesibles, con modo oscuro y un tema que cambias con una variable. Se escriben como en SwiftUI y su CSS funciona en cualquier HTML." }
+          div(.hero-cta) {
+            a({ href: "#c/button", class: "t-btn t-btn-primary t-btn-lg" }) { "Ver componentes"; span(.flecha) { "→" } }
+            a({ href: "#instalar", class: "t-btn t-btn-outline t-btn-lg" }) { "Instalar" }
+          }
+          div(.comando) {
+            span(.comando-prompt) { "$" }
+            code { "tangerine add tangerine-ui" }
+            element("button", { class: "ej-btn", on_click: |e| copy("tangerine add tangerine-ui", e.target) }) { "Copiar" }
+          }
+        }
+        div(.vitrina) { element("ui-vitrina") }
+      }
+    }
+
+    section(.seccion, .ancho) {
+      div(.rasgos) {
+        for (i, r) in [
+          ["◎", "Accesibles", "Foco visible, teclado, roles ARIA y respeto a reducir movimiento."],
+          ["◐", "Claro y oscuro", "Siguen el tema del sistema o el que elijas, sin código extra."],
+          ["✦", "Tu marca", "Cambia --t-accent y --t-radius y todo se adapta."],
+          ["⌘", "En cualquier HTML", "El CSS funciona igual en Angular, React, Vue o una página simple."],
+        ].enumerate() {
+          div({ class: "rasgo revelar", style: "--d: {i * 70}ms", ref: |el| revelar(el) }) {
+            span(.rasgo-ico) { r[0] }
+            h3 { r[1] }
+            p { r[2] }
+          }
+        }
+      }
+    }
+
+    section(.seccion, .ancho) {
+      div(.seccion-cab) {
+        p(.antetitulo) { "Así se escribe" }
+        h2 { "Como en SwiftUI, con el estado de Tangerine" }
+        p { 'Cada componente es un struct. Su bloque { } es el contenido y $campo lo une a tu estado. Edita el código: la vista previa se actualiza sola.' }
+      }
+      element("ui-ejemplo", { codigo: EJEMPLO_PORTADA })
+    }
+
+    section(.seccion, .ancho) {
+      div(.seccion-cab) {
+        p(.antetitulo) { "Componentes" }
+        h2 { "Todo lo que necesita una app" }
+        p { "Elige uno para ver sus ejemplos, su código y su API." }
+      }
+      div(.galeria) {
+        for (i, d) in docs.enumerate() {
+          a({ href: "#c/{d.id}", class: "pieza revelar", style: "--d: {(i % 3) * 60}ms", ref: |el| revelar(el) }) {
+            div(.pieza-vista) {
+              div(.pieza-lienzo, { key: d.id, raw: true, ref: |el| demo_al_ver(el, d.ejemplos[0].codigo) })
+            }
+            div(.pieza-pie) {
+              span(.pieza-nombre) { d.nombre }
+              span(.pieza-grupo) { d.grupo }
+            }
+          }
+        }
+      }
+    }
+
+    section(.seccion, .ancho) {
+      div(.cierre) {
+        h2 { "Empieza en un minuto" }
+        p { "Instálalo en tu proyecto de Tangerine o enlaza solo el CSS." }
+        div(.hero-cta) {
+          a({ href: "#instalar", class: "t-btn t-btn-primary t-btn-lg" }) { "Instalar" }
+          a({ href: REPO, class: "t-btn t-btn-outline t-btn-lg" }) { "Ver en GitHub" }
+        }
+      }
+    }
+  }
+}
+
+// ---------- Instalar ----------
+
+struct Instalar {
+  view {
+    div(.pag-cab) {
+      p(.miga) { "Empezar" }
+      h1 { "Instalación" }
+      p(.pag-desc) { "Tangerine UI es un paquete de npm con dos partes: los componentes en Tangerine y una hoja de estilos que funciona sola." }
+    }
+    h2(.pag-h2) { "1. En un proyecto de Tangerine" }
+    p(.pag-p) { "Agrega el paquete:" }
+    Codigo("tangerine add tangerine-ui", "bash")
+    p(.pag-p) { "Agrega el CSS a styles en tangerine.json:" }
+    Codigo('{
+  "entry": "src/main.tng",
+  "styles": ["node_modules/tangerine-ui/css/tangerine-ui.css", "src/estilos.css"]
+}', "css", "tangerine.json")
+    p(.pag-p) { "E impórtalos donde los uses:" }
+    Codigo('import { Button, Card, Input, Toaster, toast } from "tangerine-ui"
+
+struct App {
+  @State var correo = ""
+
+  view {
+    Card("Suscríbete") {
+      Input("Correo", $correo, "email")
+      Button("Enviar", || toast("¡Gracias!", "success"))
+    }
+    Toaster()
+  }
+}
+
+mount("#app", App)')
+    Alert('Necesitas Tangerine 5.2 o más reciente: los componentes reciben su contenido en un bloque { }.', .info)
+
+    h2(.pag-h2) { "2. En cualquier HTML, Angular o React" }
+    p(.pag-p) { "Si no usas Tangerine, enlaza solo el CSS y usa las clases. La pestaña HTML de cada ejemplo te da el código listo." }
+    Codigo('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tangerine-ui/css/tangerine-ui.css">
+
+<button class="t-btn t-btn-primary">Guardar</button>
+<div class="t-field">
+  <label class="t-label" for="correo">Correo</label>
+  <input class="t-input" id="correo" type="email">
+</div>', "html")
+    p(.pag-p) { 'En Angular agrégalo a "styles" en angular.json. En React o Vue, impórtalo en main.js: import "tangerine-ui/css/tangerine-ui.css".' }
+
+    h2(.pag-h2) { "3. Modo oscuro" }
+    p(.pag-p) { "Sigue al sistema solo. Para forzarlo, pon data-theme en la etiqueta html:" }
+    Codigo('<html data-theme="dark">   <!-- o "light" -->', "html")
+  }
+}
+
+// ---------- Temas ----------
+
+let COLORES = [
+  ["Mandarina", "#f2761d"], ["Fresa", "#e5484d"], ["Frambuesa", "#d6409f"], ["Uva", "#8e4ec6"],
+  ["Arándano", "#3e63dd"], ["Menta", "#0894b3"], ["Lima", "#30a46c"], ["Grafito", "#52525b"],
+]
+
+fn css_tema(acento, radio) {
+  ':root {' + "\n  --t-accent: {acento};\n  --t-radius: {radio}px;\n" + '}'
+}
+
+// ---------- App ----------
+
+struct App {
+  @State var ruta = ""
+  @State var tema = "light"
+  @State var acento = "#f2761d"
+  @State var radio = 10
+  @State var buscando = false
+  @State var consulta = ""
+  @State var menu = false
+  @State var muestra = "Ana"
+  @State var muestra_on = true
+
+  fn on_mount() {
+    tema = tema_actual()
+    acento = acento_actual()
+    radio = radio_actual()
+    on_route(|h| {
+      ruta = h
+      menu = false
+      buscando = false
+      scroll_top()
+    })
+    atajo_buscar(|| abrir_busqueda())
+  }
+
+  fn abrir_busqueda() {
+    consulta = ""
+    buscando = true
+    enfocar(".t-modal input")
+  }
+
+  fn alternar_tema() {
+    tema = if tema == "dark" { "light" } else { "dark" }
+    poner_tema(tema)
+  }
+
+  fn elegir_color(hex) {
+    acento = hex
+    poner_acento(hex)
+  }
+
+  fn cambiar_radio(v) {
+    radio = v
+    poner_radio(v)
+  }
+
+  fn doc_actual() { docs.find(|d| "c/{d.id}" == ruta) }
+
+  fn resultados() {
+    let q = consulta.lower().trim()
+    if q == "" { docs } else { docs.filter(|d| d.nombre.lower().contains(q) || d.grupo.lower().contains(q) || d.desc.lower().contains(q)) }
+  }
+
+  view {
+    header(.top) {
+      div(.top-in) {
+        if ruta != "" {
+          element("button", { class: "icono menu-btn", "aria-label": "Menú", "aria-expanded": if menu { "true" } else { "false" }, on_click: || { menu = !menu } }) { "☰" }
+        }
+        a(.marca, { href: "#" }) {
+          img({ src: "logo.svg", alt: "", width: 28, height: 28 })
+          span(.marca-t) { "Tangerine" }
+          span(.marca-ui) { "UI" }
+        }
+        nav(.top-nav, { "aria-label": "Secciones" }) {
+          a({ href: "#c/button", class: si(ruta.starts_with("c/"), "on") }) { "Componentes" }
+          a({ href: "#temas", class: si(ruta == "temas", "on") }) { "Temas" }
+          a({ href: "#instalar", class: si(ruta == "instalar", "on") }) { "Instalar" }
+        }
+        div(.top-acc) {
+          element("button", { class: "buscar", on_click: || abrir_busqueda() }) {
+            span(.buscar-ico, { "aria-hidden": "true" })
+            span(.buscar-txt) { "Buscar" }
+            span(.buscar-kbd) { Kbd("Ctrl"); Kbd("K") }
+          }
+          element("button", { class: "icono", "aria-label": "Cambiar a modo claro u oscuro", on_click: || alternar_tema() }) {
+            span({ class: "tema-ico {tema}", "aria-hidden": "true" })
+          }
+          a({ href: REPO, class: "icono gh", "aria-label": "Tangerine UI en GitHub" })
+        }
+      }
+    }
+
+    if ruta == "" {
+      main(.portada, { key: "inicio" }) { Inicio() }
+    } else {
+      div(.docs, .ancho) {
+        aside({ class: clases(["lateral", si(menu, "abierto")]) }) {
+          p(.lat-grupo) { "Empezar" }
+          a({ href: "#instalar", class: clases(["lat-link", si(ruta == "instalar", "on")]) }) { "Instalación" }
+          a({ href: "#temas", class: clases(["lat-link", si(ruta == "temas", "on")]) }) { "Temas" }
+          for g in grupos {
+            p(.lat-grupo) { g }
+            for d in docs.filter(|d| d.grupo == g) {
+              a({ href: "#c/{d.id}", class: clases(["lat-link", si(ruta == "c/{d.id}", "on")]) }) { d.nombre }
+            }
+          }
+        }
+        main(.pagina, { key: ruta }) {
+          if ruta == "instalar" {
+            Instalar()
+          } else if ruta == "temas" {
+            div(.pag-cab) {
+              p(.miga) { "Empezar" }
+              h1 { "Temas" }
+              p(.pag-desc) { "Todo sale de variables CSS. Elige un color y un radio: la web entera cambia, y abajo tienes el CSS para copiar." }
+            }
+            h2(.pag-h2) { "Color principal" }
+            div(.colores) {
+              for c in COLORES {
+                element("button", {
+                  class: clases(["color", si(acento == c[1], "on")]),
+                  style: "--c: {c[1]}",
+                  "aria-pressed": if acento == c[1] { "true" } else { "false" },
+                  on_click: || elegir_color(c[1]),
+                }) { span(.color-punto); span { c[0] } }
+              }
+            }
+            h2(.pag-h2) { "Esquinas: {radio}px" }
+            input(.rango, { type: "range", min: 0, max: 20, value: radio, "aria-label": "Radio de las esquinas", on_input: |e| cambiar_radio(e.value.parse()) })
+            h2(.pag-h2) { "Vista previa" }
+            Grid(2, 14) {
+              Card("Formulario") {
+                Input("Nombre", $muestra)
+                Switch("Activado", $muestra_on)
+                Row(8) {
+                  Button("Guardar", || toast("Guardado", "accent"))
+                  Button("Cancelar", || nil, .outline)
+                }
+              }
+              Card("Estado") {
+                Row(8) { Badge("Nuevo", .accent); Badge("Activo", .success).dot(); Badge("Beta", .info) }
+                Progress(62).label("Progreso")
+                Alert("Así se ven las alertas.", .info)
+              }
+            }
+            h2(.pag-h2) { "Tu CSS" }
+            Codigo(css_tema(acento, radio), "css", "Pégalo después de tangerine-ui.css")
+          } else if doc_actual() != nil {
+            let d = doc_actual()
+            let i = docs.position(|x| x.id == d.id)
+            div(.pag-cab) {
+              p(.miga) { "Componentes · {d.grupo}" }
+              h1 { d.nombre }
+              p(.pag-desc) { d.desc }
+            }
+            for (n, e) in d.ejemplos.enumerate() {
+              h2(.pag-h2) { e.titulo }
+              element("ui-ejemplo", { key: "{d.id}-{n}", codigo: e.codigo })
+            }
+            h2(.pag-h2) { "API" }
+            div(.api) {
+              for fila in d.api {
+                div(.api-fila) {
+                  code(.api-firma) { fila[0] }
+                  p(.api-desc) { fila[1] }
+                }
+              }
+            }
+            nav(.pag-nav) {
+              if i > 0 {
+                a({ href: "#c/{docs[i - 1].id}", class: "pag-ant" }) { span { "Anterior" }; strong { "← {docs[i - 1].nombre}" } }
+              } else {
+                span({ class: "hueco" })
+              }
+              if i < docs.len() - 1 {
+                a({ href: "#c/{docs[i + 1].id}", class: "pag-sig" }) { span { "Siguiente" }; strong { "{docs[i + 1].nombre} →" } }
+              }
+            }
+          } else {
+            div(.pag-cab) {
+              h1 { "No encontramos esa página" }
+              p(.pag-desc) { "Puede que el enlace esté mal escrito." }
+              a({ href: "#", class: "t-btn t-btn-primary" }) { "Volver al inicio" }
+            }
+          }
+        }
+      }
+    }
+
+    footer(.pie, .ancho) {
+      span { "Tangerine UI · MIT" }
+      span {
+        "Hecho con "
+        a({ href: "https://manuelosmadev.github.io/tangerine-lang/" }) { "Tangerine" }
+      }
+    }
+
+    Modal($buscando, "Buscar componentes") {
+      Input(nil, $consulta, "search").placeholder("Button, Modal, tabla...")
+      div(.resultados) {
+        for d in resultados() {
+          a({ href: "#c/{d.id}", class: "resultado", key: d.id }) {
+            span(.resultado-nombre) { d.nombre }
+            span(.resultado-grupo) { d.grupo }
+          }
+        }
+        if resultados().len() == 0 { p(.resultado-vacio) { "Nada con “{consulta}”" } }
+      }
+    }
+    Toaster()
+  }
+}
+
+mount("#app", App)

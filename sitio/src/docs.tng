@@ -1,0 +1,580 @@
+// Documentación de cada componente. El código de cada ejemplo es real:
+// la web lo ejecuta para dibujar la vista previa y lo convierte en HTML.
+
+export let grupos = ["Formularios", "Contenedores", "Feedback", "Datos", "Layout"]
+
+export let docs = [
+  {
+    id: "button",
+    nombre: "Button",
+    grupo: "Formularios",
+    desc: "Un botón con variantes, tamaños, ícono y estado de carga. La acción va como segundo argumento.",
+    ejemplos: [
+      {
+        titulo: "Variantes",
+        codigo: 'import { Button, Row } from "tangerine-ui"
+
+struct Demo {
+  view {
+    Row(8) {
+      Button("Primario", || nil)
+      Button("Secundario", || nil, .secondary)
+      Button("Contorno", || nil, .outline)
+      Button("Fantasma", || nil, .ghost)
+      Button("Peligro", || nil, .danger)
+      Button("Enlace", || nil, .link)
+    }
+  }
+}',
+      },
+      {
+        titulo: "Carga, tamaños e íconos",
+        codigo: 'import { Button, Row, toast, Toaster } from "tangerine-ui"
+
+struct Demo {
+  @State var guardando = false
+
+  async fn guardar() {
+    guardando = true
+    await sleep(1200)
+    guardando = false
+    toast("Cambios guardados", "success")
+  }
+
+  view {
+    Row(8) {
+      Button("Guardar", || guardar()).loading(guardando).icon("✓")
+      Button("Pequeño", || nil, .secondary).size("sm")
+      Button("Grande", || nil, .outline).size("lg")
+      Button("Desactivado", || nil).disabled()
+    }
+    Toaster()
+  }
+}',
+      },
+    ],
+    api: [
+      ['Button(texto, accion?, variante?)', 'variante: .primary (por defecto), .secondary, .outline, .ghost, .danger, .link'],
+      ['.size("sm" | "lg")', 'Más pequeño o más grande.'],
+      ['.loading(bool)', 'Muestra un spinner y evita doble clic.'],
+      ['.icon(texto)', 'Un ícono o emoji antes del texto.'],
+      ['.disabled(bool)', 'Lo desactiva.'],
+      ['.full()', 'Ocupa todo el ancho.'],
+      ['.submit()', 'Lo vuelve type="submit" dentro de un form.'],
+    ],
+  },
+  {
+    id: "input",
+    nombre: "Input",
+    grupo: "Formularios",
+    desc: "Campo de texto con etiqueta, ayuda y error. Se une a un @State con $campo.",
+    ejemplos: [
+      {
+        titulo: "Con validación en vivo",
+        codigo: 'import { Input, Stack } from "tangerine-ui"
+
+struct Demo {
+  @State var correo = ""
+  @State var clave = ""
+
+  fn error_correo() {
+    if correo != "" && !correo.contains("@") { "Le falta el @" } else { nil }
+  }
+
+  view {
+    Stack(14) {
+      Input("Correo", $correo, "email")
+        .placeholder("tu@correo.com")
+        .hint("Nunca lo compartimos")
+        .error(error_correo())
+      Input("Contraseña", $clave, "password").placeholder("Mínimo 8 caracteres")
+      p { "Escribiste: {correo}" }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Input(etiqueta, $campo, tipo?)', 'tipo: "text" (por defecto), "email", "password", "number", "search", "tel", "url", "date"...'],
+      ['.placeholder(texto)', 'Texto de ejemplo dentro del campo.'],
+      ['.hint(texto)', 'Ayuda debajo del campo.'],
+      ['.error(texto)', 'Lo marca en rojo con el mensaje. Con nil se quita.'],
+      ['.disabled(bool)', 'Lo desactiva.'],
+    ],
+  },
+  {
+    id: "textarea",
+    nombre: "Textarea",
+    grupo: "Formularios",
+    desc: "Texto de varias líneas. Crece hacia abajo si el usuario lo estira.",
+    ejemplos: [
+      {
+        titulo: "Con contador",
+        codigo: 'import { Textarea } from "tangerine-ui"
+
+struct Demo {
+  @State var bio = ""
+
+  view {
+    Textarea("Sobre ti", $bio)
+      .rows(4)
+      .placeholder("Cuéntanos algo...")
+      .hint("{bio.len()} / 160 caracteres")
+      .error(if bio.len() > 160 { "Es demasiado largo" } else { nil })
+  }
+}',
+      },
+    ],
+    api: [
+      ['Textarea(etiqueta, $campo)', 'Se une a un @State de texto.'],
+      ['.rows(n)', 'Alto inicial en líneas.'],
+      ['.placeholder(texto)', 'Texto de ejemplo.'],
+      ['.hint(texto)  .error(texto)', 'Ayuda o error debajo.'],
+    ],
+  },
+  {
+    id: "select",
+    nombre: "Select",
+    grupo: "Formularios",
+    desc: "Lista desplegable. Cada opción es un texto o un par [valor, texto].",
+    ejemplos: [
+      {
+        titulo: "Básico",
+        codigo: 'import { Select, Stack } from "tangerine-ui"
+
+struct Demo {
+  @State var pais = "co"
+
+  view {
+    Stack(12) {
+      Select("País", $pais, [["co", "Colombia"], ["mx", "México"], ["es", "España"], ["ar", "Argentina"]])
+        .hint("Elegiste: {pais}")
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Select(etiqueta, $campo, opciones)', 'opciones: ["A", "B"] o [["a", "A"], ["b", "B"]]'],
+      ['.hint(texto)', 'Ayuda debajo.'],
+    ],
+  },
+  {
+    id: "checkbox",
+    nombre: "Checkbox",
+    grupo: "Formularios",
+    desc: "Casilla de verificación animada, unida a un @State de verdadero o falso.",
+    ejemplos: [
+      {
+        titulo: "Básico",
+        codigo: 'import { Checkbox, Stack } from "tangerine-ui"
+
+struct Demo {
+  @State var terminos = false
+  @State var boletin = true
+
+  view {
+    Stack(10) {
+      Checkbox("Acepto los términos", $terminos)
+      Checkbox("Quiero recibir novedades", $boletin)
+      Checkbox("No disponible", $boletin).disabled()
+      p { if terminos { "Gracias por aceptar" } else { "Falta aceptar los términos" } }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Checkbox(texto, $campo)', 'El campo guarda true o false.'],
+      ['.disabled(bool)', 'Lo desactiva.'],
+    ],
+  },
+  {
+    id: "switch",
+    nombre: "Switch",
+    grupo: "Formularios",
+    desc: "Interruptor para activar o desactivar algo al instante.",
+    ejemplos: [
+      {
+        titulo: "Ajustes",
+        codigo: 'import { Switch, Stack, Badge } from "tangerine-ui"
+
+struct Demo {
+  @State var avisos = true
+  @State var oscuro = false
+
+  view {
+    Stack(12) {
+      Switch("Notificaciones", $avisos)
+      Switch("Modo oscuro", $oscuro)
+      Badge(if avisos { "Avisos activos" } else { "Sin avisos" }, if avisos { "success" } else { "neutral" }).dot()
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Switch(texto, $campo)', 'El campo guarda true o false. Tiene role="switch" para lectores de pantalla.'],
+      ['.disabled(bool)', 'Lo desactiva.'],
+    ],
+  },
+  {
+    id: "radio",
+    nombre: "RadioGroup",
+    grupo: "Formularios",
+    desc: "Elegir una opción entre varias.",
+    ejemplos: [
+      {
+        titulo: "Planes",
+        codigo: 'import { RadioGroup, Stack } from "tangerine-ui"
+
+struct Demo {
+  @State var plan = "pro"
+
+  view {
+    Stack(12) {
+      RadioGroup("Plan", $plan, [["free", "Gratis"], ["pro", "Pro · $9 al mes"], ["team", "Equipo · $29 al mes"]])
+      p { "Plan elegido: {plan}" }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['RadioGroup(etiqueta, $campo, opciones)', 'opciones: ["A", "B"] o [["a", "A"], ["b", "B"]]. El campo guarda el valor.'],
+    ],
+  },
+  {
+    id: "card",
+    nombre: "Card",
+    grupo: "Contenedores",
+    desc: 'Agrupa contenido con título opcional. Lo que pongas en su bloque { } va adentro.',
+    ejemplos: [
+      {
+        titulo: "Variantes",
+        codigo: 'import { Card, Grid, Button, Badge } from "tangerine-ui"
+
+struct Demo {
+  view {
+    Grid(3, 14) {
+      Card("Básica", "Borde suave") {
+        p { "Para la mayoría de los casos." }
+      }
+      Card("Elevada", "Con sombra").variant("elevated") {
+        Badge("Popular", .accent).dot()
+      }
+      Card("Destacada", "Pasa el mouse").variant("accent").interactive() {
+        Button("Elegir", || nil).full()
+      }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Card(titulo?, subtitulo?) { ... }', 'El bloque es el contenido.'],
+      ['.variant("elevated" | "outline" | "accent")', 'Cambia el estilo.'],
+      ['.interactive()', 'Se levanta al pasar el mouse.'],
+    ],
+  },
+  {
+    id: "modal",
+    nombre: "Modal",
+    grupo: "Contenedores",
+    desc: "Ventana sobre la página. Se abre y cierra con un @State. Se cierra con la X, con Escape o al hacer clic afuera.",
+    ejemplos: [
+      {
+        titulo: "Confirmar una acción",
+        codigo: 'import { Modal, Button, Row, toast, Toaster } from "tangerine-ui"
+
+struct Demo {
+  @State var abierto = false
+
+  fn borrar() {
+    abierto = false
+    toast("Proyecto borrado", "danger")
+  }
+
+  view {
+    Button("Borrar proyecto", || { abierto = true }, .danger)
+    Modal($abierto, "¿Borrar el proyecto?").size("sm") {
+      p { "Esta acción no se puede deshacer." }
+      Row(8) {
+        Button("Cancelar", || { abierto = false }, .secondary)
+        Button("Sí, borrar", || borrar(), .danger)
+      }
+    }
+    Toaster()
+  }
+}',
+      },
+    ],
+    api: [
+      ['Modal($abierto, titulo?) { ... }', 'Se muestra cuando el campo es true.'],
+      ['.size("sm" | "lg")', 'Ancho de la ventana.'],
+    ],
+  },
+  {
+    id: "tabs",
+    nombre: "Tabs",
+    grupo: "Contenedores",
+    desc: "Pestañas. El @State guarda el índice de la pestaña elegida; tú decides qué mostrar.",
+    ejemplos: [
+      {
+        titulo: "Dos estilos",
+        codigo: 'import { Tabs, Stack, Card } from "tangerine-ui"
+
+struct Demo {
+  @State var tab = 0
+  @State var vista = 1
+
+  view {
+    Stack(16) {
+      Tabs($tab, ["Perfil", "Cuenta", "Avisos"])
+      Card {
+        p { match tab { 0 => "Tu nombre y tu foto.", 1 => "Correo y contraseña.", _ => "Qué te avisamos y cuándo." } }
+      }
+      Tabs($vista, ["Resumen", "Actividad", "Ajustes"]).line()
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Tabs($indice, pestañas)', 'pestañas: lista de textos. El campo guarda 0, 1, 2...'],
+      ['.line()', 'Estilo subrayado.'],
+    ],
+  },
+  {
+    id: "alert",
+    nombre: "Alert",
+    grupo: "Feedback",
+    desc: "Mensaje destacado con ícono según el tipo.",
+    ejemplos: [
+      {
+        titulo: "Tipos",
+        codigo: 'import { Alert, Stack } from "tangerine-ui"
+
+struct Demo {
+  view {
+    Stack(10) {
+      Alert("Hay una versión nueva disponible.", .info)
+      Alert("Tus cambios se guardaron.", .success).title("Listo")
+      Alert("Tu plan vence en 3 días.", .warning)
+      Alert("No se pudo conectar con el servidor.", .danger).title("Error")
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Alert(texto?, tipo?) { ... }', 'tipo: .info (por defecto), .success, .warning, .danger. El bloque se agrega al texto.'],
+      ['.title(texto)', 'Título en negrita arriba.'],
+    ],
+  },
+  {
+    id: "toast",
+    nombre: "Toast",
+    grupo: "Feedback",
+    desc: "Avisos que aparecen un momento en la esquina. Pon Toaster() una vez y llama a toast() desde donde quieras.",
+    ejemplos: [
+      {
+        titulo: "Avisos",
+        codigo: 'import { Button, Row, toast, Toaster } from "tangerine-ui"
+
+struct Demo {
+  view {
+    Row(8) {
+      Button("Neutral", || toast("Copiado al portapapeles"), .secondary)
+      Button("Éxito", || toast("Guardado", "success"), .secondary)
+      Button("Error", || toast("Algo salió mal", "danger"), .secondary)
+      Button("Naranja", || toast("¡Hecho con Tangerine!", "accent"), .secondary)
+    }
+    Toaster()
+  }
+}',
+      },
+    ],
+    api: [
+      ['toast(texto, tipo?, ms?)', 'tipo: "neutral", "success", "warning", "danger", "info", "accent". ms: cuánto dura (3200).'],
+      ['Toaster()', 'Dónde aparecen los avisos. Ponlo una sola vez.'],
+    ],
+  },
+  {
+    id: "progress",
+    nombre: "Progress",
+    grupo: "Feedback",
+    desc: "Barra de progreso animada.",
+    ejemplos: [
+      {
+        titulo: "Subiendo archivos",
+        codigo: 'import { Progress, Button, Stack } from "tangerine-ui"
+
+struct Demo {
+  @State var hecho = 3
+
+  view {
+    Stack(14) {
+      Progress(hecho, 10).label("Subiendo archivos")
+      Button("Subir uno más", || { hecho = (hecho + 1).clamp(0, 10) }, .secondary).size("sm")
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Progress(valor, maximo?)', 'maximo es 100 si no lo pones.'],
+      ['.label(texto)', 'Texto y porcentaje arriba de la barra.'],
+    ],
+  },
+  {
+    id: "loading",
+    nombre: "Spinner y Skeleton",
+    grupo: "Feedback",
+    desc: "Para mostrar que algo está cargando. Skeleton dibuja la forma del contenido que viene.",
+    ejemplos: [
+      {
+        titulo: "Cargando un perfil",
+        codigo: 'import { Spinner, Skeleton, Row, Stack } from "tangerine-ui"
+
+struct Demo {
+  view {
+    Stack(18) {
+      Row(14) {
+        Spinner("sm")
+        Spinner()
+        Spinner("lg")
+      }
+      Row(12) {
+        Skeleton("44px", "44px").circle()
+        Stack(8) {
+          Skeleton("180px", "12px")
+          Skeleton("120px", "12px")
+        }
+      }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Spinner(tam?)', 'tam: "sm", "md" (por defecto) o "lg".'],
+      ['Skeleton(ancho?, alto?)', 'Medidas CSS: "100%", "12px"...'],
+      ['.circle()', 'Redondo, para fotos.'],
+    ],
+  },
+  {
+    id: "table",
+    nombre: "Table",
+    grupo: "Datos",
+    desc: "Tabla a partir de una lista de mapas. Cada columna es [clave, título].",
+    ejemplos: [
+      {
+        titulo: "Equipo con buscador",
+        codigo: 'import { Table, Input, Stack } from "tangerine-ui"
+
+let equipo = [
+  { nombre: "Ana Pérez", rol: "Diseño", ciudad: "Bogotá" },
+  { nombre: "Luis Gómez", rol: "Backend", ciudad: "CDMX" },
+  { nombre: "Sara Ruiz", rol: "Frontend", ciudad: "Madrid" },
+]
+
+struct Demo {
+  @State var buscar = ""
+
+  view {
+    Stack(12) {
+      Input(nil, $buscar, "search").placeholder("Buscar por nombre...")
+      Table([["nombre", "Nombre"], ["rol", "Rol"], ["ciudad", "Ciudad"]],
+        equipo.filter(|p| p.nombre.lower().contains(buscar.lower())))
+        .empty("Nadie se llama así")
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Table(columnas, filas)', 'columnas: [["clave", "Título"], ...] o ["clave", ...]. filas: lista de mapas.'],
+      ['.empty(texto)', 'Lo que se ve si no hay filas.'],
+    ],
+  },
+  {
+    id: "badge",
+    nombre: "Badge y Avatar",
+    grupo: "Datos",
+    desc: "Etiquetas pequeñas de estado e iniciales o fotos de personas.",
+    ejemplos: [
+      {
+        titulo: "Estados y personas",
+        codigo: 'import { Badge, Avatar, Row, Stack, Kbd } from "tangerine-ui"
+
+struct Demo {
+  view {
+    Stack(16) {
+      Row(8) {
+        Badge("Borrador")
+        Badge("Nuevo", .accent)
+        Badge("Activo", .success).dot()
+        Badge("En vivo", .danger).live()
+        Badge("Beta", .info)
+      }
+      Row(10) {
+        Avatar("Ana Pérez").size("sm")
+        Avatar("Luis Gómez")
+        Avatar("Sara Ruiz").size("lg")
+      }
+      Row(6) {
+        Kbd("Ctrl")
+        Kbd("K")
+        span { "para buscar" }
+      }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Badge(texto, tipo?)', 'tipo: .neutral, .accent, .success, .warning, .danger, .info'],
+      ['.dot()  .live()', 'Un punto de color; live lo hace latir.'],
+      ['Avatar(nombre, imagen?)', 'Sin imagen muestra las iniciales.'],
+      ['Avatar(...).size("sm" | "lg")', 'Tamaño.'],
+      ['Kbd(tecla)', 'Una tecla del teclado.'],
+    ],
+  },
+  {
+    id: "layout",
+    nombre: "Stack, Row y Grid",
+    grupo: "Layout",
+    desc: "Acomodan lo que pongas adentro: en columna, en fila o en rejilla. En el móvil, Grid usa una sola columna.",
+    ejemplos: [
+      {
+        titulo: "Un tablero",
+        codigo: 'import { Grid, Card, Stack, Row, Divider, Badge } from "tangerine-ui"
+
+struct Demo {
+  view {
+    Stack(14) {
+      Grid(3, 12) {
+        Card("Ventas") { strong { "$12.480" } }
+        Card("Pedidos") { strong { "318" } }
+        Card("Clientes") { strong { "1.204" } }
+      }
+      Divider("o")
+      Row(8) {
+        Badge("Hoy", .accent)
+        Badge("Esta semana")
+        Badge("Este mes")
+      }
+    }
+  }
+}',
+      },
+    ],
+    api: [
+      ['Stack(espacio?) { ... }', 'Columna. espacio en px (16).'],
+      ['Row(espacio?, alinear?) { ... }', 'Fila que salta de línea. alinear: "center", "start", "end".'],
+      ['Grid(columnas?, espacio?) { ... }', 'Rejilla (3 columnas, 16px).'],
+      ['Divider(texto?)', 'Línea separadora, con texto en medio si quieres.'],
+    ],
+  },
+]

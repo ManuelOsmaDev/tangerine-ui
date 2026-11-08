@@ -1,0 +1,11 @@
+{
+  "entry": "src/main.tng",
+  "out": "dist/index.html",
+  "title": "Tangerine UI · Componentes para Tangerine",
+  "lang": "es",
+  "styles": ["ui.css", "estilos.css"],
+  "scripts": ["nativas.js"],
+  "head": "<meta name=\"description\" content=\"Componentes accesibles y con modo oscuro para Tangerine: botones, formularios, modales, tablas y avisos. Su CSS funciona en cualquier HTML.\"><meta name=\"color-scheme\" content=\"light dark\"><meta property=\"og:title\" content=\"Tangerine UI\"><meta property=\"og:description\" content=\"Componentes jugosos para Tangerine.\"><link rel=\"icon\" href=\"logo.svg\" type=\"image/svg+xml\"><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin><link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400..800&family=JetBrains+Mono:wght@400..600&display=swap\">",
+  "body": "<div id=\"app\"></div>",
+  "runtime": "inline"
+}
